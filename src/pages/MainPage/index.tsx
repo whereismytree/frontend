@@ -1,6 +1,7 @@
 import React from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
 import ZoomControl from 'components/main/ZoomControl';
+import MyLocationButton from 'components/main/MyLocationButton';
 import * as S from './style';
 
 export const MainPage = () => {
@@ -9,8 +10,10 @@ export const MainPage = () => {
   return (
     <div>
       <S.Wrapper>
-        <S.Map ref={container}></S.Map>
-        <ZoomControl map={map} />
+        <S.Map ref={container}>
+          <MyLocationButton map={map} />
+          <ZoomControl map={map} />
+        </S.Map>
       </S.Wrapper>
     </div>
   );

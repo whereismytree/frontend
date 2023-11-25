@@ -10,6 +10,14 @@ export const Wrapper = styled.div`
 
 export const Map = styled.section`
   height: calc(100% - 100px);
+  > img {
+    z-index: 10;
+    position: absolute;
+    left: 1.6rem;
+    bottom: calc(1.2rem);
+    /* bottom: calc(21.6rem + 1.2rem); */
+    margin-bottom: 1.2rem;
+  }
 `;
 
 export const Loading = styled.section`

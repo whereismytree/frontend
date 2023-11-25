@@ -13,8 +13,8 @@ const useKakaoMap = () => {
             let center;
             if (navigator.geolocation) {
               try {
-                const location: TLocation = await getMyLocation();
-                center = new window.kakao.maps.LatLng(location.latitude, location.longitude);
+                const { latitude, longitude }: TLocation = await getMyLocation();
+                center = new window.kakao.maps.LatLng(latitude, longitude);
               } catch (error) {
                 console.error(error);
               }
