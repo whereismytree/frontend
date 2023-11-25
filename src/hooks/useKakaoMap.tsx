@@ -1,8 +1,9 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { TLocation, getMyLocation } from 'utils/getMyLocation';
 
 const useKakaoMap = () => {
-  const container = useRef(null);
+  const container = useRef<any>(null);
+  const [map, setMap] = useState<any>(null);
 
   useEffect(() => {
     const loadMap = async () => {
@@ -22,7 +23,8 @@ const useKakaoMap = () => {
             }
 
             const options = { center, level: 3 };
-            new window.kakao.maps.Map(container.current, options);
+            const map = new window.kakao.maps.Map(container.current, options);
+            setMap(map);
 
             resolve();
           });
@@ -30,9 +32,9 @@ const useKakaoMap = () => {
       }
     };
     loadMap();
-  }, [container]);
+  }, []);
 
-  return { container };
+  return { map, container };
 };
 
 export default useKakaoMap;
