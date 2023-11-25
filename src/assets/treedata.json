@@ -1,0 +1,34 @@
+{
+  "trees": [
+    {
+      "treeId": 123,
+      "name": "롯데월드타워 트리",
+      "latitude": 37.5665,
+      "longitude": 126.978
+    },
+    {
+      "treeId": 124,
+      "name": "롯데백화점 본점 트리",
+      "latitude": 37.5647224,
+      "longitude": 126.9816533
+    },
+    {
+      "treeId": 125,
+      "name": "신세계백화점 본점 트리",
+      "latitude": 37.5609223,
+      "longitude": 126.981138
+    },
+    {
+      "treeId": 126,
+      "name": "타임스퀘어 트리",
+      "latitude": 37.5169933,
+      "longitude": 126.9035425
+    },
+    {
+      "treeId": 126,
+      "name": "더현대서울 트리",
+      "latitude": 37.525219,
+      "longitude": 126.928008
+    }
+  ]
+}
