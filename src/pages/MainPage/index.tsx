@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import useKakaoMap from 'hooks/useKakaoMap';
 import ZoomControl from 'components/main/ZoomControl';
@@ -24,7 +24,23 @@ export const MainPage = () => {
   };
 
   const createMarker = (map: any, treeInfo: ITreeInfo) => {
-    // TODO: 현재 보이는 지도의 경계까지 트리만 표시하도록 수정 필요
+    const bounds = map.getBounds(); // 현재 지도 영역 경계 가져오기
+    const swLatLng = bounds.getSouthWest(); // 경계의 남서쪽 좌표 가져오기
+    const neLatLng = bounds.getNorthEast(); // 경계의 북동쪽 좌표 가져오기
+
+    // 트리의 위치가 경계 내에 있는지 확인
+    const bufferLat = neLatLng.getLat() - swLatLng.getLat();
+    const bufferLng = neLatLng.getLng() - swLatLng.getLng();
+    if (
+      treeInfo.latitude < swLatLng.getLat() - bufferLat ||
+      treeInfo.latitude > neLatLng.getLat() + bufferLat ||
+      treeInfo.longitude < swLatLng.getLng() - bufferLng ||
+      treeInfo.longitude > neLatLng.getLng() + bufferLng
+    ) {
+      // 트리의 위치가 경계 밖에 있다면 마커 미생성
+      return null;
+    }
+
     const imageSrc = TreeMarker;
     const imageSize = new window.kakao.maps.Size(64, 69);
     const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
