@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import axios from 'axios';
 import useKakaoMap from 'hooks/useKakaoMap';
 import ZoomControl from 'components/main/ZoomControl';
@@ -13,8 +13,10 @@ interface ITreeInfo {
   latitude: number;
   longitude: number;
 }
+
 export const MainPage = () => {
-  const { map, container } = useKakaoMap();
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const { map } = useKakaoMap(mapContainer);
 
   const getTreeData = async () => {
     // TODO: 추후 서버로부터 데이터 받아오는 코드로 변경
@@ -56,19 +58,19 @@ export const MainPage = () => {
 
   useEffect(() => {
     const drawTree = async () => {
-      if (map) {
-        const treeMarkers = await getTreeData();
-        treeMarkers.forEach((tree: any) => createMarker(map, tree));
-      }
+      const treeMarkers = await getTreeData();
+      treeMarkers.forEach((tree: any) => createMarker(map, tree));
     };
 
-    drawTree();
+    if (map) {
+      drawTree();
+    }
   }, [map]);
 
   return (
     <div>
       <S.Wrapper>
-        <S.Map ref={container}>
+        <S.Map ref={mapContainer}>
           <MyLocationButton map={map} />
           <ZoomControl map={map} />
         </S.Map>
