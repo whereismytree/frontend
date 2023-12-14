@@ -1,50 +1,51 @@
-import React from "react";
-import { MainPage } from "pages/MainPage";
-import { SearchPage } from "pages/SearchPage";
-import { TreeInfo } from "pages/TreeInfo";
-import { TreeRegi } from "pages/TreeRegi";
-import { SignIn } from "pages/SignIn";
-import { MyPage } from "pages/MyPage";
-import { ErrorPage } from "pages/ErrorPage";
-import { useRoutes, RouteObject } from "react-router-dom";
+import React from 'react';
+import { MainPage } from 'pages/MainPage';
+import { SearchPage } from 'pages/SearchPage';
+import { TreeInfo } from 'pages/TreeInfo';
+import { TreeRegi } from 'pages/TreeRegi';
+import { SignIn } from 'pages/SignIn';
+import { MyPage } from 'pages/MyPage';
+import { ErrorPage } from 'pages/ErrorPage';
+import { useRoutes, RouteObject } from 'react-router-dom';
+import PATH from '\bconstants/path';
 
 export const Router = () => {
   const rootRoutes: RouteObject = {
-    path: "/",
+    path: PATH.rootPage,
     element: <MainPage />,
   };
 
   const mainRoutes: RouteObject = {
-    path: "/main",
+    path: PATH.mainPage,
     element: <MainPage />,
   };
 
   const searchRoutes: RouteObject = {
-    path: "/search",
+    path: PATH.searchPage,
     element: <SearchPage />,
   };
 
   const treeInfoRoutes: RouteObject = {
-    path: "/treeinfo",
+    path: PATH.treeInfoPage,
     element: <TreeInfo />,
   };
   const registInfoRoutes: RouteObject = {
-    path: "/regist",
+    path: PATH.registInfoPage,
     element: <TreeRegi />,
   };
 
   const loginRoutes: RouteObject = {
-    path: "/login",
+    path: PATH.loginPage,
     element: <SignIn />,
   };
 
   const myRoutes: RouteObject = {
-    path: "/my",
+    path: PATH.myPage,
     element: <MyPage />,
   };
 
   const errorRoutes: RouteObject = {
-    path: "/error",
+    path: PATH.errorPage,
     element: <ErrorPage />,
   };
 
