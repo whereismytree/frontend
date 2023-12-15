@@ -1,15 +1,7 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  background-color: mistyrose;
-  width: 42rem;
-  height: 85.2rem;
-  margin: auto;
-  position: relative;
-`;
-
 export const Map = styled.section`
-  height: calc(100% - 100px);
+  height: calc(100vh - 100px);
   > img {
     z-index: 10;
     position: absolute;

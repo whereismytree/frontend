@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef } from 'react';
-import axios from 'axios';
 import useKakaoMap from 'hooks/useKakaoMap';
 import ZoomControl from 'components/main/ZoomControl';
 import MyLocationButton from 'components/main/MyLocationButton';
@@ -47,7 +47,7 @@ export const MainPage = () => {
     const imageSize = new window.kakao.maps.Size(64, 69);
     const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
     const marker = new window.kakao.maps.Marker({
-      map: map,
+      map,
       title: treeInfo.name,
       position: new window.kakao.maps.LatLng(treeInfo.latitude, treeInfo.longitude),
       image: markerImage,
@@ -69,12 +69,10 @@ export const MainPage = () => {
 
   return (
     <div>
-      <S.Wrapper>
-        <S.Map ref={mapContainer}>
-          <MyLocationButton map={map} />
-          <ZoomControl map={map} />
-        </S.Map>
-      </S.Wrapper>
+      <S.Map ref={mapContainer}>
+        <MyLocationButton map={map} />
+        <ZoomControl map={map} />
+      </S.Map>
     </div>
   );
 };
