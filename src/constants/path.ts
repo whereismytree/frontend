@@ -1,4 +1,4 @@
-const PATH = Object.freeze({
+const PATH: object = Object.freeze({
   rootPage: '/',
   mainPage: '/main',
   searchPage: '/search',
