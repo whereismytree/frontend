@@ -6,6 +6,17 @@ import textBackground from '../assets/background-title.png';
 export default createGlobalStyle`
 ${reset}
 
+:root {
+  --main-green: #1F7158;
+  --main-black: #1A1A1A;
+  --main-white: #FFFFFF;
+  --grey-light: #F1F1F1;
+  --grey-medium: #B9B9B9;
+  --grey-dark: #878787;
+  --header-height: 7.6rem;
+  --navbar-height: 10rem;
+}
+
 * {
   box-sizing: border-box;
   font-family: 'Pretendard Variable' !important;
