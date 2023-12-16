@@ -7,7 +7,7 @@ import { SignIn } from 'pages/SignIn';
 import { MyPage } from 'pages/MyPage';
 import { ErrorPage } from 'pages/ErrorPage';
 import { useRoutes, RouteObject } from 'react-router-dom';
-import PATH from '\bconstants/path';
+import PATH from 'constants/path';
 
 export const Router = () => {
   const rootRoutes: RouteObject = {
