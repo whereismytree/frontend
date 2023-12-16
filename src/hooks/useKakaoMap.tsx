@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { RefObject, useEffect, useState } from 'react';
-import { TLocation, getMyLocation } from 'utils/getMyLocation';
+// import { TLocation, getMyLocation } from 'utils/getMyLocation';
 
 const useKakaoMap = (mapContainer: RefObject<HTMLDivElement>) => {
   const [map, setMap] = useState<any>(null);
@@ -10,8 +11,9 @@ const useKakaoMap = (mapContainer: RefObject<HTMLDivElement>) => {
         let center;
         if (navigator.geolocation) {
           try {
-            const { latitude, longitude }: TLocation = await getMyLocation();
-            center = new window.kakao.maps.LatLng(latitude, longitude);
+            // const { latitude, longitude }: TLocation = await getMyLocation();
+            // center = new window.kakao.maps.LatLng(latitude, longitude);
+            center = new window.kakao.maps.LatLng(37.5647224, 126.9816533);
           } catch (error) {
             console.error(error);
           }
