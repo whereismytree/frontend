@@ -33,6 +33,9 @@ export const DetailText = styled.p`
   font-size: 1.2rem;
   color: var(--grey-dark);
   margin: 1.2rem 0;
+  white-space: pre-line;
+  text-align: center;
+  line-height: 1.8rem;
 `;
 
 export const Button = styled.button`
