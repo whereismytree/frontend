@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 
 export const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  text-align: center;
   background-color: var(--grey-light);
 `;
 
@@ -13,7 +9,6 @@ export const Title = styled.h1`
   font-family: 'UhBeeSe_hyun' !important;
   font-size: 8rem;
   font-weight: 700;
-  text-align: center;
   color: var(--main-black);
   margin-bottom: 3rem;
 `;
@@ -34,7 +29,6 @@ export const DetailText = styled.p`
   color: var(--grey-dark);
   margin: 1.2rem 0;
   white-space: pre-line;
-  text-align: center;
   line-height: 1.8rem;
 `;
 

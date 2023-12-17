@@ -6,7 +6,7 @@ const PATH = {
   registInfoPage: '/regist',
   loginPage: '/login',
   myPage: '/my',
-  errorPage: '/error',
+  errorPage: '/*',
 } as const;
 
 export default PATH;
