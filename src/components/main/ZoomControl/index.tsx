@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import zoomInButton from 'assets/zoom-in-icon.svg';
 import zoomOutButton from 'assets/zoom-out-icon.svg';

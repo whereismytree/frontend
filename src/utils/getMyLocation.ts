@@ -1,9 +1,9 @@
-export type TLocation = {
+export interface ILocation {
   latitude: number;
   longitude: number;
-};
+}
 
-export const getMyLocation = async (): Promise<TLocation> => {
+export const getMyLocation = async (): Promise<ILocation> => {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
 import ZoomControl from 'components/main/ZoomControl';
@@ -8,7 +7,7 @@ import treeMarkerImg from 'assets/tree_marker_default.svg';
 import treeJSON from 'assets/treedata.json';
 import * as S from './style';
 
-type TreeItem = {
+interface ITreeItem {
   name: string;
   lat: number;
   lng: number;
@@ -23,7 +22,7 @@ type TreeItem = {
   isPet: boolean;
   title: string;
   extraInfo: string;
-};
+}
 
 export const MainPage = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -57,7 +56,7 @@ export const MainPage = () => {
       return treeJSON.trees;
     };
 
-    const createMarker = (map: any, treeInfo: TreeItem) => {
+    const createMarker = (map: any, treeInfo: ITreeItem) => {
       const imageSrc = treeMarkerImg;
       const imageSize = new window.kakao.maps.Size(64, 69);
       const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -74,7 +73,7 @@ export const MainPage = () => {
     const drawTree = async () => {
       const treeMarkers = await getTreeData();
       if (treeMarkers) {
-        treeMarkers.forEach((tree: TreeItem) => createMarker(map, tree));
+        treeMarkers.forEach((tree: ITreeItem) => createMarker(map, tree));
       }
     };
 
