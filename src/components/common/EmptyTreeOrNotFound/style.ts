@@ -1,19 +1,27 @@
 import styled from 'styled-components';
 
 export const Section = styled.section`
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--grey-light);
 `;
 
 export const Title = styled.h1`
   font-family: 'UhBeeSe_hyun' !important;
   font-size: 8rem;
+  font-weight: 700;
+  text-align: center;
   color: var(--main-black);
+  margin-bottom: 3rem;
 `;
 
 export const Img = styled.img`
   width: 26.5rem;
   height: 30.3rem;
-  margin: 6.4rem 0;
+  margin-bottom: 6.4rem;
 `;
 
 export const Text = styled.h2`
@@ -34,5 +42,5 @@ export const Button = styled.button`
   color: var(--main-white);
   border-radius: 0.5rem;
   font-size: 2rem;
-  margin: 2.5rem 0;
+  margin-top: 2.5rem;
 `;
