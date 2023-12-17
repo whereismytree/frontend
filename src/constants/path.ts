@@ -1,4 +1,4 @@
-const PATH = Object.freeze({
+const PATH = {
   rootPage: '/',
   mainPage: '/main',
   searchPage: '/search',
@@ -7,6 +7,6 @@ const PATH = Object.freeze({
   loginPage: '/login',
   myPage: '/my',
   errorPage: '/error',
-});
+} as const;
 
 export default PATH;
