@@ -1,6 +1,6 @@
-import * as S from './style';
 import myLocationButton from 'assets/my-location-icon.svg';
 import { TLocation, getMyLocation } from 'utils/getMyLocation';
+import * as S from './style';
 
 export const MyLocationButton = ({ map }: { map: any }) => {
   const onClickMyLocation = async () => {
@@ -20,15 +20,7 @@ export const MyLocationButton = ({ map }: { map: any }) => {
     }
   };
 
-  return (
-    <>
-      <S.MyLocationButton
-        src={myLocationButton}
-        alt="현재 위치"
-        onClick={onClickMyLocation}
-      />
-    </>
-  );
+  return <S.MyLocationButton src={myLocationButton} alt="현재 위치" onClick={onClickMyLocation} />;
 };
 
 export default MyLocationButton;

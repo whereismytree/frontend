@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Map = styled.section`
-  height: calc(100vh - 100px);
+  height: calc(100vh - var(--navbar-height));
   > img {
     z-index: 10;
     position: absolute;
@@ -13,7 +13,7 @@ export const Map = styled.section`
 `;
 
 export const Loading = styled.section`
-  height: calc(100% - 100px);
+  height: calc(100vh - var(--navbar-height));
   display: flex;
   justify-content: center;
   align-items: center;
