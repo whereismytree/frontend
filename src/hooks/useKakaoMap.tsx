@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useState } from 'react';
-import { TLocation, getMyLocation } from 'utils/getMyLocation';
+import { ILocation, getMyLocation } from 'utils/getMyLocation';
 
 const useKakaoMap = (mapContainer: RefObject<HTMLDivElement>) => {
   const [map, setMap] = useState<any>(null);
@@ -10,7 +10,7 @@ const useKakaoMap = (mapContainer: RefObject<HTMLDivElement>) => {
         let center;
         if (navigator.geolocation) {
           try {
-            const { latitude, longitude }: TLocation = await getMyLocation();
+            const { latitude, longitude }: ILocation = await getMyLocation();
             center = new window.kakao.maps.LatLng(latitude, longitude);
           } catch (error) {
             console.error(error);
