@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
 import ZoomControl from 'components/main/ZoomControl';
 import MyLocationButton from 'components/common/MyLocationButton';
 import treeMarkerImg from 'assets/tree_marker_default.svg';
 // import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
 import treeJSON from 'assets/treedata.json';
+import TreeInfo from 'components/main/TreeInfo';
 import * as S from './style';
 
-interface ITreeItem {
+export interface ITreeItem {
   name: string;
   lat: number;
   lng: number;
@@ -27,6 +28,8 @@ interface ITreeItem {
 export const MainPage = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const { map } = useKakaoMap(mapContainer);
+  const [showTreeInfo, setShowTreeInfo] = useState<boolean>(false);
+  const [currentTreeInfoData, setTreeInfoData] = useState<ITreeItem | null>(null);
 
   useEffect(() => {
     const getTreeData = async () => {
@@ -70,10 +73,20 @@ export const MainPage = () => {
       return marker;
     };
 
+    function handleTreeMarker(tree: ITreeItem) {
+      return () => {
+        setTreeInfoData(tree);
+        setShowTreeInfo((prev) => !prev);
+      };
+    }
+
     const drawTree = async () => {
       const treeMarkers = await getTreeData();
       if (treeMarkers) {
-        treeMarkers.forEach((tree: ITreeItem) => createMarker(map, tree));
+        treeMarkers.forEach((tree: ITreeItem) => {
+          const marker = createMarker(map, tree);
+          window.kakao.maps.event.addListener(marker, 'click', handleTreeMarker(tree));
+        });
       }
     };
 
@@ -88,6 +101,7 @@ export const MainPage = () => {
         <MyLocationButton map={map} />
         <ZoomControl map={map} />
       </S.Map>
+      {showTreeInfo && <TreeInfo data={currentTreeInfoData} />}
     </div>
   );
 };
