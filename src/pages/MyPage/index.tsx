@@ -1,32 +1,62 @@
+import UserInfo from 'components/My/UserInfo';
 import React from 'react';
-import Topbar from 'components/Topbar';
-import Navbar from 'components/Navbar';
-import OptionList from 'pages/MyPage/components/OptionList';
-import UserInfoSection from 'pages/MyPage/components/UserInfo';
-import useProfile from './hooks';
-import * as S from './style';
+import PATH from 'constants/path';
+import OptionList from 'components/My/OptionList';
+import useApiQuery from 'hooks/useApiQuery';
+import TPlatform from 'types/platform';
+
+interface IUserData {
+  nickname: string;
+  email: string;
+  platform: TPlatform;
+  profileImageUrl: '';
+  postedTreesCount: number;
+  savedTreesCount: number;
+  reviewsCount: number;
+}
 
 export const MyPage = () => {
-  const userData = useProfile();
+  const { data, isLoading } = useApiQuery<IUserData>('v1/my');
 
-  if (!userData) {
-    return null;
+  if (isLoading) {
+    return <p>Loading..</p>;
   }
+
+  const {
+    nickname = '',
+    email = '',
+    platform = 'GOOGLE',
+    profileImageUrl = '',
+    postedTreesCount = 0,
+    savedTreesCount = 0,
+    reviewsCount = 0,
+  } = data ?? {};
 
   return (
     <>
-      <Topbar.Icon type="cookie" />
-      <S.MyPage>
-        <UserInfoSection {...userData} />
-        <OptionList>
-          <OptionList.Option>문의하기 / 신고하기</OptionList.Option>
-          <OptionList.Option>이용약관</OptionList.Option>
-          <OptionList.Option>개인정보처리방침</OptionList.Option>
-          <OptionList.DangerOption>로그아웃</OptionList.DangerOption>
-          <OptionList.DangerOption>탈퇴하기</OptionList.DangerOption>
-        </OptionList>
-      </S.MyPage>
-      <Navbar />
+      <UserInfo>
+        <UserInfo.Profile src={profileImageUrl} />
+        <UserInfo.Name>{nickname}</UserInfo.Name>
+        <UserInfo.Login platform={platform}>{email}</UserInfo.Login>
+        <UserInfo.Activities>
+          <UserInfo.Activity to={`../${PATH.registInfoPage}`} count={postedTreesCount}>
+            등록한 트리
+          </UserInfo.Activity>
+          <UserInfo.Activity to={`../${PATH.saveTreePage}`} count={savedTreesCount}>
+            저장한 트리
+          </UserInfo.Activity>
+          <UserInfo.Activity to={`../${PATH.reviewPage}`} count={reviewsCount}>
+            내가 쓴 후기
+          </UserInfo.Activity>
+        </UserInfo.Activities>
+      </UserInfo>
+      <OptionList>
+        <OptionList.Option>문의하기 / 신고하기</OptionList.Option>
+        <OptionList.Option>이용약관</OptionList.Option>
+        <OptionList.Option>개인정보처리방침</OptionList.Option>
+        <OptionList.DangerOption>로그아웃</OptionList.DangerOption>
+        <OptionList.DangerOption>탈퇴하기</OptionList.DangerOption>
+      </OptionList>
     </>
   );
 };
