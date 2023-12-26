@@ -55,3 +55,8 @@ export const TreeWrapper = styled.div`
   align-items: center;
   ${treeImage({ width: '4.2rem', height: '4.2rem' })};
 `;
+
+export const Gap = styled.span`
+  display: 'inline-block';
+  width: '10px';
+`;

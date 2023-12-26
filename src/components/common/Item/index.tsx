@@ -1,5 +1,5 @@
 import React from 'react';
-import * as style from './style';
+import * as S from './style';
 
 interface ISubTitleProps {
   children: string;
@@ -21,43 +21,43 @@ interface IItemWrapperProps {
 
 // Wrapper
 function Item({ children, gap }: IItemWrapperProps) {
-  return <style.Wrapper gap={gap}>{children}</style.Wrapper>;
+  return <S.Wrapper gap={gap}>{children}</S.Wrapper>;
 }
 
 function TreeWrapper({ children }: Omit<IItemWrapperProps, 'gap'>) {
   return (
-    <style.TreeWrapper>
+    <S.TreeWrapper>
       <div>{children}</div>
-    </style.TreeWrapper>
+    </S.TreeWrapper>
   );
 }
 
 // Title
 function Title({ children, size, weight, image }: ITitleProps) {
   return (
-    <style.Title size={size} weight={weight} image={image}>
+    <S.Title size={size} weight={weight} image={image}>
       {children}
-    </style.Title>
+    </S.Title>
   );
 }
 
 // SubTitle
 function TreeReviewCount({ children }: { children?: number }) {
   return (
-    <style.RightLineSpan>
+    <S.RightLineSpan>
       후기
-      <span style={{ display: 'inline-block', width: '10px' }} />
+      <S.Gap />
       {children}
-    </style.RightLineSpan>
+    </S.RightLineSpan>
   );
 }
 
 function SubTitle({ children, reviewCount, weight }: ISubTitleProps) {
   return (
-    <style.SubTitle weight={weight}>
+    <S.SubTitle weight={weight}>
       {reviewCount && <TreeReviewCount>{reviewCount}</TreeReviewCount>}
       {children}
-    </style.SubTitle>
+    </S.SubTitle>
   );
 }
 
