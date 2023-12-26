@@ -1,5 +1,7 @@
 const PATH = {
   rootPage: '/',
+  saveTreePage: '/save',
+  reviewPage: 'review',
   mainPage: '/main',
   searchPage: '/search',
   treeInfoPage: '/treeinfo',

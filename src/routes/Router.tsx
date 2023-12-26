@@ -15,6 +15,14 @@ export const Router = () => {
     element: <MainPage />,
   };
 
+  const reviewRoute: RouteObject = {
+    path: PATH.reviewPage,
+  };
+
+  const saveTreeRoute: RouteObject = {
+    path: PATH.saveTreePage,
+  };
+
   const mainRoutes: RouteObject = {
     path: PATH.mainPage,
     element: <MainPage />,
@@ -51,6 +59,8 @@ export const Router = () => {
 
   const routes = [
     rootRoutes,
+    reviewRoute,
+    saveTreeRoute,
     mainRoutes,
     searchRoutes,
     treeInfoRoutes,
