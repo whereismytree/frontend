@@ -1,11 +1,22 @@
-/* eslint-disable react/require-default-props */
 import React from 'react';
 import questionMarkCat from 'assets/question_mark_cat.svg';
+import Button from '../button';
 import * as S from './style';
 
 interface IGuideProps {
   title?: string;
   children: React.ReactNode;
+}
+
+interface IGuideWithButtonProps {
+  text: string;
+  btnText: string;
+  onClick?: () => void;
+}
+
+interface IGuideErrorProps extends IGuideWithButtonProps {
+  title: string;
+  subText: string;
 }
 
 const Guide = ({ title, children }: IGuideProps) => {
@@ -18,21 +29,21 @@ const Guide = ({ title, children }: IGuideProps) => {
   );
 };
 
-const GuideWithButton = ({ text, button }: { text: string; button: string }) => {
+const GuideWithButton = ({ text, btnText, onClick }: IGuideWithButtonProps) => {
   return (
     <Guide>
       <S.Text>{text}</S.Text>
-      <S.Button>{button}</S.Button>
+      <Button.MD onClick={onClick}>{btnText}</Button.MD>
     </Guide>
   );
 };
 
-const GuideError = ({ title, text, subText }: { title: string; text: string; subText: string }) => {
+const GuideError = ({ title, text, subText, btnText, onClick }: IGuideErrorProps) => {
   return (
     <Guide title={title}>
       <S.Text>{text}</S.Text>
       <S.SubText>{subText}</S.SubText>
-      <S.Button>홈으로</S.Button>
+      <Button.MD onClick={onClick}>{btnText}</Button.MD>
     </Guide>
   );
 };

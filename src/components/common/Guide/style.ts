@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const Section = styled.section`
+  width: 30rem;
+  margin: 0 auto;
   text-align: center;
   background-color: var(--grey-light);
 `;
