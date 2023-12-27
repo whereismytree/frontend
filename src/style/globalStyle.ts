@@ -68,6 +68,15 @@ img {
   vertical-align: top;
 }
 
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+input[type="search"]::-moz-search-clear-button {
+    display: none;
+}
+
+
 @media screen and (max-width: 868px) {
   #root {
     margin: 0 auto;
