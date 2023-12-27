@@ -16,9 +16,9 @@ export const StyleButton = styled.button`
 `;
 
 export const StyleMediumButton = styled(StyleButton)`
-  font-size: 1.4rem;
+  font-size: 2rem;
   font-weight: 500;
-  height: 4rem;
+  height: 4.4rem;
   border-radius: 5px;
 `;
 

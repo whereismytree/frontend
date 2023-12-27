@@ -29,17 +29,12 @@ export const Text = styled.h2`
 export const SubText = styled.p`
   font-size: 1.2rem;
   color: var(--grey-dark);
-  margin: 1.2rem 0;
+  margin-top: 1.2rem;
+  margin-bottom: 3rem;
   white-space: pre-line;
   line-height: 1.8rem;
 `;
 
-export const Button = styled.button`
-  width: 30rem;
-  height: 4.4rem;
-  background-color: var(--main-green);
-  color: var(--main-white);
-  border-radius: 0.5rem;
-  font-size: 2rem;
-  margin-top: 2.5rem;
+export const Whitespace = styled.div`
+  height: 3rem;
 `;

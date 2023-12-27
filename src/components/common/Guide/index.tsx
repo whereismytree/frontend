@@ -5,7 +5,8 @@ import * as S from './style';
 
 interface IGuideProps {
   title?: string;
-  children: React.ReactNode;
+  text: string;
+  children?: React.ReactNode;
 }
 
 interface IGuideWithButtonProps {
@@ -19,11 +20,12 @@ interface IGuideErrorProps extends IGuideWithButtonProps {
   subText: string;
 }
 
-const Guide = ({ title, children }: IGuideProps) => {
+const Guide = ({ title, text, children }: IGuideProps) => {
   return (
     <S.Section>
       {title && <S.Title>{title}</S.Title>}
       <S.Img src={questionMarkCat} alt="물음표고양이" />
+      <S.Text>{text}</S.Text>
       {children}
     </S.Section>
   );
@@ -31,8 +33,8 @@ const Guide = ({ title, children }: IGuideProps) => {
 
 const GuideWithButton = ({ text, btnText, onClick }: IGuideWithButtonProps) => {
   return (
-    <Guide>
-      <S.Text>{text}</S.Text>
+    <Guide text={text}>
+      <S.Whitespace />
       <Button.MD onClick={onClick}>{btnText}</Button.MD>
     </Guide>
   );
@@ -40,8 +42,7 @@ const GuideWithButton = ({ text, btnText, onClick }: IGuideWithButtonProps) => {
 
 const GuideError = ({ title, text, subText, btnText, onClick }: IGuideErrorProps) => {
   return (
-    <Guide title={title}>
-      <S.Text>{text}</S.Text>
+    <Guide title={title} text={text}>
       <S.SubText>{subText}</S.SubText>
       <Button.MD onClick={onClick}>{btnText}</Button.MD>
     </Guide>
