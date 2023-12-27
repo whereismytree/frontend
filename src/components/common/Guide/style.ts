@@ -24,7 +24,7 @@ export const Text = styled.h2`
   color: var(--grey-dark);
 `;
 
-export const DetailText = styled.p`
+export const SubText = styled.p`
   font-size: 1.2rem;
   color: var(--grey-dark);
   margin: 1.2rem 0;
