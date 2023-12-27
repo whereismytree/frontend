@@ -16,11 +16,7 @@ interface IUserData {
 }
 
 export const MyPage = () => {
-  const { data, isLoading } = useApiQuery<IUserData>('v1/my');
-
-  if (isLoading) {
-    return <p>Loading..</p>;
-  }
+  const { data } = useApiQuery<IUserData>('v1/my');
 
   const {
     nickname = '',
