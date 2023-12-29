@@ -1,31 +1,44 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setKeyword } from 'store/modules/searchSlice';
-import { StyleSearchInput } from './style';
+import * as S from './style';
 
 function SearchInput() {
+  const [value, setValue] = useState<string>('');
   const dispatch = useDispatch();
   const timer = useRef<NodeJS.Timeout | null>(null);
 
   const debounceSetKeyword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (value: string) => {
       if (timer.current) {
         clearTimeout(timer.current);
       }
 
       timer.current = setTimeout(() => {
-        dispatch(setKeyword(e.target.value));
+        dispatch(setKeyword(value));
       }, 500);
     },
     [dispatch],
   );
 
+  const clearKeyword = () => {
+    setValue('');
+    dispatch(setKeyword(''));
+  };
+
   return (
-    <StyleSearchInput
-      type="search"
-      placeholder="지번, 도로명, 건물명으로 검색"
-      onChange={(e) => debounceSetKeyword(e)}
-    />
+    <S.SearchWrapper>
+      <S.StyleSearchInput
+        type="search"
+        value={value}
+        placeholder="지번, 도로명, 건물명으로 검색"
+        onChange={(e) => {
+          debounceSetKeyword(e.target.value);
+          setValue(e.target.value);
+        }}
+      />
+      {value && <S.ClearButton type="reset" onClick={() => clearKeyword()} />}
+    </S.SearchWrapper>
   );
 }
 
