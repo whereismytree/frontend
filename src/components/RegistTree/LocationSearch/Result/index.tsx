@@ -1,8 +1,10 @@
 import React from 'react';
 import Item from 'components/common/Item';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ISearchPlaceData from 'types/SearchPlaceData';
 import usePlaceSearch from 'hooks/usePlaceSearch';
+import { setAddressType, setLatitude, setLongitude } from 'store/modules/locationSlice';
+import { Link } from 'react-router-dom';
 import * as S from './style';
 
 function SearchTip() {
@@ -19,15 +21,27 @@ function SearchTip() {
 }
 
 function SearchListItem({ data }: { data: ISearchPlaceData }) {
+  const dispatch = useDispatch();
+
+  const setRegistLocation = () => {
+    const addressType = data.road_address_name ? 'ROAD' : 'STREET';
+
+    dispatch(setLongitude(Number(data.x)));
+    dispatch(setLatitude(Number(data.y)));
+    dispatch(setAddressType(addressType));
+  };
+
   return (
-    <S.ResultListItem>
-      <Item.Title size={1.4} weight={400}>
-        {data.place_name}
-      </Item.Title>
-      <S.ResultItemAddress>
-        <S.AddressType>{data.road_address_name ? '도로명' : '지번'}</S.AddressType>
-        {data.road_address_name || data.address_name}
-      </S.ResultItemAddress>
+    <S.ResultListItem onClick={() => setRegistLocation()}>
+      <Link to="./">
+        <Item.Title size={1.4} weight={400}>
+          {data.place_name}
+        </Item.Title>
+        <S.ResultItemAddress>
+          <S.AddressType>{data.road_address_name ? '도로명' : '지번'}</S.AddressType>
+          {data.road_address_name || data.address_name}
+        </S.ResultItemAddress>
+      </Link>
     </S.ResultListItem>
   );
 }
