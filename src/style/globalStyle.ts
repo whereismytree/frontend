@@ -31,6 +31,7 @@ html {
 body {
   margin: 0;
   background: url(${mainBackground}) no-repeat center / cover;
+  -ms-overflow-style: none;
 }
 
 input, textarea { 
@@ -76,6 +77,9 @@ input[type="search"]::-moz-search-clear-button {
     display: none;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
 
 @media screen and (max-width: 868px) {
   #root {
