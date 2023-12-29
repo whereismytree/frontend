@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setKeyword } from 'store/modules/searchSlice';
+import { setSearchKeyword } from 'store/modules/locationSlice';
 import * as S from './style';
 
 function SearchInput() {
@@ -15,7 +15,7 @@ function SearchInput() {
       }
 
       timer.current = setTimeout(() => {
-        dispatch(setKeyword(value));
+        dispatch(setSearchKeyword(value));
       }, 500);
     },
     [dispatch],
@@ -23,7 +23,7 @@ function SearchInput() {
 
   const clearKeyword = () => {
     setValue('');
-    dispatch(setKeyword(''));
+    dispatch(setSearchKeyword(''));
   };
 
   return (

@@ -43,9 +43,9 @@ function SearchResultList({ result }: { result: ISearchPlaceData[] }) {
 }
 
 function Search() {
-  const { keyword } = useSelector(({ search }) => search);
-  const result = usePlaceSearch(keyword);
-  const isHaveResult = keyword && result && result.length > 0;
+  const { searchKeyword } = useSelector(({ location }) => location);
+  const result = usePlaceSearch(searchKeyword);
+  const isHaveResult = searchKeyword && result && result.length > 0;
 
   return isHaveResult ? <SearchResultList result={result} /> : <SearchTip />;
 }

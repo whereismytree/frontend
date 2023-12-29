@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import searchReducer from './modules/searchSlice';
+import locationReducer from './modules/locationSlice';
 
 const rootReducer = combineReducers({
-  search: searchReducer,
+  location: locationReducer,
 });
 
 const store = configureStore({
