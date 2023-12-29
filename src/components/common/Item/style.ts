@@ -22,14 +22,15 @@ export const Title = styled.p<{ size?: number; $weight?: number; image?: boolean
   ${({ image }) => image && treeImage({ width: '1.6rem', height: '2.4rem' })}
 `;
 
-export const SubTitleFont = styled.p`
+export const SubTitleFontStyle = () => css`
   font-size: 1.2rem;
   color: var(--grey-dark);
 `;
 
-export const SubTitle = styled(SubTitleFont)<{ weight?: number }>`
+export const SubTitle = styled.p<{ weight?: number }>`
   font-weight: ${({ weight }) => weight || 300};
   line-height: 1.8rem;
+  ${SubTitleFontStyle}
 `;
 
 export const RightLineSpan = styled.span`
