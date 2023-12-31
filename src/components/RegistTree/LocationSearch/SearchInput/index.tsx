@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSearchKeyword } from 'store/modules/locationSlice';
+import { setSearchKeyword } from 'store/modules/treeRegistLocationSlice';
 import * as S from './style';
 
 function SearchInput() {
