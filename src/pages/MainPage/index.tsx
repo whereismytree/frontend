@@ -5,6 +5,7 @@ import MyLocationButton from 'components/common/MyLocationButton';
 import treeMarkerImg from 'assets/tree_marker_default.svg';
 // import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
 import treeJSON from 'assets/treedata.json';
+import Navbar from 'components/common/Navbar';
 import * as S from './style';
 
 interface ITreeItem {
@@ -88,6 +89,7 @@ export const MainPage = () => {
         <MyLocationButton map={map} />
         <ZoomControl map={map} />
       </S.Map>
+      <Navbar />
     </div>
   );
 };
