@@ -1,19 +1,26 @@
 import React from 'react';
-import homeImg from 'assets/navbar-home.svg';
-import candyImg from 'assets/navbar-candy.svg';
-import starImg from 'assets/navbar-star.svg';
-import cookieImg from 'assets/navbar-cookie.svg';
+import { navbarImg } from 'assets/images';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from './style';
 
 interface INavButtonProps {
-  src: string;
+  src: { basic: string; active: string };
+  alt: string;
   text: string;
+  page: string;
 }
 
-const NavButton = ({ src, text }: INavButtonProps) => {
+const NavButton = ({ src, alt, text, page }: INavButtonProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isActive = location.pathname === page;
+  const handleGoToPage = () => {
+    navigate(page);
+  };
+
   return (
-    <S.Button>
-      <S.Img src={src} />
+    <S.Button onClick={handleGoToPage}>
+      <S.Img src={isActive ? src.active : src.basic} alt={alt} />
       <S.Text>{text}</S.Text>
     </S.Button>
   );
@@ -22,10 +29,10 @@ const NavButton = ({ src, text }: INavButtonProps) => {
 const Navbar = () => {
   return (
     <S.Wrapper>
-      <NavButton src={homeImg} text="홈" />
-      <NavButton src={candyImg} text="트리 등록하기" />
-      <NavButton src={starImg} text="저장한 트리" />
-      <NavButton src={cookieImg} text="MY" />
+      <NavButton src={navbarImg.home} alt="home" text="홈" page="/main" />
+      <NavButton src={navbarImg.candy} alt="regist" text="트리 등록하기" page="/regist" />
+      <NavButton src={navbarImg.star} alt="save" text="저장한 트리" page="/save" />
+      <NavButton src={navbarImg.cookie} alt="my" text="MY" page="/my" />
     </S.Wrapper>
   );
 };
