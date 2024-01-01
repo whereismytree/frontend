@@ -15,6 +15,13 @@ export const StyleButton = styled.button`
   }
 `;
 
+export const StyleSmallButton = styled(StyleButton)`
+  font-size: 1.4rem;
+  font-weight: 500;
+  height: 4rem;
+  border-radius: 5px;
+`;
+
 export const StyleMediumButton = styled(StyleButton)`
   font-size: 2rem;
   font-weight: 500;

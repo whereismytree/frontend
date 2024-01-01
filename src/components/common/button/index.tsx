@@ -1,4 +1,4 @@
-import { StyleButton, StyleCancelButton, StyleMediumButton } from './style';
+import { StyleButton, StyleCancelButton, StyleSmallButton, StyleMediumButton } from './style';
 
 interface IButtonProps {
   children: string;
@@ -16,6 +16,19 @@ function Button({ children, onClick = () => {}, type = 'button', disabled = fals
     <StyleButton type={type} onClick={() => onClick()} disabled={disabled}>
       {children}
     </StyleButton>
+  );
+}
+
+function SmallButton({
+  children,
+  onClick = () => {},
+  type = 'button',
+  disabled = false,
+}: IButtonProps) {
+  return (
+    <StyleSmallButton type={type} onClick={() => onClick()} disabled={disabled}>
+      {children}
+    </StyleSmallButton>
   );
 }
 
@@ -40,7 +53,8 @@ function CancelButton({ children, onClick = () => {} }: TCancelButtonProps) {
   );
 }
 
-Button.MD = MediumButton;
+Button.Small = SmallButton;
+Button.Medium = MediumButton;
 Button.Cancel = CancelButton;
 
 export default Button;

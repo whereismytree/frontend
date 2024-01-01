@@ -35,7 +35,7 @@ const GuideWithButton = ({ text, btnText, onClick }: IGuideWithButtonProps) => {
   return (
     <Guide text={text}>
       <S.Whitespace />
-      <Button.MD onClick={onClick}>{btnText}</Button.MD>
+      <Button.Medium onClick={onClick}>{btnText}</Button.Medium>
     </Guide>
   );
 };
@@ -44,7 +44,7 @@ const GuideError = ({ title, text, subText, btnText, onClick }: IGuideErrorProps
   return (
     <Guide title={title} text={text}>
       <S.SubText>{subText}</S.SubText>
-      <Button.MD onClick={onClick}>{btnText}</Button.MD>
+      <Button.Medium onClick={onClick}>{btnText}</Button.Medium>
     </Guide>
   );
 };
