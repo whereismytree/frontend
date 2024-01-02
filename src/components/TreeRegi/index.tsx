@@ -1,8 +1,8 @@
 import { ReactElement, ReactNode } from 'react';
+import SearchInput from './Location/Search/SearchInput';
+import SearchResult from './Location/Search/SearchResult';
+import CurrentLocationButton from './Location/Search/CurrentLocationButton/Index';
 import * as S from './style';
-import SearchInput from './SearchInput';
-import SearchResult from './SearchResult';
-import CurrentLocationButton from './CurrentLocationButton/Index';
 
 function Search({ children }: { children: ReactElement[] }) {
   return <S.Wrapper>{children}</S.Wrapper>;

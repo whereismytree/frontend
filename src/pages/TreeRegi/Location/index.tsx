@@ -1,5 +1,5 @@
-import TreeRegistMap from 'components/RegistTree/RegistMap';
-import Search from 'components/RegistTree/LocationSearch';
+import TreeRegistMap from 'components/TreeRegi/Location/Map';
+import Search from 'components/TreeRegi';
 
 function SearchPlace() {
   return (
