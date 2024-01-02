@@ -1,6 +1,6 @@
-import React from 'react';
 import { navbarImg } from 'assets/images';
 import { useLocation, useNavigate } from 'react-router-dom';
+import PATH from 'constants/path';
 import * as S from './style';
 
 interface INavButtonProps {
@@ -27,12 +27,36 @@ const NavButton = ({ src, alt, text, page }: INavButtonProps) => {
 };
 
 const Navbar = () => {
+  const altGenerator = (pathName: string) => {
+    return `${pathName.replace('/', '')}Icon`;
+  };
+
   return (
     <S.Wrapper>
-      <NavButton src={navbarImg.home} alt="home" text="홈" page="/main" />
-      <NavButton src={navbarImg.candy} alt="regist" text="트리 등록하기" page="/regist" />
-      <NavButton src={navbarImg.star} alt="save" text="저장한 트리" page="/save" />
-      <NavButton src={navbarImg.cookie} alt="my" text="MY" page="/my" />
+      <NavButton
+        src={navbarImg.home}
+        alt={altGenerator(PATH.mainPage)}
+        text="홈"
+        page={PATH.mainPage}
+      />
+      <NavButton
+        src={navbarImg.candy}
+        alt={altGenerator(PATH.registInfoPage)}
+        text="트리 등록하기"
+        page={PATH.registInfoPage}
+      />
+      <NavButton
+        src={navbarImg.star}
+        alt={altGenerator(PATH.savePage)}
+        text="저장한 트리"
+        page={PATH.savePage}
+      />
+      <NavButton
+        src={navbarImg.cookie}
+        alt={altGenerator(PATH.myPage)}
+        text="MY"
+        page={PATH.myPage}
+      />
     </S.Wrapper>
   );
 };
