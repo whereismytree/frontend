@@ -4,12 +4,13 @@ function Map() {
   // const { address, addressType, latitude, longitude } = useSelector(({ location }) => location);
 
   return (
-    <TreeRegistMap>
+    <>
+      <TreeRegistMap />
       <TreeRegistMap.LocationInfo>
         <TreeRegistMap.LocationTypeButton />
         <TreeRegistMap.RegistButton />
       </TreeRegistMap.LocationInfo>
-    </TreeRegistMap>
+    </>
   );
 }
 
