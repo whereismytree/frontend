@@ -19,7 +19,7 @@ ${reset}
 
 * {
   box-sizing: border-box;
-  font-family: 'Pretendard Variable' !important;
+  font-family: 'Noto Sans KR' !important;
 }
 
 html {
@@ -67,6 +67,14 @@ img {
   max-width: 100%;
   vertical-align: top;
 }
+
+@font-face {
+	font-family: 'UhBeeSe_hyun';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeSe_hyun.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 
 @media screen and (max-width: 868px) {
   #root {
