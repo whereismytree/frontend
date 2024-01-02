@@ -12,5 +12,4 @@ export const LocationInfo = styled.div`
   background-color: var(--main-white);
   border-radius: 10px 10px 0 0;
   box-shadow: 1px -1px 5px var(--grey-medium);
-  border-bottom: 1px solid black;
 `;

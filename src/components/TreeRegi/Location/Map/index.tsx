@@ -1,5 +1,5 @@
 import MyLocationButton from 'components/common/MyLocationButton';
-import { ReactElement, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import useLocationMap from 'hooks/useLocationMap';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -14,17 +14,22 @@ import LocationInfo from './LocationInfo';
 import RegistButton from './RegistButton';
 import LocationTypeButton from './LocationTypeButton';
 
-function TreeRegistMap({ children }: { children: ReactElement }) {
+function TreeRegistMap() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const { map, roadAddress, address } = useLocationMap(mapContainer);
   const { longitude, latitude } = useSelector((state: TRootState) => state.location);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (map && longitude && latitude) {
-      const moveLatLon = new window.kakao.maps.LatLng(latitude, longitude);
+    if (map) {
+      // 지도를 마우스 휠로 확대/축소 제한
+      map.setZoomable(false);
 
-      map.setCenter(moveLatLon);
+      if (longitude && latitude) {
+        const moveLatLon = new window.kakao.maps.LatLng(latitude, longitude);
+        // 미리 설정된 좌표가 있을 시 지도의 중심을 좌표로 이동
+        map.setCenter(moveLatLon);
+      }
     }
   }, [map]);
 
@@ -41,8 +46,8 @@ function TreeRegistMap({ children }: { children: ReactElement }) {
 
   return (
     <S.MapContainer ref={mapContainer}>
+      <S.Overlay>지도를 움직여 트리를 심어주세요</S.Overlay>
       <MyLocationButton map={map} />
-      {children}
     </S.MapContainer>
   );
 }
