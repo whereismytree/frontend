@@ -1,19 +1,6 @@
 import TreeRegistMap from 'components/TreeRegi/Location/Map';
-import Search from 'components/TreeRegi';
 
-function SearchPlace() {
-  return (
-    <Search>
-      <Search.Header>
-        <Search.Input />
-        <Search.CurrentLocationButton />
-      </Search.Header>
-      <Search.Result />
-    </Search>
-  );
-}
-
-function TreeRegist() {
+function Map() {
   // const { address, addressType, latitude, longitude } = useSelector(({ location }) => location);
 
   return (
@@ -26,8 +13,4 @@ function TreeRegist() {
   );
 }
 
-function Location() {
-  return <TreeRegist /> || <SearchPlace />;
-}
-
-export default Location;
+export default Map;

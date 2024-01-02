@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import scopeIcon from 'assets/scope.svg';
+import { Link } from 'react-router-dom';
 
-export const LocationButton = styled.button`
+export const LocationButton = styled(Link)`
   width: 100%;
   font-size: 14px;
   display: flex;
