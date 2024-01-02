@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.nav`
   height: var(--navbar-height);
   display: flex;
   justify-content: space-around;
