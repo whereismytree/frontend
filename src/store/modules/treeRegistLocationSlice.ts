@@ -5,6 +5,10 @@ interface ILocationState {
   latitude: number;
   longitude: number;
   addressType: 'ROAD' | 'STREET';
+  address: {
+    road: string | null;
+    street: string;
+  };
 }
 
 const initialState: ILocationState = {
@@ -12,6 +16,10 @@ const initialState: ILocationState = {
   latitude: 0,
   longitude: 0,
   addressType: 'ROAD',
+  address: {
+    road: '',
+    street: '',
+  },
 };
 
 const treeRegistLocationSlice = createSlice({
@@ -33,10 +41,24 @@ const treeRegistLocationSlice = createSlice({
     setAddressType: (state, action: PayloadAction<'ROAD' | 'STREET'>) => {
       state.addressType = action.payload;
     },
+
+    setRoadAddress: (state, action: PayloadAction<string | null>) => {
+      state.address.road = action.payload;
+    },
+
+    setStreetAddress: (state, action: PayloadAction<string>) => {
+      state.address.street = action.payload;
+    },
   },
 });
 
-export const { setSearchKeyword, setLatitude, setLongitude, setAddressType } =
-  treeRegistLocationSlice.actions;
+export const {
+  setSearchKeyword,
+  setLatitude,
+  setLongitude,
+  setAddressType,
+  setRoadAddress,
+  setStreetAddress,
+} = treeRegistLocationSlice.actions;
 
 export default treeRegistLocationSlice.reducer;

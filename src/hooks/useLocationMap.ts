@@ -8,20 +8,20 @@ interface IAddressData {
 
 const useLocationMap = (
   mapContainer: RefObject<HTMLDivElement>,
-): { map: any; roadAddress: string; address: string } => {
+): { map: any; roadAddress: string | null; address: string } => {
   const { map } = useKakaoMap(mapContainer);
-  const [roadAddressName, setRoadAddressName] = useState<string>('');
-  const [addressName, setAddressName] = useState<string>('');
+  const [roadAddressName, setRoadAddressName] = useState<string | null>(null);
+  const [streetAddressName, setStreetAddressName] = useState<string>('');
 
-  const convertAddressToString = (addressData: IAddressData | null) => {
-    const { address_name: addressName, building_name: bulidngName } = addressData ?? {};
+  const convertAddressToString = (addressData: IAddressData) => {
+    const { address_name: addressName, building_name: bulidngName } = addressData;
 
     return `${addressName} ${bulidngName || ''}`.trim();
   };
 
   const getMapCenterAddress = (
     map: any,
-  ): Promise<{ roadAddress: IAddressData | null; address: IAddressData | null }> => {
+  ): Promise<{ roadAddress: IAddressData | null; address: IAddressData }> => {
     return new Promise((resolve, reject) => {
       const geocoder = new window.kakao.maps.services.Geocoder();
       const center = map.getCenter();
@@ -29,7 +29,7 @@ const useLocationMap = (
       geocoder.coord2Address(
         center.getLng(),
         center.getLat(),
-        ([result]: [{ road_address: IAddressData; address: IAddressData }], status: any) => {
+        ([result]: [{ road_address: IAddressData | null; address: IAddressData }], status: any) => {
           if (status === window.kakao.maps.services.Status.OK && result) {
             const { road_address: roadAddress, address } = result;
 
@@ -42,15 +42,12 @@ const useLocationMap = (
     });
   };
 
-  const applyAddressName = async (
-    address: IAddressData | null,
-    roadAddress: IAddressData | null,
-  ) => {
-    setAddressName(convertAddressToString(address));
-    setRoadAddressName(convertAddressToString(roadAddress));
-  };
-
   useEffect(() => {
+    const applyAddressName = async (address: IAddressData, roadAddress: IAddressData | null) => {
+      setStreetAddressName(convertAddressToString(address));
+      setRoadAddressName(roadAddress ? convertAddressToString(roadAddress) : null);
+    };
+
     if (map) {
       window.kakao.maps.load(async () => {
         const { roadAddress, address } = await getMapCenterAddress(map);
@@ -64,7 +61,7 @@ const useLocationMap = (
     }
   }, [map]);
 
-  return { map, roadAddress: roadAddressName, address: addressName };
+  return { map, roadAddress: roadAddressName, address: streetAddressName };
 };
 
 export default useLocationMap;
