@@ -45,7 +45,7 @@ function TreeRegistMap() {
       dispatch(setLatitude(center.getLat()));
       dispatch(setLongitude(center.getLng()));
     }
-  }, [map, dispatch, roadAddress, address]);
+  }, [map, dispatch, roadAddress, address, buildingName]);
 
   return (
     <S.MapContainer ref={mapContainer}>

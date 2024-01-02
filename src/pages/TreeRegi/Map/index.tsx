@@ -1,8 +1,6 @@
 import TreeRegistMap from 'components/TreeRegi/Location/Map';
 
-function Map() {
-  // const { address, addressType, latitude, longitude } = useSelector(({ location }) => location);
-
+function RegistMap() {
   return (
     <>
       <TreeRegistMap />
@@ -14,4 +12,4 @@ function Map() {
   );
 }
 
-export default Map;
+export default RegistMap;
