@@ -28,6 +28,10 @@ export const Overlay = styled.div`
   top: 33%;
   left: 50%;
   transform: translate(-50%, -50%);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
   &::after {
     content: '';
