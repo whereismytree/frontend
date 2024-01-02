@@ -13,10 +13,10 @@ const useLocationMap = (
   const [roadAddressName, setRoadAddressName] = useState<string | null>(null);
   const [streetAddressName, setStreetAddressName] = useState<string>('');
 
-  const convertAddressToString = (addressData: IAddressData) => {
-    const { address_name: addressName, building_name: bulidngName } = addressData;
+  const convertAddressToString = (addressData: IAddressData, buildingName: string | undefined) => {
+    const { address_name: addressName } = addressData;
 
-    return `${addressName} ${bulidngName || ''}`.trim();
+    return `${addressName} ${buildingName || ''}`.trim();
   };
 
   const getMapCenterAddress = (
@@ -41,20 +41,26 @@ const useLocationMap = (
   };
 
   useEffect(() => {
-    const applyAddressName = async (address: IAddressData, roadAddress: IAddressData | null) => {
-      setStreetAddressName(convertAddressToString(address));
-      setRoadAddressName(roadAddress ? convertAddressToString(roadAddress) : null);
+    const applyAddressName = async (
+      address: IAddressData,
+      roadAddress: IAddressData | null,
+      buildingName: string | undefined,
+    ) => {
+      setStreetAddressName(convertAddressToString(address, buildingName));
+      setRoadAddressName(roadAddress ? convertAddressToString(roadAddress, buildingName) : null);
     };
 
     if (map) {
       (async () => {
         const { roadAddress, address } = await getMapCenterAddress(map);
-        await applyAddressName(address, roadAddress);
+        const { building_name: buildingName } = roadAddress ?? {};
+        await applyAddressName(address, roadAddress, buildingName);
       })();
 
       window.kakao.maps.event.addListener(map, 'idle', async () => {
         const { roadAddress, address } = await getMapCenterAddress(map);
-        await applyAddressName(address, roadAddress);
+        const { building_name: buildingName } = roadAddress ?? {};
+        await applyAddressName(address, roadAddress, buildingName);
       });
     }
   }, [map]);
