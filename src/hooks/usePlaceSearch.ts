@@ -5,11 +5,7 @@ const usePlaceSearch = (keyword: string) => {
   const [result, setResult] = useState<ISearchPlaceData[]>([]);
 
   useEffect(() => {
-    window.kakao.maps.load();
-  }, []);
-
-  useEffect(() => {
-    if (keyword.replace(/^\s+|\s+$/g, '') !== '') {
+    const keywordSearch = () => {
       const places = new window.kakao.maps.services.Places();
 
       places.keywordSearch(keyword, (data: ISearchPlaceData[], status: any) => {
@@ -17,6 +13,10 @@ const usePlaceSearch = (keyword: string) => {
           setResult(data);
         }
       });
+    };
+
+    if (keyword.replace(/^\s+|\s+$/g, '') !== '') {
+      window.kakao.maps.load(keywordSearch);
     }
   }, [keyword]);
 

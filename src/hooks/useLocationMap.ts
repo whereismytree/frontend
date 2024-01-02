@@ -25,14 +25,12 @@ const useLocationMap = (
     return new Promise((resolve, reject) => {
       const geocoder = new window.kakao.maps.services.Geocoder();
       const center = map.getCenter();
-
       geocoder.coord2Address(
         center.getLng(),
         center.getLat(),
         ([result]: [{ road_address: IAddressData | null; address: IAddressData }], status: any) => {
           if (status === window.kakao.maps.services.Status.OK && result) {
             const { road_address: roadAddress, address } = result;
-
             resolve({ roadAddress, address });
           } else {
             reject(new Error('주소를 받아오는데 실패했습니다'));
@@ -49,10 +47,10 @@ const useLocationMap = (
     };
 
     if (map) {
-      window.kakao.maps.load(async () => {
+      (async () => {
         const { roadAddress, address } = await getMapCenterAddress(map);
         await applyAddressName(address, roadAddress);
-      });
+      })();
 
       window.kakao.maps.event.addListener(map, 'idle', async () => {
         const { roadAddress, address } = await getMapCenterAddress(map);
