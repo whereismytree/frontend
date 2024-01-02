@@ -8,7 +8,7 @@ interface ILocationState {
   address: {
     road: string | null;
     street: string;
-    buildingName: string | null;
+    buildingName: string | undefined;
   };
 }
 
@@ -52,7 +52,7 @@ const treeRegistLocationSlice = createSlice({
       state.address.street = action.payload;
     },
 
-    setBuildingName: (state, action: PayloadAction<string | null>) => {
+    setBuildingName: (state, action: PayloadAction<string | undefined>) => {
       state.address.buildingName = action.payload;
     },
   },
@@ -65,6 +65,7 @@ export const {
   setAddressType,
   setRoadAddress,
   setStreetAddress,
+  setBuildingName,
 } = treeRegistLocationSlice.actions;
 
 export default treeRegistLocationSlice.reducer;

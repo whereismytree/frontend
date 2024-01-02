@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import useLocationMap from 'hooks/useLocationMap';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  setBuildingName,
   setLatitude,
   setLongitude,
   setRoadAddress,
@@ -16,7 +17,7 @@ import LocationTypeButton from './LocationTypeButton';
 
 function TreeRegistMap() {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const { map, roadAddress, address } = useLocationMap(mapContainer);
+  const { map, roadAddress, address, buildingName } = useLocationMap(mapContainer);
   const { longitude, latitude } = useSelector((state: TRootState) => state.location);
   const dispatch = useDispatch();
 
@@ -36,9 +37,11 @@ function TreeRegistMap() {
   useEffect(() => {
     dispatch(setRoadAddress(roadAddress));
     dispatch(setStreetAddress(address));
+    dispatch(setBuildingName(buildingName));
 
     if (map) {
       const center = map.getCenter();
+
       dispatch(setLatitude(center.getLat()));
       dispatch(setLongitude(center.getLng()));
     }
