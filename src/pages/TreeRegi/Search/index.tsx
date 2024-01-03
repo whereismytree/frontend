@@ -1,4 +1,4 @@
-import Search from 'components/TreeRegi';
+import Search from 'components/TreeRegi/Location/Search';
 import usePlaceSearch from 'hooks/usePlaceSearch';
 import { useSelector } from 'react-redux';
 import { TRootState } from 'store';
