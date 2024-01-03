@@ -45,9 +45,9 @@ export const RightLineSpan = styled.span`
   }
 `;
 
-export const Wrapper = styled.div<{ gap?: number }>`
+export const Wrapper = styled.div<{ $gap?: number }>`
   p:last-child {
-    margin-top: ${({ gap }) => (gap ? `${gap}rem` : '0.4rem')};
+    margin-top: ${({ $gap }) => ($gap ? `${$gap}rem` : '0.4rem')};
   }
 `;
 
