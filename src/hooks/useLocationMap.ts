@@ -42,7 +42,7 @@ const useLocationMap = (
   };
 
   useEffect(() => {
-    const applyAddressName = async (address: IAddressData, roadAddress: IAddressData | null) => {
+    const applyAddressName = (address: IAddressData, roadAddress: IAddressData | null) => {
       setStreetAddressName(convertAddressToString(address));
       setRoadAddressName(roadAddress ? convertAddressToString(roadAddress) : null);
     };
@@ -52,14 +52,14 @@ const useLocationMap = (
         const { roadAddress, address } = await getMapCenterAddress(map);
         const { building_name: changeBuildingName } = roadAddress || {};
         setBuildingName(changeBuildingName && String(changeBuildingName));
-        await applyAddressName(address, roadAddress);
+        applyAddressName(address, roadAddress);
       })();
 
       window.kakao.maps.event.addListener(map, 'idle', async () => {
         const { roadAddress, address } = await getMapCenterAddress(map);
         const { building_name: changeBuildingName } = roadAddress || {};
         setBuildingName(changeBuildingName && String(changeBuildingName));
-        await applyAddressName(address, roadAddress);
+        applyAddressName(address, roadAddress);
       });
     }
   }, [map]);
