@@ -7,7 +7,7 @@ export const LocationInfo = styled.div`
   flex-direction: column;
   gap: 15px;
   width: 100%;
-  max-height: ${LOCATION_INFO_HEIGHT}px;
+  height: ${LOCATION_INFO_HEIGHT}px;
   padding: 30px 25px;
   background-color: var(--main-white);
   border-radius: 10px 10px 0 0;
