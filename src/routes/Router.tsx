@@ -1,10 +1,10 @@
-import React from 'react';
 import { MainPage } from 'pages/MainPage';
 import { SearchPage } from 'pages/SearchPage';
 import { TreeInfo } from 'pages/TreeInfo';
 import { TreeRegi } from 'pages/TreeRegi';
 import { SignIn } from 'pages/SignIn';
 import { MyPage } from 'pages/MyPage';
+import { SavePage } from 'pages/SavePage';
 import { ErrorPage } from 'pages/ErrorPage';
 import { useRoutes, RouteObject } from 'react-router-dom';
 import PATH from 'constants/path';
@@ -44,6 +44,11 @@ export const Router = () => {
     element: <MyPage />,
   };
 
+  const saveRoutes: RouteObject = {
+    path: PATH.savePage,
+    element: <SavePage />,
+  };
+
   const errorRoutes: RouteObject = {
     path: PATH.errorPage,
     element: <ErrorPage />,
@@ -57,6 +62,7 @@ export const Router = () => {
     registInfoRoutes,
     loginRoutes,
     myRoutes,
+    saveRoutes,
     errorRoutes,
   ];
 
