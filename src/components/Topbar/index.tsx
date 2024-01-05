@@ -1,30 +1,34 @@
 import React from 'react';
+import { topbarImg } from 'assets/images';
+import { useNavigate } from 'react-router-dom';
 import * as S from './style';
 
 interface ITopbarProps {
   children: React.ReactNode;
-  onClick?: () => void;
 }
 
-const Topbar = ({ children, onClick }: ITopbarProps) => {
+const Topbar = ({ children }: ITopbarProps) => {
+  const navigate = useNavigate();
+  const handleGoToBack = () => {
+    navigate(-1);
+  };
+
   return (
     <S.Wrapper>
-      <S.BackIcon onClick={onClick} />
+      <S.BackIcon onClick={handleGoToBack} />
       {children}
     </S.Wrapper>
   );
 };
 
 interface IPageIconProps {
-  src: string;
-  alt: string;
-  onClick?: () => void;
+  type: 'tree' | 'candy' | 'star' | 'cookie';
 }
 
-const CurrentPageIcon = ({ src, alt, onClick }: IPageIconProps) => {
+const CurrentPageIcon = ({ type }: IPageIconProps) => {
   return (
-    <Topbar onClick={onClick}>
-      <S.Icon src={src} alt={alt} />
+    <Topbar>
+      <S.Icon src={topbarImg[type]} alt={type} />
     </Topbar>
   );
 };
