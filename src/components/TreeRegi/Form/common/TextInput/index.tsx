@@ -1,5 +1,5 @@
 import IInputProps from 'types/InputProps';
-import * as CommonS from '../style';
+import * as CommonS from '../../style';
 import * as S from './style';
 
 interface TextInputProps extends IInputProps {
