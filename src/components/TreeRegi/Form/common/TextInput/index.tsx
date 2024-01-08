@@ -1,5 +1,5 @@
 import IInputProps from 'types/InputProps';
-import * as CommonS from '../../style';
+import * as CommonS from '../style';
 import * as S from './style';
 
 interface TextInputProps extends IInputProps {
@@ -18,11 +18,13 @@ function TextInput({
 }: TextInputProps) {
   return (
     <>
-      <CommonS.Label htmlFor={name}>
-        {children}
-        {optional && <CommonS.OptionalText>(선택)</CommonS.OptionalText>}
-        {required && <S.RequiredStar>*</S.RequiredStar>}
-      </CommonS.Label>
+      {children && (
+        <CommonS.Label htmlFor={name}>
+          {children}
+          {optional && <CommonS.OptionalText>(선택)</CommonS.OptionalText>}
+          {required && <S.RequiredStar>*</S.RequiredStar>}
+        </CommonS.Label>
+      )}
       <S.TextInput
         type="text"
         placeholder={placeholder}
