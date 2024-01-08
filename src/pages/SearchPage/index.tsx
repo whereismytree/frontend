@@ -4,6 +4,7 @@ import { ITreeItem } from 'types/apiResponse';
 // import useApiQuery from 'hooks/useApiQuery';
 import TreeImageItem from 'components/TreeImageItem';
 import treeJSON from 'assets/treedata.json';
+import * as S from './style';
 
 export const SearchPage = () => {
   const [keyword, setKeyword] = useState<string>('');
@@ -18,9 +19,9 @@ export const SearchPage = () => {
         <section>
           {data.map((tree) => {
             return (
-              <TreeImageItem key={tree.name} location={tree.roadAddress}>
-                {tree.name}
-              </TreeImageItem>
+              <S.ItemWrapper key={tree.name}>
+                <TreeImageItem location={tree.roadAddress}>{tree.name}</TreeImageItem>
+              </S.ItemWrapper>
             );
           })}
         </section>
