@@ -1,7 +1,7 @@
-import UserInfo from 'components/My/UserInfo';
 import React from 'react';
+import UserInfo from 'components/MyPage/UserInfo';
 import PATH from 'constants/path';
-import OptionList from 'components/My/OptionList';
+import OptionList from 'components/MyPage/OptionList';
 import useApiQuery from 'hooks/useApiQuery';
 import TPlatform from 'types/platform';
 
