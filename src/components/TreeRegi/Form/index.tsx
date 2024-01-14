@@ -1,89 +1,90 @@
-import React, { ReactNode, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import React, { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { TRootState } from 'store';
 import formatDateWithDayOfWeek from 'utils/formatDateWithDayOfWeek';
+import useApiMutation from 'hooks/useApiMutation';
 import LocationDetailForm from './LocationDetail';
 import TreeInformationForm from './TreeInformation';
 import * as S from './style';
 
-// "latitude": 37.5665,
-// "longitude": 126.9780,
-// "registerRoadYn": true,
-// "roadAddress": "서울 어쩌구 무슨로12길 123",
-// "name": "석촌역 트리",
-// "streetAddress": "서울 어쩌구 무슨동 123",
-// "detailAddress": "",
-// "exhibitionStartDate": "2023-12-01",
-// "exhibitionEndDate": "2024-01-15",
-// "indoorYn": true,
-// "businessDays": [2, 3, 4, 5, 6],
-// "petYn": true,
-// "additionalInfo": "더현대 서울의 5층에 위치!"
-
-// interface treeRegistAPIBody {
-//   latitude: number;
-//   longitude: number;
-//   registerRoadYn: boolean;
-//   roadAddress: string;
-//   name: string;
-//   streetAddress: string;
-//   detailAddress?: string;
-// }
+interface treeRegistAPIBody {
+  name: string;
+  latitude: number;
+  longitude: number;
+  registerRoadYn: boolean;
+  roadAddress?: string;
+  streetAddress?: string;
+  detailAddress?: string;
+  exhibitionStartDate?: string;
+  exhibitionEndDate?: string;
+  indoorYn?: boolean;
+  businessDays?: 1 | 2 | 3 | 4 | 5 | 6[];
+  petYn?: boolean;
+  additionalInfo?: string;
+}
 
 function TreeRegiForm({ children }: { children: ReactNode }) {
-  const {
-    formState: { errors },
-    handleSubmit,
-  } = useFormContext();
+  const { handleSubmit } = useFormContext();
 
   const { longitude, latitude, addressType } = useSelector((state: TRootState) => state.location);
 
+  const { mutate } = useApiMutation<treeRegistAPIBody>('v1/trees', 'POST', {
+    onSuccess: (data) => console.log(data),
+    onError: (e) => console.error(e),
+  });
+
+  const filterObject = (object: object) => {
+    return Object.entries(object)
+      .filter(([, value]) => {
+        if (Array.isArray(value)) {
+          return value.length;
+        }
+        return value;
+      })
+      .reduce((obj, cur) => {
+        const [key, value] = cur;
+        return { ...obj, [key]: value };
+      }, {});
+  };
+
   const registTree = (data: any) => {
-    const registerRoadYn = addressType === 'ROAD';
     const busineesDays = data.busineesDays.filter(Number).map(Number);
     const [exhibitionDate] = data.exhibitionDate ?? [];
-    const regex = /\([가-힣]\)/g;
+    delete data.exhibitionDate;
+    const replaceDayOfWeek = (dateString: string) => dateString.replace(/\([가-힣]\)/g, '');
 
     try {
-      const exhibitionStartDate = formatDateWithDayOfWeek(exhibitionDate.startDate, '-').replace(
-        regex,
-        '',
+      const exhibitionStartDate = replaceDayOfWeek(
+        formatDateWithDayOfWeek(exhibitionDate.startDate, '-'),
       );
-      const exhibitionEndDate = formatDateWithDayOfWeek(exhibitionDate.endDate, '-').replace(
-        regex,
-        '',
+      const exhibitionEndDate = replaceDayOfWeek(
+        formatDateWithDayOfWeek(exhibitionDate.endDate, '-'),
       );
 
-      delete data.exhibitionDate;
-
-      console.table({
+      const bodyData = filterObject({
         ...data,
         lng: longitude,
         lat: latitude,
-        registerRoadYn,
         busineesDays,
+        addressType,
         exhibitionStartDate,
         exhibitionEndDate,
       });
+
+      mutate(bodyData);
     } catch (e) {
-      console.error(e);
-      delete data.exhibitionDate;
-      console.table({
+      const bodyData = filterObject({
         ...data,
         lng: longitude,
         lat: latitude,
-        registerRoadYn,
+        addressType,
         busineesDays,
       });
+
+      mutate(bodyData);
     }
   };
-
-  useEffect(() => {
-    if (Object.values(errors).length) {
-      console.log('에러:', errors);
-    }
-  }, [errors]);
 
   return (
     <S.Main>
