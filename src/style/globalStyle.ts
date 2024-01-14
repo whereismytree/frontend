@@ -19,7 +19,7 @@ ${reset}
 
 * {
   box-sizing: border-box;
-  font-family: 'Pretendard Variable' !important;
+  font-family: 'Noto Sans KR' !important;
 }
 
 html {
@@ -40,6 +40,7 @@ input, textarea {
   -webkit-user-select: auto;
   -ms-user-select: auto;
   user-select: auto;
+  border: none;
 }
 
 input:focus {
@@ -66,14 +67,12 @@ a {
   overflow: hidden;
 }
 
-#root {
-  padding: var(--header-height) 0 var(--navbar-height);
-  max-width: 420px;
-  min-height: 100vh;
-  background: #fff;
-  margin-left: 50%;
+@font-face {
+	font-family: 'UhBeeSe_hyun';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeSe_hyun.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
-
 
 img {
   max-width: 100%;

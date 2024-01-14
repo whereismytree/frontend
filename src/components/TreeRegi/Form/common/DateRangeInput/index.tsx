@@ -87,9 +87,9 @@ function DateRangeInput({ name, required = false, children, setValue }: IDateInp
           />
           <S.ButtonWrapper>
             <Button.Cancel onClick={() => cancel()}>취소하기</Button.Cancel>
-            <Button.MD onClick={() => submit()} disabled={disabled}>
+            <Button.Medium onClick={() => submit()} disabled={disabled}>
               선택하기
-            </Button.MD>
+            </Button.Medium>
           </S.ButtonWrapper>
         </S.DateInputWrapper>
       )}
