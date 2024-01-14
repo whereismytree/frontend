@@ -9,6 +9,7 @@ import { useRoutes, RouteObject, Outlet } from 'react-router-dom';
 import PATH from 'constants/path';
 import LocationMap from 'pages/TreeRegi/Map';
 import LocationSearch from 'pages/TreeRegi/Search';
+import TreeRegiDetail from 'pages/TreeRegi/Form';
 
 export const Router = () => {
   const rootRoutes: RouteObject = {
@@ -36,16 +37,22 @@ export const Router = () => {
       path: 'search',
       element: <LocationSearch />,
     },
+
     map: {
       path: 'map',
       element: <LocationMap />,
+    },
+
+    detail: {
+      path: 'detail',
+      element: <TreeRegiDetail />,
     },
   };
 
   const registInfoRoutes: RouteObject = {
     path: `${PATH.registInfoPage}/*`,
     element: <Outlet />,
-    children: [registRouteObject.search, registRouteObject.map],
+    children: Object.values(registRouteObject),
   };
 
   const loginRoutes: RouteObject = {

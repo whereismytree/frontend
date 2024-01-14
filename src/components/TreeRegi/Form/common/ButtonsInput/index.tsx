@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import IInputProps from 'types/InputProps';
 import * as CommonS from '../style';
@@ -17,7 +17,7 @@ function ButtonsInput({
   children,
   values: buttonValues,
   multiple,
-  optional = true,
+  required = false,
   setValue,
 }: ButtonsInputProps) {
   const [selected, setSelected] = useState<string | null>();
@@ -38,26 +38,27 @@ function ButtonsInput({
     <>
       <CommonS.Label htmlFor={name}>
         {children}
-        {optional && <CommonS.OptionalText>(선택)</CommonS.OptionalText>}
+        {!required && <CommonS.OptionalText>(선택)</CommonS.OptionalText>}
       </CommonS.Label>
       <S.ButtonWrapper>
         {buttonValues.map((buttonValue) => (
-          <>
+          <React.Fragment key={buttonValue.text}>
             <S.ButtonInput
-              type="checkbox"
+              type={multiple ? 'checkbox' : 'radio'}
               id={buttonValue.text}
               value={buttonValue.value.toString()}
               onClick={(e) => !multiple && singleCheckboxOnClick(e)}
+              className="hidden"
               {...(!multiple && { checked: selected === buttonValue.value.toString() })}
               {...register(multiple ? `${name}.${buttonValue.value}` : name, {
-                required: !optional,
+                required,
                 ...options,
               })}
             />
             <S.ButtonLabel htmlFor={buttonValue.text} value={buttonValue.text}>
               {buttonValue.text}
             </S.ButtonLabel>
-          </>
+          </React.Fragment>
         ))}
       </S.ButtonWrapper>
     </>

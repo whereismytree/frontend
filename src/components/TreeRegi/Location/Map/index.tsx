@@ -35,16 +35,16 @@ function TreeRegistMap() {
   }, [map]);
 
   useEffect(() => {
-    dispatch(setRoadAddress(roadAddress));
-    dispatch(setStreetAddress(address));
-    dispatch(setBuildingName(buildingName));
-
     if (map) {
       const center = map.getCenter();
 
       dispatch(setLatitude(center.getLat()));
       dispatch(setLongitude(center.getLng()));
     }
+
+    dispatch(setRoadAddress(roadAddress));
+    dispatch(setStreetAddress(address));
+    dispatch(setBuildingName(buildingName));
   }, [map, dispatch, roadAddress, address, buildingName]);
 
   return (

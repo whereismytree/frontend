@@ -29,6 +29,7 @@ html {
 }
 
 body {
+  overflow: hidden;
   margin: 0;
   background: url(${mainBackground}) no-repeat center / cover;
   -ms-overflow-style: none;
@@ -62,7 +63,17 @@ a {
   min-height: 100vh;
   background: #fff;
   margin-left: 50%;
+  overflow: hidden;
 }
+
+#root {
+  padding: var(--header-height) 0 var(--navbar-height);
+  max-width: 420px;
+  min-height: 100vh;
+  background: #fff;
+  margin-left: 50%;
+}
+
 
 img {
   max-width: 100%;
@@ -79,6 +90,17 @@ input[type="search"]::-moz-search-clear-button {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.hidden {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
 }
 
 @media screen and (max-width: 868px) {

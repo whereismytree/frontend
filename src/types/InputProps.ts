@@ -5,7 +5,7 @@ interface IInputProps {
   children?: string;
   register: ReturnType<typeof useForm>['register'];
   options?: RegisterOptions;
-  optional?: boolean;
+  required?: boolean;
 }
 
 export default IInputProps;

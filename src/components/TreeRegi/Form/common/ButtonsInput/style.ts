@@ -31,8 +31,6 @@ export const ButtonLabel = styled.label<{ value: string }>`
 `;
 
 export const ButtonInput = styled.input`
-  display: none;
-
   &:checked + label {
     transition: 0.2s ease;
     background-color: var(--main-green);

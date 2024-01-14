@@ -11,7 +11,6 @@ function TextInput({
   placeholder,
   name,
   children,
-  optional,
   options,
   register,
   required = false,
@@ -21,7 +20,7 @@ function TextInput({
       {children && (
         <CommonS.Label htmlFor={name}>
           {children}
-          {optional && <CommonS.OptionalText>(선택)</CommonS.OptionalText>}
+          {!required && <CommonS.OptionalText>(선택)</CommonS.OptionalText>}
           {required && <S.RequiredStar>*</S.RequiredStar>}
         </CommonS.Label>
       )}
