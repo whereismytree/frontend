@@ -3,6 +3,12 @@ import ProfileImage from 'components/common/ProfileImage';
 import TPlatform from 'types/platform';
 import * as S from './style';
 
+interface IUserActivity {
+  children: string;
+  count: number;
+  to: string;
+}
+
 function UserInfo({ children }: { children: ReactNode }) {
   return <S.Wrapper>{children}</S.Wrapper>;
 }
@@ -15,17 +21,7 @@ function LoginInfo({ children, platform }: { children: string; platform: TPlatfo
   return <S.LoginInfo platform={platform}>{children}</S.LoginInfo>;
 }
 
-interface IUserActivity {
-  children: string;
-  count: number;
-  to: string;
-}
-
-function UserActivities({
-  children,
-}: {
-  children: ReactElement<IUserActivity> | ReactElement<IUserActivity>[];
-}) {
+function UserActivities({ children }: { children: ReactElement<IUserActivity>[] }) {
   return <S.ActivitiesWrapper>{children}</S.ActivitiesWrapper>;
 }
 

@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 import * as S from './style';
-
-function OptionList({ children }: { children: ReactNode }) {
-  return <ul>{children}</ul>;
-}
 
 interface IOptionProps {
   children: string;
+}
+
+function OptionList({ children }: { children: ReactElement<IOptionProps>[] }) {
+  return <ul>{children}</ul>;
 }
 
 function Option({ children }: IOptionProps) {
