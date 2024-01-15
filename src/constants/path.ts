@@ -7,7 +7,6 @@ const PATH = {
   loginPage: '/login',
   myPage: '/my',
   errorPage: '/error',
-  savePage: '/save',
 } as const;
 
 export default PATH;

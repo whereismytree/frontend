@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Button = styled.button`
+export const StyleButton = styled.button`
   width: 100%;
   height: 5.2rem;
   font-size: 2rem;
@@ -15,21 +15,14 @@ export const Button = styled.button`
   }
 `;
 
-export const SmallButton = styled(Button)`
+export const StyleMediumButton = styled(StyleButton)`
   font-size: 1.4rem;
   font-weight: 500;
   height: 4rem;
   border-radius: 5px;
 `;
 
-export const MediumButton = styled(Button)`
-  font-size: 2rem;
-  font-weight: 500;
-  height: 4.4rem;
-  border-radius: 5px;
-`;
-
-export const CancelButton = styled(Button)`
+export const StyleCancelButton = styled(StyleMediumButton)`
   color: var(--grey-medium);
   background-color: var(--main-white);
   border: 1px solid var(--grey-light);
