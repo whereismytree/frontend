@@ -8,6 +8,7 @@ import { SavePage } from 'pages/SavePage';
 import { ErrorPage } from 'pages/ErrorPage';
 import { useRoutes, RouteObject } from 'react-router-dom';
 import PATH from 'constants/path';
+import Redirect from 'pages/SignIn/Redirect';
 
 export const Router = () => {
   const rootRoutes: RouteObject = {
@@ -54,6 +55,11 @@ export const Router = () => {
     element: <ErrorPage />,
   };
 
+  const redirectdRoute: RouteObject = {
+    path: PATH.redirectPage,
+    element: <Redirect />,
+  };
+
   const routes = [
     rootRoutes,
     mainRoutes,
@@ -64,6 +70,7 @@ export const Router = () => {
     myRoutes,
     saveRoutes,
     errorRoutes,
+    redirectdRoute,
   ];
 
   return useRoutes(routes);
