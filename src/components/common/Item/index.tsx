@@ -10,7 +10,7 @@ interface ISubTitleProps {
 interface ITitleProps {
   children: string;
   size?: number;
-  weight?: 400 | 500 | 700 | 800;
+  weight?: 400 | 700 | 800;
   image?: true;
 }
 
@@ -21,7 +21,7 @@ interface IItemWrapperProps {
 
 // Wrapper
 function Item({ children, gap }: IItemWrapperProps) {
-  return <S.Wrapper $gap={gap}>{children}</S.Wrapper>;
+  return <S.Wrapper gap={gap}>{children}</S.Wrapper>;
 }
 
 function TreeWrapper({ children }: Omit<IItemWrapperProps, 'gap'>) {
@@ -35,7 +35,7 @@ function TreeWrapper({ children }: Omit<IItemWrapperProps, 'gap'>) {
 // Title
 function Title({ children, size, weight, image }: ITitleProps) {
   return (
-    <S.Title size={size} $weight={weight} image={image}>
+    <S.Title size={size} weight={weight} image={image}>
       {children}
     </S.Title>
   );

@@ -14,23 +14,22 @@ export const treeImage = ({ width, height }: { width?: string; height?: string }
   }
 `;
 
-export const Title = styled.p<{ size?: number; $weight?: number; image?: boolean }>`
+export const Title = styled.p<{ size?: number; weight?: number; image?: boolean }>`
   font-size: ${({ size }) => (size ? `${size}rem` : '1.6rem')};
-  font-weight: ${({ $weight }) => $weight || 800};
+  font-weight: ${({ weight }) => weight || 800};
   line-height: 2.1rem;
 
   ${({ image }) => image && treeImage({ width: '1.6rem', height: '2.4rem' })}
 `;
 
-export const SubTitleFontStyle = () => css`
+export const SubTitleFont = styled.p`
   font-size: 1.2rem;
   color: var(--grey-dark);
 `;
 
-export const SubTitle = styled.p<{ weight?: number }>`
+export const SubTitle = styled(SubTitleFont)<{ weight?: number }>`
   font-weight: ${({ weight }) => weight || 300};
   line-height: 1.8rem;
-  ${SubTitleFontStyle}
 `;
 
 export const RightLineSpan = styled.span`
@@ -45,9 +44,9 @@ export const RightLineSpan = styled.span`
   }
 `;
 
-export const Wrapper = styled.div<{ $gap?: number }>`
+export const Wrapper = styled.div<{ gap?: number }>`
   p:last-child {
-    margin-top: ${({ $gap }) => ($gap ? `${$gap}rem` : '0.4rem')};
+    margin-top: ${({ gap }) => (gap ? `${gap}rem` : '0.4rem')};
   }
 `;
 

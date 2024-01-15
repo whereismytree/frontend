@@ -29,10 +29,8 @@ html {
 }
 
 body {
-  overflow: hidden;
   margin: 0;
   background: url(${mainBackground}) no-repeat center / cover;
-  -ms-overflow-style: none;
 }
 
 input, textarea { 
@@ -40,7 +38,7 @@ input, textarea {
   -webkit-user-select: auto;
   -ms-user-select: auto;
   user-select: auto;
-  border: none;
+	border: none;
 }
 
 input:focus {
@@ -64,7 +62,11 @@ a {
   min-height: 100vh;
   background: #fff;
   margin-left: 50%;
-  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: top;
 }
 
 @font-face {
@@ -74,33 +76,6 @@ a {
 	font-style: normal;
 }
 
-img {
-  max-width: 100%;
-  vertical-align: top;
-}
-
-input[type="search"]::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-}
-
-input[type="search"]::-moz-search-clear-button {
-    display: none;
-}
-
-::-webkit-scrollbar {
-  display: none;
-}
-
-.hidden {
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-}
 
 @media screen and (max-width: 868px) {
   #root {

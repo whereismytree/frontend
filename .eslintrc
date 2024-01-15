@@ -17,7 +17,6 @@
     "eqeqeq": "warn",
     "react/prop-types": 0,
     "no-extra-semi": "error",
-    "no-param-reassign": "warn",
     "react/require-default-props": "off",
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }], // jsx 파일 확장자 .jx, .jsx, .ts, .tsx 허용
     "no-unused-vars": "off",
