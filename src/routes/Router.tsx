@@ -2,12 +2,14 @@ import React from 'react';
 import { MainPage } from 'pages/MainPage';
 import { SearchPage } from 'pages/SearchPage';
 import { TreeInfo } from 'pages/TreeInfo';
-import { TreeRegi } from 'pages/TreeRegi';
 import { SignIn } from 'pages/SignIn';
 import { MyPage } from 'pages/MyPage';
 import { ErrorPage } from 'pages/ErrorPage';
-import { useRoutes, RouteObject } from 'react-router-dom';
+import { useRoutes, RouteObject, Outlet } from 'react-router-dom';
 import PATH from 'constants/path';
+import LocationMap from 'pages/TreeRegi/Map';
+import LocationSearch from 'pages/TreeRegi/Search';
+import TreeRegiDetail from 'pages/TreeRegi/Form';
 
 export const Router = () => {
   const rootRoutes: RouteObject = {
@@ -29,9 +31,28 @@ export const Router = () => {
     path: PATH.treeInfoPage,
     element: <TreeInfo />,
   };
+
+  const registRouteObject = {
+    search: {
+      path: 'search',
+      element: <LocationSearch />,
+    },
+
+    map: {
+      path: 'map',
+      element: <LocationMap />,
+    },
+
+    detail: {
+      path: 'detail',
+      element: <TreeRegiDetail />,
+    },
+  };
+
   const registInfoRoutes: RouteObject = {
-    path: PATH.registInfoPage,
-    element: <TreeRegi />,
+    path: `${PATH.registInfoPage}/*`,
+    element: <Outlet />,
+    children: Object.values(registRouteObject),
   };
 
   const loginRoutes: RouteObject = {

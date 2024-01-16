@@ -19,7 +19,7 @@ ${reset}
 
 * {
   box-sizing: border-box;
-  font-family: 'Pretendard Variable' !important;
+  font-family: 'Noto Sans KR' !important;
 }
 
 html {
@@ -29,8 +29,10 @@ html {
 }
 
 body {
+  overflow: hidden;
   margin: 0;
   background: url(${mainBackground}) no-repeat center / cover;
+  -ms-overflow-style: none;
 }
 
 input, textarea { 
@@ -38,6 +40,7 @@ input, textarea {
   -webkit-user-select: auto;
   -ms-user-select: auto;
   user-select: auto;
+  border: none;
 }
 
 input:focus {
@@ -61,11 +64,42 @@ a {
   min-height: 100vh;
   background: #fff;
   margin-left: 50%;
+  overflow: hidden;
+}
+
+@font-face {
+	font-family: 'UhBeeSe_hyun';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeSe_hyun.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
 
 img {
   max-width: 100%;
   vertical-align: top;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+input[type="search"]::-moz-search-clear-button {
+    display: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.hidden {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
 }
 
 @media screen and (max-width: 868px) {

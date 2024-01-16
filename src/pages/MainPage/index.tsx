@@ -6,6 +6,7 @@ import treeMarkerImg from 'assets/tree_marker_default.svg';
 // import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
 import treeJSON from 'assets/treedata.json';
 import TreeInfo from 'components/main/TreeInfo';
+import Navbar from 'components/Navbar';
 import * as S from './style';
 
 export interface ITreeItem {
@@ -101,6 +102,7 @@ export const MainPage = () => {
         <MyLocationButton map={map} />
         <ZoomControl map={map} />
       </S.Map>
+      <Navbar />
       {showTreeInfo && <TreeInfo data={currentTreeInfoData} />}
     </div>
   );
