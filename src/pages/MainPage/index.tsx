@@ -6,24 +6,8 @@ import treeMarkerImg from 'assets/tree_marker_default.svg';
 // import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
 import treeJSON from 'assets/treedata.json';
 import Navbar from 'components/Navbar';
+import { ITreeItem } from 'types/apiResponse';
 import * as S from './style';
-
-interface ITreeItem {
-  name: string;
-  lat: number;
-  lng: number;
-  addressType: string;
-  roadAddress: string;
-  streetAddress: string;
-  detailAddress: string;
-  exhibitionStartDate: string;
-  exhibitionEndDate: string;
-  spaceType: string;
-  businessDays: string;
-  isPet: boolean;
-  title: string;
-  extraInfo: string;
-}
 
 export const MainPage = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
