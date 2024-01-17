@@ -1,20 +1,14 @@
 import { useRoutes, RouteObject, Outlet } from 'react-router-dom';
 import { MainPage } from 'pages/MainPage';
 import { SearchPage } from 'pages/SearchPage';
-import { TreeInfo } from 'pages/TreeInfoPage';
+import { TreeInfo } from 'pages/TreeInfo';
+import { SignIn } from 'pages/SignIn/SocialLogin';
 import { MyPage } from 'pages/MyPage';
 import { LandingPage } from 'pages/LandingPage';
 import SignIn from 'pages/LoginPage/SocialLogin';
 import PATH from 'constants/path';
 import SearchLocation from 'pages/TreeRegi/Search';
 import Redirect from 'pages/SignIn/Redirect';
-import ReviewDetailPage from 'pages/ReviewDetailPage';
-import RegistMap from 'pages/TreeRegi/Map';
-import TreeRegiDetail from 'pages/TreeRegi/Form';
-import Nickname from 'pages/SignIn/ProfileSetting';
-import SavePage from 'pages/SavedTreePage';
-import RegistedTreePage from 'pages/MyTreePage';
-import RegistReviewPage from 'pages/MyReviewPage';
 
 export const Router = () => {
   const landingRoute: RouteObject = {
@@ -71,9 +65,9 @@ export const Router = () => {
     children: [
       { path: PATH.reviewPage.dynamicParam, element: <ReviewDetailPage /> },
       // 리뷰 등록 페이지
-      { path: `${PATH.reviewPage.children.regist}/:treeId`, element: <ReviewRegistAndEditPage /> },
+      { path: `${PATH.reviewPage.children.regist}/:treeId`, element: null },
       // 리뷰 수정 페이지
-      { path: `${PATH.reviewPage.children.edit}/:reviewId`, element: <ReviewRegistAndEditPage /> },
+      { path: `${PATH.reviewPage.children.edit}/:reviewId`, element: null },
     ],
   };
 
