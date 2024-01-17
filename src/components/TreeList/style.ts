@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-export const RegistedTree = styled.article<{ viewMap: boolean }>`
+export const RegistedTree = styled.article<{ viewList: boolean }>`
   position: absolute;
   bottom: 0;
   z-index: 999;
@@ -8,11 +8,7 @@ export const RegistedTree = styled.article<{ viewMap: boolean }>`
   width: 100%;
   transition: 0.5s;
 
-  ${({ viewMap }) =>
-    viewMap &&
-    css`
-      transform: translateY(100%);
-    `};
+  transform: ${({ viewList }) => !viewList && 'translateY(100%)'};
 `;
 
 export const ViewButton = styled.button`

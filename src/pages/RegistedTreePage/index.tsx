@@ -5,22 +5,23 @@ import { useEffect, useRef, useState } from 'react';
 import useMarkerMap from 'hooks/useMarkerMap';
 import useApiQuery from 'hooks/useApiQuery';
 import treeMarker from 'assets/tree_marker.svg';
-import RegistedTreeList from './List';
+import Guide from 'components/common/Guide';
+import TreeList from 'components/TreeList';
+import { useNavigate } from 'react-router-dom';
+import PATH from 'constants/path';
 import * as S from './style';
 
-/**
- * TODO: test를 위한 mock data입니다. 서버에서 가지고 있는 데이터로 교체해야 합니다.
- */
+interface ITreeData {
+  treeId: number;
+  name: string;
+  lat: number;
+  lng: number;
+  address: string;
+  reviewsCount: number;
+}
 
 interface IRegistedTreeAPIResponse {
-  trees: {
-    treeId: number;
-    name: string;
-    lat: number;
-    lng: number;
-    address: string;
-    reviewsCount: number;
-  }[];
+  trees: ITreeData[];
   totalTrees: number;
 }
 
@@ -33,9 +34,21 @@ const RegistedTreePage = () => {
     positions,
     imageSize: [24, 24],
   });
-  const { data } = useApiQuery<IRegistedTreeAPIResponse>(
-    'v1/my/trees/posted?userId=pjy90123@gmail.com',
-  );
+  const { data } = useApiQuery<IRegistedTreeAPIResponse>('v1/my/trees/saved');
+  const navigate = useNavigate();
+
+  /**
+   * TODO: test를 위한 mock data입니다. 서버에서 가지고 있는 데이터로 교체해야 합니다.
+   */
+  const listData: ITreeData | [] = [];
+  // {
+  //   treeId: 123,
+  //   name: '롯데월드타워 트리',
+  //   lat: 37.5665,
+  //   lng: 126.978,
+  //   address: '서울특별시 어쩌구 무슨동 101 1,2층',
+  //   reviewsCount: 5,
+  // },
 
   useEffect(() => {
     window.kakao.maps.load(() => {
@@ -63,11 +76,19 @@ const RegistedTreePage = () => {
   return (
     <>
       <Topbar.Icon type="cookie" />
-
-      <S.Map ref={mapContainer}>
-        <RegistedTreeList />
-      </S.Map>
-
+      {listData.length ? (
+        <S.Map ref={mapContainer}>
+          <TreeList list={listData} type="registed" />
+        </S.Map>
+      ) : (
+        <S.Wrapper>
+          <Guide.Button
+            text="등록한 트리가 없어요"
+            btnText="트리 등록하러 가기"
+            onClick={() => navigate(`${PATH.registInfoPage}/search`)}
+          />
+        </S.Wrapper>
+      )}
       <Navbar />
     </>
   );
