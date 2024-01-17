@@ -11,7 +11,7 @@ function NicknameSetting() {
     message: '',
   });
 
-  const checkNickname = async (nickname: string) => {
+  const handleDupButtonClick = async (nickname: string) => {
     if (!validateNickname(nickname)) return;
     const isDupNickname = await checkDuplicateNickname(nickname);
 
@@ -77,7 +77,7 @@ function NicknameSetting() {
           type="button"
           onClick={() => {
             const nickname = getValues('nickname');
-            checkNickname(nickname);
+            handleDupButtonClick(nickname);
           }}
         >
           중복확인
