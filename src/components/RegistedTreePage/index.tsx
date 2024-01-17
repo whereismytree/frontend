@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useRef } from 'react';
-import Navbar from 'components/Navbar';
-import Topbar from 'components/Topbar';
 import useMarkerMap from 'hooks/useMarkerMap';
 import useApiQuery from 'hooks/useApiQuery';
 import treeMarker from 'assets/tree_marker.svg';
@@ -55,13 +53,9 @@ function RegistedTreeMap() {
   );
 
   return (
-    <>
-      <Topbar.Icon type="cookie" />
-      <S.Map ref={mapContainer}>
-        <RegistedTreeList />
-      </S.Map>
-      <Navbar />
-    </>
+    <S.Map ref={mapContainer}>
+      <RegistedTreeList />
+    </S.Map>
   );
 }
 
