@@ -10,6 +10,36 @@ import PATH from 'constants/path';
 import LocationMap from 'pages/TreeRegi/Map';
 import LocationSearch from 'pages/TreeRegi/Search';
 import TreeRegiDetail from 'pages/TreeRegi/Form';
+import RegistedTreePage from 'pages/RegistedTreePage';
+
+const registRouteObject = {
+  search: {
+    path: 'search',
+    element: <LocationSearch />,
+  },
+
+  map: {
+    path: 'map',
+    element: <LocationMap />,
+  },
+
+  detail: {
+    path: 'detail',
+    element: <TreeRegiDetail />,
+  },
+};
+
+const myPageRouteObject = {
+  myPage: {
+    path: '',
+    element: <MyPage />,
+  },
+
+  registedTree: {
+    path: PATH.registInfoPage.slice(1),
+    element: <RegistedTreePage />,
+  },
+};
 
 export const Router = () => {
   const rootRoutes: RouteObject = {
@@ -40,23 +70,6 @@ export const Router = () => {
     element: <TreeInfo />,
   };
 
-  const registRouteObject = {
-    search: {
-      path: 'search',
-      element: <LocationSearch />,
-    },
-
-    map: {
-      path: 'map',
-      element: <LocationMap />,
-    },
-
-    detail: {
-      path: 'detail',
-      element: <TreeRegiDetail />,
-    },
-  };
-
   const registInfoRoutes: RouteObject = {
     path: `${PATH.registInfoPage}/*`,
     element: <Outlet />,
@@ -70,7 +83,8 @@ export const Router = () => {
 
   const myRoutes: RouteObject = {
     path: PATH.myPage,
-    element: <MyPage />,
+    element: <Outlet />,
+    children: Object.values(myPageRouteObject),
   };
 
   const errorRoutes: RouteObject = {
