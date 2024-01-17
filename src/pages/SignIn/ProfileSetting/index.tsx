@@ -3,6 +3,7 @@ import ProfileImageSetting from 'components/SignIn/ProfileSetting/ProfileImage';
 import NicknameSetting from 'components/SignIn/ProfileSetting/Nickname';
 import useApiMutation from 'hooks/useApiMutation';
 import { useNavigate } from 'react-router-dom';
+import Topbar from 'components/Topbar';
 import PATH from 'constants/path';
 import * as S from './style';
 
@@ -35,12 +36,15 @@ function Nickname() {
   };
 
   return (
-    <FormProvider {...methods}>
-      <S.Wrapper onSubmit={handleSubmit(createProfile)}>
-        <ProfileImageSetting />
-        <NicknameSetting />
-      </S.Wrapper>
-    </FormProvider>
+    <>
+      <Topbar.Icon type="cookie" />
+      <FormProvider {...methods}>
+        <S.Wrapper onSubmit={handleSubmit(createProfile)}>
+          <ProfileImageSetting />
+          <NicknameSetting />
+        </S.Wrapper>
+      </FormProvider>
+    </>
   );
 }
 
