@@ -2,7 +2,7 @@ import React from 'react';
 import { MainPage } from 'pages/MainPage';
 import { SearchPage } from 'pages/SearchPage';
 import { TreeInfo } from 'pages/TreeInfo';
-import { SignIn } from 'pages/SignIn';
+import { SignIn } from 'pages/SignIn/SocialLogin';
 import { MyPage } from 'pages/MyPage';
 import { ErrorPage } from 'pages/ErrorPage';
 import { useRoutes, RouteObject, Outlet } from 'react-router-dom';
@@ -11,6 +11,7 @@ import Redirect from 'pages/SignIn/Redirect';
 import LocationMap from 'pages/TreeRegi/Map';
 import LocationSearch from 'pages/TreeRegi/Search';
 import TreeRegiDetail from 'pages/TreeRegi/Form';
+import Nickname from 'pages/SignIn/ProfileSetting';
 
 export const Router = () => {
   const rootRoutes: RouteObject = {
@@ -56,9 +57,22 @@ export const Router = () => {
     children: Object.values(registRouteObject),
   };
 
+  const loginRouteObject = {
+    outlet: {
+      path: '',
+      element: <SignIn />,
+    },
+
+    setting: {
+      path: 'setting',
+      element: <Nickname />,
+    },
+  };
+
   const loginRoutes: RouteObject = {
     path: PATH.loginPage,
-    element: <SignIn />,
+    element: <Outlet />,
+    children: Object.values(loginRouteObject),
   };
 
   const myRoutes: RouteObject = {

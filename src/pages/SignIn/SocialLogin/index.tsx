@@ -1,7 +1,11 @@
 import React from 'react';
+import PATH from 'constants/path';
 import * as S from './style';
 
 export const SignIn = () => {
+  const googleLoginUrl = `${process.env.REACT_APP_TREE_API_URL}oauth2/authorization/google`;
+  const kakaoLoginUrl = `${process.env.REACT_APP_TREE_API_URL}oauth2/authorization/kakao`;
+
   return (
     <S.BackDrop>
       <S.Modal>
@@ -10,14 +14,14 @@ export const SignIn = () => {
           <br /> 로그인을 해주세요
         </S.GuideText>
         <S.LoginButtonWrapper>
-          <S.LoginButton platform="google">
+          <S.LoginButton platform="google" href={googleLoginUrl}>
             <strong>Google</strong>로 계속
           </S.LoginButton>
-          <S.LoginButton platform="kakao">
+          <S.LoginButton platform="kakao" href={kakaoLoginUrl}>
             <strong>Kakao</strong>로 계속
           </S.LoginButton>
         </S.LoginButtonWrapper>
-        <S.SkipButton to="">저쩔추억! Skip</S.SkipButton>
+        <S.SkipButton to={PATH.mainPage}>저쩔추억! Skip</S.SkipButton>
       </S.Modal>
     </S.BackDrop>
   );

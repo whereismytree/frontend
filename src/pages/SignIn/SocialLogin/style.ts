@@ -15,6 +15,7 @@ export const Modal = styled.article`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  border-radius: 10px;
   font-size: 1.4rem;
   text-align: center;
   position: absolute;
