@@ -1,4 +1,4 @@
-import { StyleButton, StyleCancelButton, StyleMediumButton } from './style';
+import * as S from './style';
 
 interface IButtonProps {
   children: string;
@@ -13,9 +13,22 @@ type TCancelButtonProps = Pick<TPartialButtonProps, 'children' | 'onClick'>;
 
 function Button({ children, onClick = () => {}, type = 'button', disabled = false }: IButtonProps) {
   return (
-    <StyleButton type={type} onClick={() => onClick()} disabled={disabled}>
+    <S.Button type={type} onClick={() => onClick()} disabled={disabled}>
       {children}
-    </StyleButton>
+    </S.Button>
+  );
+}
+
+function SmallButton({
+  children,
+  onClick = () => {},
+  type = 'button',
+  disabled = false,
+}: IButtonProps) {
+  return (
+    <S.SmallButton type={type} onClick={() => onClick()} disabled={disabled}>
+      {children}
+    </S.SmallButton>
   );
 }
 
@@ -26,21 +39,22 @@ function MediumButton({
   disabled = false,
 }: IButtonProps) {
   return (
-    <StyleMediumButton type={type} onClick={() => onClick()} disabled={disabled}>
+    <S.MediumButton type={type} onClick={() => onClick()} disabled={disabled}>
       {children}
-    </StyleMediumButton>
+    </S.MediumButton>
   );
 }
 
 function CancelButton({ children, onClick = () => {} }: TCancelButtonProps) {
   return (
-    <StyleCancelButton type="button" onClick={() => onClick()}>
+    <S.CancelButton type="button" onClick={() => onClick()}>
       {children || '취소하기'}
-    </StyleCancelButton>
+    </S.CancelButton>
   );
 }
 
-Button.MD = MediumButton;
+Button.Small = SmallButton;
+Button.Medium = MediumButton;
 Button.Cancel = CancelButton;
 
 export default Button;
