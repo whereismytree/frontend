@@ -1,8 +1,8 @@
+import PATH from 'constants/path';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setAccessToken } from 'store/modules/userInfoSlice';
-import getPath from 'utils/getPath';
 
 function Redirect() {
   const location = useLocation();
@@ -15,13 +15,13 @@ function Redirect() {
   useEffect(() => {
     dispath(setAccessToken(accessToken));
 
-    if (JSON.parse(nicknameReq ?? '')) {
-      navigate(getPath('loginPage', 'profileSetting'));
+    if (nicknameReq) {
+      navigate('../login/setting');
     } else {
-      navigate('');
+      navigate(PATH.mainPage);
     }
   }, []);
 
-  return null;
+  return <div />;
 }
 export default Redirect;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PATH from 'constants/path';
 import * as S from './style';
 
 export const SignIn = () => {
@@ -20,7 +21,7 @@ export const SignIn = () => {
             <strong>Kakao</strong>로 계속
           </S.LoginButton>
         </S.LoginButtonWrapper>
-        <S.SkipButton to="">저쩔추억! Skip</S.SkipButton>
+        <S.SkipButton to={PATH.mainPage}>저쩔추억! Skip</S.SkipButton>
       </S.Modal>
     </S.BackDrop>
   );

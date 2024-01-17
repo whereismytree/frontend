@@ -1,10 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import ProfileImageSetting from 'pages/SignIn/ProfileSetting/ProfileImage';
-import NicknameSetting from 'pages/SignIn/ProfileSetting/Nickname';
+import ProfileImageSetting from 'components/SignIn/ProfileSetting/ProfileImage';
+import NicknameSetting from 'components/SignIn/ProfileSetting/Nickname';
 import useApiMutation from 'hooks/useApiMutation';
 import { useNavigate } from 'react-router-dom';
-import Topbar from 'components/Topbar';
-// import PATH from 'constants/path';
+import PATH from 'constants/path';
 import * as S from './style';
 
 interface IProfile {
@@ -22,7 +21,7 @@ function Nickname() {
     'POST',
     {
       onSuccess: () => {
-        navigate('');
+        navigate(PATH.mainPage);
       },
 
       onError: (e) => {
@@ -36,15 +35,12 @@ function Nickname() {
   };
 
   return (
-    <>
-      <Topbar.Icon type="cookie" />
-      <FormProvider {...methods}>
-        <S.Wrapper onSubmit={handleSubmit(createProfile)}>
-          <ProfileImageSetting />
-          <NicknameSetting />
-        </S.Wrapper>
-      </FormProvider>
-    </>
+    <FormProvider {...methods}>
+      <S.Wrapper onSubmit={handleSubmit(createProfile)}>
+        <ProfileImageSetting />
+        <NicknameSetting />
+      </S.Wrapper>
+    </FormProvider>
   );
 }
 
