@@ -58,6 +58,6 @@ export const TreeWrapper = styled.div`
 `;
 
 export const Gap = styled.span`
-  display: 'inline-block';
-  width: '10px';
+  display: inline-block;
+  width: 10px;
 `;
