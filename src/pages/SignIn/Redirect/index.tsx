@@ -15,7 +15,7 @@ function Redirect() {
   useEffect(() => {
     dispath(setAccessToken(accessToken));
 
-    if (nicknameReq) {
+    if (JSON.parse(nicknameReq ?? '')) {
       navigate('../login/setting');
     } else {
       navigate(PATH.mainPage);
