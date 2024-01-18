@@ -15,7 +15,7 @@ function TreeList({ list, type }: { list: ITreeList; type: 'registed' | 'saved' 
   const [viewList, setViewList] = useState<boolean>(true);
 
   return (
-    <S.RegistedTree viewList={viewList}>
+    <S.RegistedTree $viewList={viewList}>
       <S.ViewButton type="button" onClick={() => setViewList((prev) => !prev)}>
         {viewList ? '지도' : '목록'}보기
       </S.ViewButton>

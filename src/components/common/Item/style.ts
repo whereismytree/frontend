@@ -14,12 +14,12 @@ export const treeImage = ({ width, height }: { width?: string; height?: string }
   }
 `;
 
-export const Title = styled.p<{ size?: number; $weight?: number; image?: boolean }>`
+export const Title = styled.p<{ size?: number; $weight?: number; $image?: boolean }>`
   font-size: ${({ size }) => (size ? `${size}rem` : '1.6rem')};
   font-weight: ${({ $weight }) => $weight || 800};
   line-height: 2.1rem;
 
-  ${({ image }) => image && treeImage({ width: '1.6rem', height: '2.4rem' })}
+  ${({ $image }) => $image && treeImage({ width: '1.6rem', height: '2.4rem' })}
 `;
 
 export const SubTitleFontStyle = () => css`
