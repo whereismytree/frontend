@@ -34,24 +34,28 @@ const RegistedTreePage = () => {
     positions,
     imageSize: [24, 24],
   });
-  const { data } = useApiQuery<IRegistedTreeAPIResponse>('v1/my/trees/saved');
+  const { data } = useApiQuery<IRegistedTreeAPIResponse>('v1/my/trees/posted');
   const navigate = useNavigate();
 
   /**
    * TODO: test를 위한 mock data입니다. 서버에서 가지고 있는 데이터로 교체해야 합니다.
    */
-  const listData: ITreeData | [] = [];
-  // {
-  //   treeId: 123,
-  //   name: '롯데월드타워 트리',
-  //   lat: 37.5665,
-  //   lng: 126.978,
-  //   address: '서울특별시 어쩌구 무슨동 101 1,2층',
-  //   reviewsCount: 5,
-  // },
+  const listData: ITreeData[] | [] = [
+    {
+      treeId: 123,
+      name: '롯데월드타워 트리',
+      lat: 37.5665,
+      lng: 126.978,
+      address: '서울특별시 어쩌구 무슨동 101 1,2층',
+      reviewsCount: 5,
+    },
+  ];
 
   useEffect(() => {
     window.kakao.maps.load(() => {
+      /**
+       * TODO: test를 위한 mock data입니다. 서버에서 가지고 있는 데이터로 교체해야 합니다.
+       */
       setPositions([
         {
           name: '카카오',
