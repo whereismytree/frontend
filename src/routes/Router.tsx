@@ -1,12 +1,16 @@
 import { useRoutes, RouteObject, Outlet } from 'react-router-dom';
 import { MainPage } from 'pages/MainPage';
 import { SearchPage } from 'pages/SearchPage';
+import { TreeInfo } from 'pages/TreeInfo';
 import { MyPage } from 'pages/MyPage';
 import { LandingPage } from 'pages/LandingPage';
 import SignIn from 'pages/LoginPage/SocialLogin';
 import PATH from 'constants/path';
+import SearchLocation from 'pages/TreeRegi/Search';
 import Redirect from 'pages/LoginPage/Redirect';
 import ReviewDetailPage from 'pages/ReviewDetailPage';
+import RegistMap from 'pages/TreeRegi/Map';
+import TreeRegiDetail from 'pages/TreeRegi/Form';
 import Nickname from 'pages/LoginPage/ProfileSetting';
 import SavePage from 'pages/SavedTreePage';
 import RegistedTreePage from 'pages/MyTreePage';
@@ -44,6 +48,23 @@ export const Router = () => {
     element: <Redirect />,
   };
 
+  const treeRoute: RouteObject = {
+    path: PATH.treePage.root,
+    element: <Outlet />,
+    children: [
+      { path: PATH.treePage.children.dynamicParam, element: <TreeInfo /> },
+      {
+        path: PATH.treePage.children.regist.root,
+        element: <Outlet />,
+        children: [
+          { path: '', element: <SearchLocation /> },
+          { path: PATH.treePage.children.regist.children.map, element: <RegistMap /> },
+          { path: PATH.treePage.children.regist.children.detail, element: <TreeRegiDetail /> },
+        ],
+      },
+    ],
+  };
+
   const reviewRoute: RouteObject = {
     path: PATH.reviewPage.root,
     element: <Outlet />,
@@ -67,7 +88,15 @@ export const Router = () => {
     ],
   };
 
-  const routes = [landingRoute, mainRoute, reviewRoute, loginRoute, loginRedirectRoute, myRoute];
+  const routes = [
+    landingRoute,
+    mainRoute,
+    treeRoute,
+    reviewRoute,
+    loginRoute,
+    loginRedirectRoute,
+    myRoute,
+  ];
 
   return useRoutes(routes);
 };
