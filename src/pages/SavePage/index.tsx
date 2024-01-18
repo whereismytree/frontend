@@ -12,7 +12,7 @@ import PATH from 'constants/path';
 import ITreeListApiResponse, { ITreeListItem } from 'types/TreeListApiResponse';
 import * as S from './style';
 
-const RegistedTreePage = () => {
+const SavePage = () => {
   const mapContainer = useRef(null);
   const [positions, setPositions] = useState<any>();
   const { map } = useMarkerMap({
@@ -27,16 +27,16 @@ const RegistedTreePage = () => {
   /**
    * TODO: test를 위한 mock data입니다. 서버에서 가지고 있는 데이터로 교체해야 합니다.
    */
-  const listData: ITreeListItem[] | [] = [
-    {
-      treeId: 123,
-      name: '롯데월드타워 트리',
-      lat: 37.5665,
-      lng: 126.978,
-      address: '서울특별시 어쩌구 무슨동 101 1,2층',
-      reviewsCount: 5,
-    },
-  ];
+  const listData: ITreeListItem[] | [] = [];
+  //   {
+  //     treeId: 123,
+  //     name: '롯데월드타워 트리',
+  //     lat: 37.5665,
+  //     lng: 126.978,
+  //     address: '서울특별시 어쩌구 무슨동 101 1,2층',
+  //     reviewsCount: 5,
+  //   },
+  // ];
 
   useEffect(() => {
     window.kakao.maps.load(() => {
@@ -66,18 +66,14 @@ const RegistedTreePage = () => {
 
   return (
     <>
-      <Topbar.Icon type="cookie" />
+      <Topbar.Icon type="star" />
       {listData.length ? (
         <S.Map ref={mapContainer}>
-          <TreeList list={listData} type="registed" />
+          <TreeList list={listData} type="saved" />
         </S.Map>
       ) : (
         <S.Wrapper>
-          <Guide.Button
-            text="등록한 트리가 없어요"
-            btnText="트리 등록하러 가기"
-            onClick={() => navigate(`${PATH.registInfoPage}/search`)}
-          />
+          <Guide text="저장한 트리가 없어요" />
         </S.Wrapper>
       )}
       <Navbar />
@@ -85,4 +81,4 @@ const RegistedTreePage = () => {
   );
 };
 
-export default RegistedTreePage;
+export default SavePage;

@@ -35,10 +35,10 @@ function UserInfoSection() {
         <UserInfo.Activity to={`.${PATH.registInfoPage}`} count={postedTreesCount}>
           등록한 트리
         </UserInfo.Activity>
-        <UserInfo.Activity to={`.${PATH.saveTreePage}`} count={savedTreesCount}>
+        <UserInfo.Activity to={`${PATH.saveTreePage}`} count={savedTreesCount}>
           저장한 트리
         </UserInfo.Activity>
-        <UserInfo.Activity to={`.${PATH.reviewPage}`} count={reviewsCount}>
+        <UserInfo.Activity to={`${PATH.reviewPage}`} count={reviewsCount}>
           내가 쓴 후기
         </UserInfo.Activity>
       </UserInfo.Activities>
