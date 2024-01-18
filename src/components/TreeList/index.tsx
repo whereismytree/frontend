@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import TreeReviewItem from 'components/TreeReviewItem';
+import ListTitle from 'components/common/ListTitle';
 import * as S from './style';
 
 type ITreeList = {
@@ -19,9 +20,8 @@ function TreeList({ list, type }: { list: ITreeList; type: 'registed' | 'saved' 
       <S.ViewButton type="button" onClick={() => setViewList((prev) => !prev)}>
         {viewList ? '지도' : '목록'}보기
       </S.ViewButton>
-      <S.Title>
-        {type === 'registed' ? '등록' : '저장'}한 트리<S.GreenText>{list.length}</S.GreenText>
-      </S.Title>
+      <ListTitle count={list.length}>{type === 'registed' ? '등록' : '저장'}한 트리</ListTitle>
+
       <S.RegistTreeList>
         {list.map(({ treeId, name, address, reviewsCount }) => (
           <S.RegistTreeItem key={treeId}>
