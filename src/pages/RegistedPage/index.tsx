@@ -9,21 +9,8 @@ import Guide from 'components/common/Guide';
 import TreeList from 'components/TreeList';
 import { useNavigate } from 'react-router-dom';
 import PATH from 'constants/path';
+import ITreeListApiResponse, { ITreeListItem } from 'types/TreeListApiResponse';
 import * as S from './style';
-
-interface ITreeData {
-  treeId: number;
-  name: string;
-  lat: number;
-  lng: number;
-  address: string;
-  reviewsCount: number;
-}
-
-interface IRegistedTreeAPIResponse {
-  trees: ITreeData[];
-  totalTrees: number;
-}
 
 const RegistedTreePage = () => {
   const mapContainer = useRef(null);
@@ -34,13 +21,13 @@ const RegistedTreePage = () => {
     positions,
     imageSize: [24, 24],
   });
-  const { data } = useApiQuery<IRegistedTreeAPIResponse>('v1/my/trees/posted');
+  const { data } = useApiQuery<ITreeListApiResponse>('v1/my/trees/posted');
   const navigate = useNavigate();
 
   /**
    * TODO: test를 위한 mock data입니다. 서버에서 가지고 있는 데이터로 교체해야 합니다.
    */
-  const listData: ITreeData[] | [] = [
+  const listData: ITreeListItem[] | [] = [
     {
       treeId: 123,
       name: '롯데월드타워 트리',
