@@ -5,7 +5,7 @@ import MyLocationButton from 'components/common/MyLocationButton';
 import treeMarkerImg from 'assets/tree_marker_default.svg';
 // import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
 import treeJSON from 'assets/treedata.json';
-import TreeInfo from 'components/main/TreeInfo';
+import TreeInfoCard from 'components/main/TreeInfoCard';
 import Navbar from 'components/Navbar';
 import { ITreeItem } from 'types/apiResponse';
 import * as S from './style';
@@ -87,7 +87,7 @@ export const MainPage = () => {
           <MyLocationButton map={map} />
           <ZoomControl map={map} />
         </S.MapButtons>
-        {showTreeInfo && <TreeInfo data={currentTreeInfoData} />}
+        {showTreeInfo && <TreeInfoCard data={currentTreeInfoData} />}
       </S.Map>
       <Navbar />
     </div>

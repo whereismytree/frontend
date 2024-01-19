@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.article`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
   z-index: 10;
   width: 38.8rem;
   height: 21.6rem;
@@ -23,7 +27,6 @@ export const Name = styled.h2`
 
 export const Address = styled.p`
   font-size: 1.2rem;
-  margin-bottom: 1.3rem;
   span {
     font-weight: 700;
     line-height: 1.8rem;
@@ -44,10 +47,5 @@ export const Images = styled.div`
 
 export const Btns = styled.div`
   display: flex;
-  justify-content: flex-end;
   gap: 1.6rem;
-  z-index: 1;
-  position: absolute;
-  top: 1.8rem;
-  right: 2rem;
 `;

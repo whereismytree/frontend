@@ -1,12 +1,14 @@
 import React from 'react';
 import { ITreeItem } from 'types/apiResponse';
+import ImageButton from 'components/ImageButton';
+import defaultImg from 'assets/treeinfo-default.svg';
 import * as S from './style';
 
 interface IProps {
   data: ITreeItem | null;
 }
 
-const TreeInfo = ({ data }: IProps) => {
+const TreeInfoCard = ({ data }: IProps) => {
   return data ? (
     <S.Wrapper>
       <S.Title>
@@ -16,17 +18,18 @@ const TreeInfo = ({ data }: IProps) => {
           {data.roadAddress}
         </S.Address>
       </S.Title>
-      <S.Images>
-        {/* {Images.map(([src, alt], idx) => (
-              <img key={idx} src={src} alt={alt} />
-            ))} */}
-      </S.Images>
       <S.Btns>
-        {/* <SaveButton />
-            <ShareButton /> */}
+        <ImageButton.Save />
+        <ImageButton.Share />
       </S.Btns>
+      <S.Images>
+        <img src={defaultImg} alt="트리 기본 이미지" />
+        {/* {Images.map(([src, alt], idx) => (
+          <img key={idx} src={src} alt={alt} />
+        ))} */}
+      </S.Images>
     </S.Wrapper>
   ) : null;
 };
 
-export default TreeInfo;
+export default TreeInfoCard;
