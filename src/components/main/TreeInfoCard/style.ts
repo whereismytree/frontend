@@ -13,6 +13,7 @@ export const Wrapper = styled.article`
   padding: 1.8rem 2rem;
   box-sizing: border-box;
   margin: 0 16px 12px 16px;
+  position: relative;
 `;
 
 export const Title = styled.div`

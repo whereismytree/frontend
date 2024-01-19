@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ITreeItem } from 'types/apiResponse';
 import ImageButton from 'components/ImageButton';
 import defaultImg from 'assets/treeinfo-default.svg';
@@ -9,6 +9,8 @@ interface IProps {
 }
 
 const TreeInfoCard = ({ data }: IProps) => {
+  const [isSave, setIsSave] = useState<boolean>(false);
+
   return data ? (
     <S.Wrapper>
       <S.Title>
@@ -19,7 +21,7 @@ const TreeInfoCard = ({ data }: IProps) => {
         </S.Address>
       </S.Title>
       <S.Btns>
-        <ImageButton.Save />
+        <ImageButton.Save isSave={isSave} setIsSave={setIsSave} />
         <ImageButton.Share />
       </S.Btns>
       <S.Images>
