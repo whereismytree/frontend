@@ -83,11 +83,13 @@ export const MainPage = () => {
   return (
     <div>
       <S.Map ref={mapContainer}>
-        <MyLocationButton map={map} />
-        <ZoomControl map={map} />
+        <S.MapButtons>
+          <MyLocationButton map={map} />
+          <ZoomControl map={map} />
+        </S.MapButtons>
+        {showTreeInfo && <TreeInfo data={currentTreeInfoData} />}
       </S.Map>
       <Navbar />
-      {showTreeInfo && <TreeInfo data={currentTreeInfoData} />}
     </div>
   );
 };

@@ -1,17 +1,14 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.article`
-  /* display: none; */
+  z-index: 10;
   width: 38.8rem;
   height: 21.6rem;
   background-color: #fff;
   border-radius: 1rem;
   padding: 1.8rem 2rem;
   box-sizing: border-box;
-  z-index: 10;
-  position: absolute;
-  bottom: 10rem;
-  margin: 12px 16px;
+  margin: 0 16px 12px 16px;
 `;
 
 export const Title = styled.div`
