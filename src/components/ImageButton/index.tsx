@@ -12,6 +12,11 @@ interface IImageButtonProps {
   onClick?: () => void;
 }
 
+interface ISaveButtonProps {
+  isSave: boolean;
+  setIsSave: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 const ImageButton = ({ type, imgSrc, onClick }: IImageButtonProps) => {
   return (
     <S.Wrapper onClick={onClick}>
@@ -20,11 +25,6 @@ const ImageButton = ({ type, imgSrc, onClick }: IImageButtonProps) => {
     </S.Wrapper>
   );
 };
-
-interface ISaveButtonProps {
-  isSave: boolean;
-  setIsSave: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 const SaveButton = ({ isSave, setIsSave }: ISaveButtonProps) => {
   const imgSrc = isSave ? fullSaveIcon : saveIcon;

@@ -4,6 +4,7 @@ import ZoomControl from 'components/main/ZoomControl';
 import MyLocationButton from 'components/common/MyLocationButton';
 import treeMarkerImg from 'assets/tree_marker_default.svg';
 // import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
+import MainSearchInput from 'components/main/SearchBar';
 import treeJSON from 'assets/treedata.json';
 import TreeInfoCard from 'components/main/TreeInfoCard';
 import Navbar from 'components/Navbar';
@@ -83,6 +84,7 @@ export const MainPage = () => {
   return (
     <div>
       <S.Map ref={mapContainer}>
+        <MainSearchInput />
         <S.MapButtons>
           <MyLocationButton map={map} />
           <ZoomControl map={map} />
