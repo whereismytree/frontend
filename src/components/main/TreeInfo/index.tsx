@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITreeItem } from 'pages/MainPage';
+import { ITreeItem } from 'types/apiResponse';
 import * as S from './style';
 
 interface IProps {
