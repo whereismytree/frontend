@@ -8,6 +8,7 @@ const PATH = {
   myPage: '/my',
   errorPage: '/error',
   savePage: '/save',
+  redirectPage: '/oauth/redirect*',
 } as const;
 
 export default PATH;

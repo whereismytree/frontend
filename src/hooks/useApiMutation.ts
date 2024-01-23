@@ -6,7 +6,8 @@ const useApiMutation = <TData = unknown, TVariables = unknown>(
   method: 'POST' | 'PUT' | 'DELETE',
   options?: UseMutationOptions<TData, unknown, TVariables, unknown>,
 ): UseMutationResult<TData, unknown, TVariables, unknown> => {
-  // TODO: line 10 - 14 / Redux에서 유저 정보와 관련된 상태에 접근해 accessToken 할당 : Custom Hook으로 분리
+  // TODO: 실제 서비스 배포시에는 아래 액세스 토큰을 가져오는 코드로 사용해야 합니다.
+  // const accessToken = useAccessToken();
   const accessToken: string | undefined = process.env.REACT_APP_TREE_ACCESS_TOKEN;
 
   if (!accessToken) {

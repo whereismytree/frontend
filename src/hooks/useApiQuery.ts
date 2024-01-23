@@ -2,8 +2,9 @@ import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 
 const useApiQuery = <TData = unknown>(queryParam: string): UseQueryResult<TData, unknown> => {
-  // TODO: line 5 - 10 / Redux에서 유저 정보와 관련된 상태에 접근해 accessToken 할당 : Custom Hook으로 분리
+  // TODO: 실제 서비스 배포시에는 아래 액세스 토큰을 가져오는 코드로 사용해야 합니다.
   const accessToken: string | undefined = process.env.REACT_APP_TREE_ACCESS_TOKEN;
+  // const accessToken = useAccessToken();
 
   if (!accessToken) {
     throw new Error('사용자의 액세스 토큰을 찾을 수 없습니다.');
