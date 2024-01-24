@@ -6,7 +6,7 @@ export const Wrapper = styled.article`
   justify-content: space-between;
   align-items: flex-start;
   z-index: 10;
-  width: 38.8rem;
+  width: calc(100% - 3.2rem);
   height: 21.6rem;
   background-color: #fff;
   border-radius: 1rem;

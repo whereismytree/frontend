@@ -5,7 +5,8 @@ export const SearchBar = styled.div`
   z-index: 10;
   margin: 0 1.6rem;
   padding: 1.6rem;
-  width: calc(42rem - 3.2rem);
+  width: calc(100% - 3.2rem);
+  max-width: 38.8rem;
   height: 5.3rem;
   background-color: white;
   border-radius: 0.5rem;
