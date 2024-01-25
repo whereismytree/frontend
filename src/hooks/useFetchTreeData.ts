@@ -37,8 +37,6 @@ const useFetchTreeData = (map: any, handleTreeMarker: (tree: ITreeItem) => void)
 
   const drawTree = async () => {
     const treeMarkers = treeJSON.trees;
-    console.log(treeMarkers);
-    console.log('트리 조회!');
     if (treeMarkers) {
       treeMarkers.forEach((tree: ITreeItem) => {
         const marker = createMarker(map, tree);
