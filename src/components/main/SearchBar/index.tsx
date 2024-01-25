@@ -7,6 +7,7 @@ import * as S from './style';
 const SearchBar = () => {
   const navigate = useNavigate();
   const handleGoToSearchPage = () => {
+    // TODO: 라우팅 수정 필요
     navigate(PATH.searchPage);
   };
 

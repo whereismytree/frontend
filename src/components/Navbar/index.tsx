@@ -14,6 +14,7 @@ const NavButton = ({ src, text, page }: INavButtonProps) => {
   const location = useLocation();
   const isActive = location.pathname === page;
   const handleGoToPage = () => {
+    // TODO: 라우팅 수정 필요
     navigate(page);
   };
 
