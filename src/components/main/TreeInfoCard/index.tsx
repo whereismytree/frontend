@@ -22,7 +22,7 @@ const TreeInfoCard = ({ data }: IProps) => {
       </S.Title>
       <S.Btns>
         <SaveButton treeId={data.treeId} isSave={isSave} setIsSave={setIsSave} />
-        <ShareButton />
+        <ShareButton treeId={data.treeId} treeName={data.name} />
       </S.Btns>
       <S.Images>
         <img src={defaultImg} alt="트리 기본 이미지" />
