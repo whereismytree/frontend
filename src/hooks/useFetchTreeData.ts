@@ -1,11 +1,17 @@
 import { useEffect } from 'react';
 import { ITreeItem } from 'types/apiResponse';
 import treeJSON from 'assets/treedata.json';
-import treeMarkerImg from 'assets/tree_marker_default.svg';
-// import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
+import defaultMarkerImg from 'assets/tree_marker_default.svg';
+import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
 // import useApiQuery from './useApiQuery';
 
-const useFetchTreeData = (map: any, handleTreeMarker: (tree: ITreeItem) => void) => {
+const useFetchTreeData = (
+  map: any,
+  setTreeInfoData: React.Dispatch<React.SetStateAction<ITreeItem | null>>,
+  setShowTreeInfo: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  let selectedMarker: any = null;
+
   // TODO: api에 데이터가 없어 주석처리. 추후 수정 필요
   // const bounds = map.getBounds();
   // const swLatLng = bounds.getSouthWest();
@@ -22,7 +28,7 @@ const useFetchTreeData = (map: any, handleTreeMarker: (tree: ITreeItem) => void)
   // const { data } = useApiQuery<ITreeItem[]>(url);
 
   const createMarker = (map: any, treeInfo: ITreeItem) => {
-    const imageSrc = treeMarkerImg;
+    const imageSrc = defaultMarkerImg;
     const imageSize = new window.kakao.maps.Size(64, 69);
     const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
     const marker = new window.kakao.maps.Marker({
@@ -35,12 +41,34 @@ const useFetchTreeData = (map: any, handleTreeMarker: (tree: ITreeItem) => void)
     return marker;
   };
 
+  const setImageToMarker = (marker: any, imageSrc: string) => {
+    const imageSize = new window.kakao.maps.Size(64, 69);
+    const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+    marker.setImage(markerImage);
+  };
+
   const drawTree = async () => {
     const treeMarkers = treeJSON.trees;
     if (treeMarkers) {
       treeMarkers.forEach((tree: ITreeItem) => {
         const marker = createMarker(map, tree);
-        window.kakao.maps.event.addListener(marker, 'click', handleTreeMarker(tree));
+        window.kakao.maps.event.addListener(marker, 'click', () => {
+          if (selectedMarker === marker) {
+            // 현재 클릭한 마커와 선택했던 마커가 같은 경우
+            setImageToMarker(marker, defaultMarkerImg);
+            selectedMarker = null;
+            setShowTreeInfo(false);
+          } else {
+            // 현재 클릭한 마커와 선택했던 마커가 다른 경우
+            if (selectedMarker && selectedMarker !== marker) {
+              setImageToMarker(selectedMarker, defaultMarkerImg);
+            }
+            setImageToMarker(marker, focusTreeMarkerImg);
+            selectedMarker = marker;
+            setTreeInfoData(tree);
+            setShowTreeInfo((prev) => (prev === false ? true : prev));
+          }
+        });
       });
     }
   };

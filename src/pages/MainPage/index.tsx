@@ -15,20 +15,13 @@ export const MainPage = () => {
   const { map } = useKakaoMap(mapContainer);
   const [showTreeInfo, setShowTreeInfo] = useState<boolean>(false);
   const [currentTreeInfoData, setTreeInfoData] = useState<ITreeItem | null>(null);
-  const redrawTree = useFetchTreeData(map, handleTreeMarker);
-
-  function handleTreeMarker(tree: ITreeItem) {
-    return () => {
-      setTreeInfoData(tree);
-      setShowTreeInfo((prev) => !prev);
-    };
-  }
+  const redrawTree = useFetchTreeData(map, setTreeInfoData, setShowTreeInfo);
 
   return (
     <div>
       <S.Map ref={mapContainer}>
         <MainSearchInput />
-        <ResearchButton redrawTree={redrawTree} />
+        <ResearchButton redrawTree={redrawTree} setShowTreeInfo={setShowTreeInfo} />
         <S.MapButtons>
           <MyLocationButton map={map} />
           <ZoomControl map={map} />

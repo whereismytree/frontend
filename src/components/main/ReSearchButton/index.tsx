@@ -3,11 +3,13 @@ import * as S from './style';
 
 interface IResearchButtonProps {
   redrawTree: () => Promise<void>;
+  setShowTreeInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ResearchButton = ({ redrawTree }: IResearchButtonProps) => {
+const ResearchButton = ({ redrawTree, setShowTreeInfo }: IResearchButtonProps) => {
   const handleResearch = () => {
     redrawTree();
+    setShowTreeInfo((prev) => (prev === true ? false : prev));
   };
 
   return (
