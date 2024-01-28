@@ -84,10 +84,8 @@ function ReviewDetailPage() {
       <Topbar.Icon type="tree" />
       <SnackBar>URL이 클립보드에 복사되었습니다</SnackBar>
       <S.Main>
-        {/* TODO: 백엔드에서 리뷰 리스트에 트리 위치 데이터 함께 넘겨주면 location prop에 전달해주세요. */}
-        <TreeItem location="">{treeName}</TreeItem>
-        <ReviewImage src={reviewImageUrl} />
-        <ReviewProfile
+        <TreeInformation treeName={treeName} location={location} src={reviewData.reviewImageUrl} />
+        <ReviewDetail
           nickname={nickname}
           profileImageSrc={profileImageUrl}
           createDate={createdAt}
