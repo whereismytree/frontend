@@ -4,6 +4,7 @@ import TreeInformation from 'components/ReviewPage/TreeInformation';
 import Topbar from 'components/Topbar';
 import ReviewDetail from 'components/ReviewPage/ReviewDetail';
 import { HttpError } from 'types/ErrorTypes';
+import { ITreeItem } from 'types/apiResponse';
 import * as S from './style';
 
 interface ReviewResponse {
@@ -18,22 +19,26 @@ interface ReviewResponse {
 }
 
 function ReviewDetailPage() {
-  const { treeId } = useParams();
-  const { data, isError } = useApiQuery<ReviewResponse>(`v1/reviews/${treeId}`);
+  // TODO: 트리 아이디, 리뷰 아이디 두 개의 URI 파라미터가 필요합니다.
+  const { treeId, reviewId } = useParams();
+  const { data: reviewData, isError: isReviewError } = useApiQuery<ReviewResponse>(
+    `v1/reviews/${reviewId}`,
+  );
+  const { data: treeData, isError: isTreeError } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
 
-  if (isError) {
-    throw new HttpError('리뷰를 불러오는 데 오류가 발생했습니다.');
-  }
+  if (isReviewError) throw new HttpError('리뷰를 불러오는 데 오류가 발생했습니다.');
+  if (isTreeError) throw new HttpError('트리를 불러오는 데 오류가 발생했습니다.');
+  if (!reviewData || !treeData) return null;
 
-  if (!data) return null;
-
-  const { nickname, createdAt, content, profileImageUrl, tags, canEdit, canRemove } = data;
+  const { name: treeName, addressType, roadAddress, streetAddress } = treeData;
+  const location = addressType === 'ROAD' ? roadAddress : streetAddress;
+  const { nickname, createdAt, content, profileImageUrl, tags, canEdit, canRemove } = reviewData;
 
   return (
     <>
       <Topbar.Icon type="tree" />
       <S.Main>
-        <TreeInformation treeName="" location="" src={data.reviewImageUrl} />
+        <TreeInformation treeName={treeName} location={location} src={reviewData.reviewImageUrl} />
         <ReviewDetail
           nickname={nickname}
           createdAt={createdAt}
