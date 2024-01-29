@@ -1,12 +1,12 @@
 import React from 'react';
+import { useReviewContext } from 'pages/ReviewDetailPage/context';
 import Item from 'components/common/Item';
 import ProfileImage from 'components/common/ProfileImage';
 import { DateIsNotValidError } from 'types/ErrorTypes';
 import formatDateWithDayOfWeek from 'utils/formatDateWithDayOfWeek';
 import isValidDate from 'utils/isValidDate';
-import OptionList from './OptionList';
-import VerticalButton from '../../common/KebabButton';
 import * as S from './style';
+import DropDown from './DropDown';
 
 const parseCreateDate = (createDate: string) => {
   const date = new Date(createDate);
@@ -29,6 +29,7 @@ function ReviewDetail({
   tags,
   canEdit = false,
   canRemove = false,
+  onDelete = () => {},
 }: {
   nickname: string;
   reviewText: string;
@@ -37,9 +38,15 @@ function ReviewDetail({
   tags: string[];
   canEdit?: boolean;
   canRemove?: boolean;
+  onDelete: () => void;
 }) {
+  const { dispatch } = useReviewContext();
   const createDate = parseCreateDate(createdAt);
   const userCanEditOrRemove = canEdit && canRemove;
+
+  const closeDropDown = () => {
+    dispatch({ type: 'DROPDOWN_OPEN', payload: false });
+  };
 
   return (
     <>
@@ -49,8 +56,23 @@ function ReviewDetail({
           <S.NickName>{nickname}</S.NickName>
           <S.CreateTime>{createDate}</S.CreateTime>
         </Item>
-        {userCanEditOrRemove && <VerticalButton onClick={() => {}} />}
-        <OptionList />
+        {userCanEditOrRemove && (
+          <DropDown>
+            <DropDown.Toggle />
+            <DropDown.List>
+              <DropDown.Item
+                onClick={() => {
+                  closeDropDown();
+                  console.log('공유!');
+                }}
+              >
+                공유하기
+              </DropDown.Item>
+              <DropDown.Item onClick={() => console.log('공유!')}>수정하기</DropDown.Item>
+              <DropDown.Item onClick={() => onDelete()}>삭제하기</DropDown.Item>
+            </DropDown.List>
+          </DropDown>
+        )}
       </S.ReviewProfile>
       <S.ReviewText>{reviewText}</S.ReviewText>
       <S.Tags>{tags.map((tag) => tag)}</S.Tags>
