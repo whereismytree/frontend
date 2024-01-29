@@ -19,7 +19,7 @@ interface ReviewResponse {
 }
 
 function ReviewDetailPage() {
-  // TODO: 트리 아이디, 리뷰 아이디 두 개의 URI 파라미터가 필요합니다.
+  // TODO: 트리의 정보(트리 이름과 위치)와 리뷰에 대한 데이터를 받아오기 위해서 트리 아이디, 리뷰 아이디 두 개의 URI 파라미터가 필요합니다. 라우터 작성시 참고해주세요.
   const { treeId, reviewId } = useParams();
   const { data: reviewData, isError: isReviewError } = useApiQuery<ReviewResponse>(
     `v1/reviews/${reviewId}`,
