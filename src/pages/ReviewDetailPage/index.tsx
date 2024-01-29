@@ -34,14 +34,12 @@ const validateTreeData = (treeData: any) => {
 };
 
 function ReviewDetailPage() {
-  const params = useParams();
-  const { state: treeData } = useLocation();
-  const navigate = useNavigate();
-  const reviewId = validateReviewId(Number(params.reviewId));
-
-  const { review, deleteReview } = useReview(reviewId);
-  const { treeName } = validateTreeData(treeData);
-  const { SnackBar, render: renderSnackBar } = useSnackBar();
+  // TODO: 트리의 정보(트리 이름과 위치)와 리뷰에 대한 데이터를 받아오기 위해서 트리 아이디, 리뷰 아이디 두 개의 URI 파라미터가 필요합니다. 라우터 작성시 참고해주세요.
+  const { treeId, reviewId } = useParams();
+  const { data: reviewData, isError: isReviewError } = useApiQuery<ReviewResponse>(
+    `v1/reviews/${reviewId}`,
+  );
+  const { data: treeData, isError: isTreeError } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
 
   if (!review) return null;
 
