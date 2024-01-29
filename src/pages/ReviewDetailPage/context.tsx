@@ -6,19 +6,19 @@ type Action = {
 };
 
 type ReviewDetailContext = {
-  state: { optionOpen: boolean };
+  state: { isOptionOpen: boolean };
   dispatch: React.Dispatch<Action>;
 };
 
 const reviewDetailContext = React.createContext<ReviewDetailContext>({
-  state: { optionOpen: false },
+  state: { isOptionOpen: false },
   dispatch: () => {},
 });
 
 function reducer(state: ReviewDetailContext['state'], action: Action) {
   switch (action.type) {
     case 'OPTION_OPEN':
-      return { ...state, optionOpen: action.payload };
+      return { ...state, isOptionOpen: action.payload };
     default:
       throw new Error('액션의 타입을 제대로 지정해주세요.');
   }
@@ -26,7 +26,7 @@ function reducer(state: ReviewDetailContext['state'], action: Action) {
 
 export function ReviewProvider({ children }: { children: JSX.Element[] }) {
   const [state, dispatch] = React.useReducer(reducer, {
-    optionOpen: false,
+    isOptionOpen: false,
   });
 
   const memorizeValue = React.useMemo(() => {

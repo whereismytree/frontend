@@ -5,6 +5,7 @@ import Topbar from 'components/Topbar';
 import ReviewDetail from 'components/ReviewPage/ReviewDetail';
 import { HttpError } from 'types/ErrorTypes';
 import { ITreeItem } from 'types/apiResponse';
+import { ReviewProvider } from './context';
 import * as S from './style';
 
 interface ReviewResponse {
@@ -35,7 +36,7 @@ function ReviewDetailPage() {
   const { nickname, createdAt, content, profileImageUrl, tags, canEdit, canRemove } = reviewData;
 
   return (
-    <>
+    <ReviewProvider>
       <Topbar.Icon type="tree" />
       <S.Main>
         <TreeInformation treeName={treeName} location={location} src={reviewData.reviewImageUrl} />
@@ -49,7 +50,7 @@ function ReviewDetailPage() {
           canRemove={canRemove}
         />
       </S.Main>
-    </>
+    </ReviewProvider>
   );
 }
 
