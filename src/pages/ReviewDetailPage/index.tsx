@@ -1,14 +1,10 @@
 import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Topbar from 'components/Topbar';
-import ReviewProfile from 'pages/ReviewDetailPage/components/Profile';
-import TreeItem from 'components/TreeItem';
-import ReviewContent from 'pages/ReviewDetailPage/components/Review';
-import parseTagCommentToID from 'utils/parseTagCommentToID';
-import KebabDropDown from 'pages/ReviewDetailPage/components/KebabDropDown';
-import useReview from 'hooks/useReview';
-import useSnackBar from 'hooks/useSnackBar';
-import getPath from 'utils/getPath';
+import ReviewDetail from 'components/ReviewPage/ReviewDetail';
+import { HttpError } from 'types/ErrorTypes';
+import { ITreeItem } from 'types/apiResponse';
+import { ReviewProvider } from './context';
 import * as S from './style';
 import ReviewImage from './components/ReviewImage';
 
@@ -78,7 +74,7 @@ function ReviewDetailPage() {
   };
 
   return (
-    <>
+    <ReviewProvider>
       <Topbar.Icon type="tree" />
       <SnackBar>URL이 클립보드에 복사되었습니다</SnackBar>
       <S.Main>
@@ -101,7 +97,7 @@ function ReviewDetailPage() {
         </ReviewProfile>
         <ReviewContent content={content} tags={parseTags} />
       </S.Main>
-    </>
+    </ReviewProvider>
   );
 }
 
