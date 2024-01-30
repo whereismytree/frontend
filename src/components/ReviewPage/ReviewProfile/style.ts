@@ -21,13 +21,3 @@ export const CreateTime = styled.p`
   font-size: 1rem;
   color: var(--grey-medium);
 `;
-
-export const ReviewText = styled.p`
-  line-height: 1.8rem;
-  font-size: 1.2rem;
-  font-weight: 350;
-`;
-
-export const Tags = styled.div`
-  margin-top: 16px;
-`;
