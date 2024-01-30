@@ -25,6 +25,7 @@ export const Modal = styled.div`
   padding: 0.8rem 1.7rem 0.5rem 1.7rem;
   border: 0.1rem solid var(--grey-light);
   border-radius: 1rem;
+  background-color: #fff;
 `;
 
 export const ModalItem = styled.button`
