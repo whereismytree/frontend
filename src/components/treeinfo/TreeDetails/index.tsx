@@ -1,7 +1,7 @@
 import React from 'react';
 import { ITreeItem } from 'types/apiResponse';
 import useApiQuery from 'hooks/useApiQuery';
-import * as S from './style';
+import * as S from '../style';
 
 const TreeDetails = () => {
   // 전시기간을 형식에 맞게 포맷팅하는 함수

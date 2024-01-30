@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TreeLocationItem from 'components/TreeLocationItem';
 import SaveButton from 'components/SaveButton';
 import ShareButton from 'components/ShareButton';
-import * as S from './style';
+import * as S from '../style';
 
 const TreeTitle = () => {
   const [isSave, setIsSave] = useState<boolean>(false);
