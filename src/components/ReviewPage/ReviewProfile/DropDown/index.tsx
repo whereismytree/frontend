@@ -1,3 +1,4 @@
+import React from 'react';
 import KebabButton from 'components/common/KebabButton';
 import { useReviewContext } from 'pages/ReviewDetailPage/context';
 import * as S from './style';
@@ -31,9 +32,20 @@ function DropDownList({ children }: { children: JSX.Element[] }) {
 }
 
 function DropDownItem({ children, onClick }: { children: string; onClick: () => void }) {
+  const { dispatch } = useReviewContext();
+  const closeDropDown = () => {
+    dispatch({ type: 'DROPDOWN_OPEN', payload: false });
+  };
+
   return (
     <S.Option>
-      <button type="button" onClick={() => onClick()}>
+      <button
+        type="button"
+        onClick={() => {
+          closeDropDown();
+          onClick();
+        }}
+      >
         {children}
       </button>
     </S.Option>
