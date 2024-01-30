@@ -1,5 +1,6 @@
 import { UseMutationOptions, UseMutationResult, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
+import { HTTPError } from 'error/HTTPError';
 
 const useApiMutation = <TData = unknown, TVariables = unknown>(
   url: string,
@@ -26,20 +27,10 @@ const useApiMutation = <TData = unknown, TVariables = unknown>(
         data: variables,
       });
 
-      const isSuccess = response.status >= 200 && response.status < 300;
-
-      if (!isSuccess) {
-        throw new Error(
-          `ajax 통신 중 오류가 발생했습니다. 에러코드: ${response.status}\n${response.statusText}`,
-        );
-      }
-
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        throw new Error(
-          `ajax 통신 중 오류가 발생했습니다. status: ${error.response.status}, ${error.response.statusText}`,
-        );
+        throw new HTTPError('axios 통신 중 오류가 발생했습니다.', error.response.status);
       }
 
       throw error;
