@@ -3,7 +3,7 @@ export class HTTPError extends Error {
 
   constructor(
     message: string,
-    public statusCode?: number,
+    public statusCode: number,
   ) {
     super(message);
     this.name = 'HttpError';
@@ -36,10 +36,6 @@ export class HTTPError extends Error {
 
       case 502:
         this.errorMessage = '서버가 잘못된 응답을 반환하였습니다.';
-        break;
-
-      case undefined:
-        this.errorMessage = '에러코드가 없습니다.';
         break;
 
       default:
