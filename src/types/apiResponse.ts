@@ -1,4 +1,5 @@
 export interface ITreeItem {
+  treeId: number;
   name: string;
   lat: number;
   lng: number;
