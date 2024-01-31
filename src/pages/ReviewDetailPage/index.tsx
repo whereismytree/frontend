@@ -59,8 +59,15 @@ function ReviewDetailPage() {
     });
   };
 
-  const handleShare = () => {
-    viewSnackBar();
+  const handleShare = async () => {
+    const currentUrl = window.location.href;
+
+    try {
+      await navigator.clipboard.writeText(currentUrl);
+      viewSnackBar();
+    } catch (err) {
+      console.error('현재 URL을 클립보드에 복사하는 데 실패했습니다.');
+    }
   };
 
   const handleEdit = () => {
