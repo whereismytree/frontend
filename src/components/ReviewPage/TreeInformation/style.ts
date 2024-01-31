@@ -8,11 +8,12 @@ export const ImageWrapper = styled.section`
   margin-top: 23px;
   position: relative;
   background-color: var(--grey-light);
+  overflow: hidden;
 `;
 
 export const Image = styled.img`
   position: absolute;
-  max-height: fit-content;
+  width: 100%;
   top: 50%;
   transform: translateY(-50%);
 `;
