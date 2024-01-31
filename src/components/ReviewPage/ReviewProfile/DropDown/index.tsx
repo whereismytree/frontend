@@ -1,19 +1,21 @@
 import React from 'react';
 import KebabButton from 'components/common/KebabButton';
-import { useReviewContext } from 'pages/ReviewDetailPage/context';
+import { useDispatch, useSelector } from 'react-redux';
+import { TRootState } from 'store';
+import { setDropDownView } from 'store/modules/toggleSlice';
 import * as S from './style';
 
 function ToggleKebabButton() {
   const {
-    state: { isDropdownOpen },
-    dispatch,
-  } = useReviewContext();
+    dropDown: { view },
+  } = useSelector((state: TRootState) => state.toggle);
+  const dispatch = useDispatch();
 
   return (
     <KebabButton
-      isOpen={isDropdownOpen}
+      isOpen={view}
       onClick={() => {
-        dispatch({ type: 'DROPDOWN_OPEN', payload: !isDropdownOpen });
+        dispatch(setDropDownView(!view));
       }}
     />
   );
@@ -25,16 +27,17 @@ function DropDown({ children }: { children: React.ReactNode }) {
 
 function DropDownList({ children }: { children: JSX.Element[] }) {
   const {
-    state: { isDropdownOpen },
-  } = useReviewContext();
+    dropDown: { view },
+  } = useSelector((state: TRootState) => state.toggle);
 
-  return isDropdownOpen ? <S.OptionList>{children}</S.OptionList> : null;
+  return view ? <S.OptionList>{children}</S.OptionList> : null;
 }
 
 function DropDownItem({ children, onClick }: { children: string; onClick: () => void }) {
-  const { dispatch } = useReviewContext();
+  const dispatch = useDispatch();
+
   const closeDropDown = () => {
-    dispatch({ type: 'DROPDOWN_OPEN', payload: false });
+    dispatch(setDropDownView(false));
   };
 
   return (
