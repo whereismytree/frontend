@@ -55,7 +55,7 @@ function TreeReviewCount({ children }: { children?: number }) {
 function SubTitle({ children, reviewCount, weight }: ISubTitleProps) {
   return (
     <S.SubTitle weight={weight}>
-      {reviewCount && <TreeReviewCount>{reviewCount}</TreeReviewCount>}
+      {typeof reviewCount === 'number' && <TreeReviewCount>{reviewCount}</TreeReviewCount>}
       {children}
     </S.SubTitle>
   );
