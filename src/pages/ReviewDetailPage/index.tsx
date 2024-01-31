@@ -1,39 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import TreeInformation from 'components/ReviewPage/TreeInformation';
 import Topbar from 'components/Topbar';
 import { useTreeData } from 'hooks/treeHooks';
-import ReviewProfile from 'components/ReviewPage/ReviewProfile';
 import { useDeleteReview, useReviewData } from 'hooks/reviewHooks';
+import ReviewProfile from 'components/ReviewPage/ReviewProfile';
 import ReviewContent from 'components/ReviewPage/ReviewContent';
 import parseCommentToTagID from 'utils/parseCommentToTagID';
 import DropDown from 'components/ReviewPage/ReviewProfile/DropDown';
-import { ReviewProvider } from './context';
+import SnackBar from 'components/SnackBar';
+import { useDispatch } from 'react-redux';
+import { setSnackBarView } from 'store/modules/toggleSlice';
 import * as S from './style';
 
-function CopyAlert({ view }: { view: boolean }) {
-  return <S.Alert $view={view}>클립보드에 복사되었습니다.</S.Alert>;
-}
-
-function ReviewDetailPage() {
-  const { treeId, reviewId } = useParams();
-  const [copyed, setCopyed] = useState(false);
-
-  if (!treeId || !reviewId) {
-    throw new Error('URL 식별자에 트리 아이디와 리뷰 아이디가 포함되어야 합니다.');
+const validateParamData = (data: string | undefined) => {
+  if (!data) {
+    throw new Error('URL 식별자 데이터가 존재하지 않습니다.');
   }
 
-  useEffect(() => {
-    if (copyed) {
-      setTimeout(() => {
-        setCopyed(false);
-      }, S.ALERT_ANIMATION_TIME);
-    }
-  }, [copyed]);
+  return data;
+};
 
-  const deleteReview = useDeleteReview(reviewId);
-  const reviewData = useReviewData(reviewId);
+function ReviewDetailPage() {
+  const params = useParams();
+  const dispatch = useDispatch();
+  const treeId = validateParamData(params.treeId);
+  const reviewId = validateParamData(params.reviewId);
+
   const treeData = useTreeData(treeId);
+  const reviewData = useReviewData(reviewId);
+  const deleteReview = useDeleteReview(reviewId);
 
   if (!reviewData || !treeData) return null;
 
@@ -51,6 +47,10 @@ function ReviewDetailPage() {
   const parseTags = tags.map((comment) => parseCommentToTagID(comment));
   const location = addressType === 'ROAD' ? roadAddress : streetAddress;
 
+  const viewSnackBar = () => {
+    dispatch(setSnackBarView(true));
+  };
+
   const handleDelete = () => {
     deleteReview({
       onSuccess: () => {
@@ -59,8 +59,8 @@ function ReviewDetailPage() {
     });
   };
 
-  const handleShare = async () => {
-    setCopyed(true);
+  const handleShare = () => {
+    viewSnackBar();
   };
 
   const handleEdit = () => {
@@ -68,10 +68,9 @@ function ReviewDetailPage() {
   };
 
   return (
-    <ReviewProvider>
-      <CopyAlert view={copyed} />
+    <>
       <Topbar.Icon type="tree" />
-      <SnackBar>URL이 클립보드에 복사되었습니다</SnackBar>
+      <SnackBar during={3000}>URL이 클립보드에 복사되었습니다</SnackBar>
       <S.Main>
         <TreeInformation treeName={treeName} location={location} src={reviewImageUrl} />
         <ReviewProfile
@@ -92,7 +91,7 @@ function ReviewDetailPage() {
         </ReviewProfile>
         <ReviewContent content={content} tags={parseTags} />
       </S.Main>
-    </ReviewProvider>
+    </>
   );
 }
 
