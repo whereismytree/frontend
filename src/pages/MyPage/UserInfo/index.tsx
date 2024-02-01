@@ -1,31 +1,16 @@
 import UserInfo from 'components/MyPage/UserInfo';
 import PATH from 'constants/path';
-import useApiQuery from 'hooks/useApiQuery';
-import TPlatform from 'types/platform';
+import { IUserData } from '..';
 
-interface IUserData {
-  nickname: string;
-  email: string;
-  platform: TPlatform;
-  profileImageUrl: '';
-  postedTreesCount: number;
-  savedTreesCount: number;
-  reviewsCount: number;
-}
-
-function UserInfoSection() {
-  const { data } = useApiQuery<IUserData>('v1/my');
-
-  const {
-    nickname = '',
-    email = '',
-    platform = 'GOOGLE',
-    profileImageUrl = '',
-    postedTreesCount = 0,
-    savedTreesCount = 0,
-    reviewsCount = 0,
-  } = data ?? {};
-
+function UserInfoSection({
+  profileImageUrl,
+  nickname,
+  platform,
+  email,
+  postedTreesCount,
+  savedTreesCount,
+  reviewsCount,
+}: IUserData) {
   return (
     <UserInfo>
       <UserInfo.Profile src={profileImageUrl} />
