@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 
 export const Map = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   height: calc(100vh - var(--navbar-height));
-  > img {
-    z-index: 10;
-    position: absolute;
-    left: 1.6rem;
-    bottom: calc(1.2rem);
-    /* bottom: calc(21.6rem + 1.2rem); */
-    margin-bottom: 1.2rem;
-  }
+`;
+
+export const MapButtons = styled.div`
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 1.6rem;
 `;
 
 export const Loading = styled.section`
