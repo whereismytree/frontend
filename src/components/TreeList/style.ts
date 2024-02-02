@@ -44,3 +44,8 @@ export const GreenText = styled.span`
   color: var(--main-green);
   margin-left: 10px;
 `;
+
+export const TitleSection = styled.div`
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--grey-light);
+`;
