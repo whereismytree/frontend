@@ -21,7 +21,7 @@ export const Name = styled.h2`
   font-weight: 700;
 `;
 
-export const LoginInfo = styled.p<{ platform: TPlatform }>`
+export const LoginInfo = styled.p<{ $platform: TPlatform }>`
   font-size: 12px;
   font-weight: 350;
   color: var(--grey-dark);
@@ -36,8 +36,8 @@ export const LoginInfo = styled.p<{ platform: TPlatform }>`
 
   &::before {
     content: '';
-    background: url(${({ platform }) => (platform === 'KAKAO' ? googleLogo : kakaoLogo)}) no-repeat
-      left / contain;
+    background: url(${({ $platform }) => ($platform === 'KAKAO' ? kakaoLogo : googleLogo)})
+      no-repeat left / contain;
     display: inline-block;
     width: 18px;
     aspect-ratio: 1/1;
