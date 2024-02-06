@@ -3,7 +3,11 @@ import { ITreeItem } from 'types/apiResponse';
 import useApiQuery from 'hooks/useApiQuery';
 import * as S from '../style';
 
-const TreeDetails = () => {
+interface IProps {
+  treeId: number;
+}
+
+const TreeDetails = ({ treeId }: IProps) => {
   // 전시기간을 형식에 맞게 포맷팅하는 함수
   const formatExhibitionDates = (start: string, end: string) => {
     const startDate = new Date(start);
@@ -24,19 +28,20 @@ const TreeDetails = () => {
     return `${formatDate(startDate)} ~ ${formatDate(endDate)}`;
   };
 
-  const id = 3;
-  const { data } = useApiQuery<ITreeItem>(`v1/trees/${id}`);
-  let treeInfo;
+  const { data } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
+
+  let info;
   if (data) {
-    treeInfo = [
-      [data.spaceType && '공간', data.spaceType],
-      [data.businessDays && '영업일', data.businessDays.replace(/,/g, ', ')],
-      [
-        data.exhibitionStartDate && data.exhibitionEndDate && '전시 기간',
-        formatExhibitionDates(data.exhibitionStartDate, data.exhibitionEndDate),
-      ],
-      [data.isPet && '반려동물', data.isPet ? '동반 가능' : '동반 불가능'],
-      [data.extraInfo && '참고정보', data.extraInfo],
+    info = [
+      data.spaceType && ['공간', data.spaceType],
+      data.businessDays && ['영업일', data.businessDays?.replace(/,/g, ', ')],
+      data.exhibitionStartDate &&
+        data.exhibitionEndDate && [
+          '전시 기간',
+          formatExhibitionDates(data.exhibitionStartDate, data.exhibitionEndDate),
+        ],
+      data.isPet && ['반려동물', data.isPet ? '동반 가능' : '동반 불가능'],
+      data.extraInfo && ['참고정보', data.extraInfo],
     ];
   }
 
@@ -47,15 +52,18 @@ const TreeDetails = () => {
         <S.EditInfoButton>✎ 정보 수정 제안하기</S.EditInfoButton>
       </S.TitleContainer>
       <S.Details>
-        {treeInfo &&
-          treeInfo.map((item) => {
-            return item[0] ? (
+        {info && info.length !== 0 ? (
+          info.map((item) => {
+            return item && item[0] ? (
               <S.DetailItem key={item[0]}>
                 <S.ItemTitle>{item[0]}</S.ItemTitle>
                 <S.ItemContent>{item[1]}</S.ItemContent>
               </S.DetailItem>
             ) : null;
-          })}
+          })
+        ) : (
+          <S.DetailItem style={{ color: ' #878787' }}>정보가 없습니다.</S.DetailItem>
+        )}
       </S.Details>
     </S.Wrapper>
   );

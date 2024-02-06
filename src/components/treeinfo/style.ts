@@ -4,6 +4,9 @@ import { DetailedHTMLProps, HTMLAttributes } from 'react';
 // common
 export const Wrapper = styled.section`
   border-bottom: 0.1rem solid var(--grey-light);
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 export const TitleContainer = styled.div`
@@ -80,12 +83,14 @@ export const PhotoList = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5rem;
   padding: 1.6rem 2.3rem 0 2.3rem;
+  margin-bottom: 1.6rem;
 `;
 
 export const Photo = styled.img`
   width: 100%;
-  height: 100%;
+  height: 12rem;
   object-fit: cover;
+  border-radius: 0.5rem;
 `;
 
 export const PhotoMoreButton = styled.button`
