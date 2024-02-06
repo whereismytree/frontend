@@ -35,7 +35,7 @@ function TreeWrapper({ children }: Omit<IItemWrapperProps, 'gap'>) {
 // Title
 function Title({ children, size, weight, image }: ITitleProps) {
   return (
-    <S.Title size={size} $weight={weight} image={image}>
+    <S.Title size={size} $weight={weight} $image={image}>
       {children}
     </S.Title>
   );
@@ -55,7 +55,7 @@ function TreeReviewCount({ children }: { children?: number }) {
 function SubTitle({ children, reviewCount, weight }: ISubTitleProps) {
   return (
     <S.SubTitle weight={weight}>
-      {reviewCount && <TreeReviewCount>{reviewCount}</TreeReviewCount>}
+      {typeof reviewCount === 'number' && <TreeReviewCount>{reviewCount}</TreeReviewCount>}
       {children}
     </S.SubTitle>
   );

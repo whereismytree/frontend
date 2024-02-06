@@ -5,13 +5,16 @@ import useMarkerMap from 'hooks/useMarkerMap';
 import treeMarker from 'assets/tree_marker.svg';
 import Guide from 'components/common/Guide';
 import TreeList from 'components/TreeList';
-import { ITreeListItem } from 'types/TreeListApiResponse';
-import useSavedTrees from './hooks';
+import { useNavigate } from 'react-router-dom';
+import PATH from 'constants/path';
+import useRegistedTree from 'hooks/useRegistedTree';
 import * as S from './style';
 
-const SavePage = () => {
+const RegistedTreePage = () => {
   const mapContainer = useRef(null);
   const [positions, setPositions] = useState<any>();
+  const registedTrees = useRegistedTree();
+  const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { map } = useMarkerMap({
     mapContainer,
@@ -19,14 +22,11 @@ const SavePage = () => {
     positions,
     imageSize: [24, 24],
   });
-  const data = useSavedTrees();
-
-  const savedTrees: ITreeListItem[] = data?.trees || [];
 
   useEffect(() => {
     window.kakao.maps.load(() => {
       setPositions(
-        savedTrees.map((tree) => {
+        registedTrees.map((tree) => {
           return {
             name: tree.name,
             latlng: new window.kakao.maps.LatLng(tree.lat, tree.lng),
@@ -38,14 +38,18 @@ const SavePage = () => {
 
   return (
     <>
-      <Topbar.Icon type="star" />
-      {savedTrees.length ? (
+      <Topbar.Icon type="cookie" />
+      {registedTrees.length ? (
         <S.Map ref={mapContainer}>
-          <TreeList list={savedTrees} type="saved" />
+          <TreeList list={registedTrees} type="registed" />
         </S.Map>
       ) : (
         <S.Wrapper>
-          <Guide text="저장한 트리가 없어요" />
+          <Guide.Button
+            text="등록한 트리가 없어요"
+            btnText="트리 등록하러 가기"
+            onClick={() => navigate(`${PATH.registInfoPage}/search`)}
+          />
         </S.Wrapper>
       )}
       <Navbar />
@@ -53,4 +57,4 @@ const SavePage = () => {
   );
 };
 
-export default SavePage;
+export default RegistedTreePage;

@@ -12,11 +12,13 @@ import LocationMap from 'pages/TreeRegi/Map';
 import LocationSearch from 'pages/TreeRegi/Search';
 import TreeRegiDetail from 'pages/TreeRegi/Form';
 import Nickname from 'pages/SignIn/ProfileSetting';
+import ReviewDetailPage from 'pages/ReviewDetailPage';
 
 export const Router = () => {
   const rootRoutes: RouteObject = {
     path: PATH.rootPage,
-    element: <MainPage />,
+    element: <Outlet />,
+    children: [{ path: ':treeId', element: <ReviewDetailPage /> }],
   };
 
   const mainRoutes: RouteObject = {
