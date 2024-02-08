@@ -5,6 +5,7 @@ export const Wrapper = styled.header`
   border-bottom: 0.1rem solid var(--grey-medium);
   display: flex;
   align-items: center;
+  position: relative;
 `;
 
 export const BackIcon = styled.button`

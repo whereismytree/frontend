@@ -17,6 +17,7 @@ export const Wrapper = styled.article`
 `;
 
 export const Title = styled.div`
+  cursor: pointer;
   color: #1a1a1a;
 `;
 
@@ -40,6 +41,7 @@ export const Address = styled.p`
 `;
 
 export const Images = styled.div`
+  cursor: pointer;
   display: flex;
   gap: 0.5rem;
   width: 11.2rem;
