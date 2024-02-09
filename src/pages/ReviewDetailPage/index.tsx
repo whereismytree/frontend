@@ -6,7 +6,7 @@ import { useTreeData } from 'hooks/treeHooks';
 import { useDeleteReview, useReviewData } from 'hooks/reviewHooks';
 import ReviewProfile from 'components/ReviewPage/ReviewProfile';
 import ReviewContent from 'components/ReviewPage/ReviewContent';
-import parseCommentToTagID from 'utils/parseCommentToTagID';
+import parseTagCommentToID from 'utils/parseTagCommentToID';
 import DropDown from 'components/ReviewPage/ReviewProfile/DropDown';
 import SnackBar from 'components/SnackBar';
 import { useDispatch } from 'react-redux';
@@ -44,7 +44,7 @@ function ReviewDetailPage() {
     reviewImageUrl,
   } = reviewData;
   const { name: treeName, addressType, roadAddress, streetAddress } = treeData;
-  const parseTags = tags.map((comment) => parseCommentToTagID(comment));
+  const parseTags = tags.map((comment) => parseTagCommentToID(comment));
   const location = addressType === 'ROAD' ? roadAddress : streetAddress;
 
   const viewSnackBar = () => {
