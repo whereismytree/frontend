@@ -1,16 +1,59 @@
 const PATH = {
-  rootPage: '/',
-  saveTreePage: '/save',
-  reviewPage: 'review',
-  mainPage: '/main',
-  searchPage: '/search',
-  treeInfoPage: '/treeinfo',
-  registInfoPage: '/regist',
-  loginPage: '/login',
-  myPage: '/my',
-  errorPage: '/error',
-  savePage: '/save',
-  redirectPage: '/oauth/redirect*',
-} as const;
+  landingPage: '',
+
+  mainPage: {
+    root: 'main',
+
+    children: {
+      search: 'search',
+    },
+  },
+
+  loginPage: {
+    root: 'login',
+
+    children: {
+      redirect: 'redirect',
+      profileSetting: 'setting',
+    },
+  },
+
+  treePage: {
+    root: 'tree',
+
+    children: {
+      regist: 'regist',
+      dynamicParam: ':treeId',
+
+      review: {
+        root: 'review',
+        dynamicParam: ':reviewId',
+        children: {
+          regist: 'regist',
+          edit: 'edit',
+        },
+      },
+    },
+  },
+
+  registPage: {
+    root: 'regist',
+
+    children: {
+      map: 'map',
+      detail: 'detail',
+    },
+  },
+
+  myPage: {
+    root: 'my',
+
+    children: {
+      registedReviews: 'review',
+      savedTrees: 'save',
+      registedTrees: 'tree',
+    },
+  },
+};
 
 export default PATH;
