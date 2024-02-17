@@ -3,7 +3,6 @@ const PATH = {
 
   mainPage: {
     root: 'main',
-
     children: {
       search: 'search',
     },
@@ -11,7 +10,6 @@ const PATH = {
 
   loginPage: {
     root: 'login',
-
     children: {
       redirect: 'redirect',
       profileSetting: 'setting',
@@ -20,34 +18,29 @@ const PATH = {
 
   treePage: {
     root: 'tree',
-
     children: {
-      regist: 'regist',
       dynamicParam: ':treeId',
-
-      review: {
-        root: 'review',
-        dynamicParam: ':reviewId',
+      regist: {
+        root: 'regist',
         children: {
-          regist: 'regist',
-          edit: 'edit',
+          map: 'map',
+          detail: 'detail',
         },
       },
     },
   },
 
-  registPage: {
-    root: 'regist',
-
+  reviewPage: {
+    root: 'review',
+    dynamicParam: ':reviewId',
     children: {
-      map: 'map',
-      detail: 'detail',
+      regist: 'regist',
+      edit: 'edit',
     },
   },
 
   myPage: {
     root: 'my',
-
     children: {
       registedReviews: 'review',
       savedTrees: 'save',

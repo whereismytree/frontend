@@ -17,17 +17,21 @@ const PATH_DATABASE = {
   },
 
   treePage: {
-    detail: (treeId: number) => `${PATH.treePage.root}/${treeId}`,
-    regist: `${PATH.treePage.root}/${PATH.treePage.children.regist}`,
-
-    review: {
-      detail: (treeId: number, reviewId: number) =>
-        `${PATH.treePage.root}/${treeId}/${PATH.treePage.children.review}/${reviewId}`,
-      regist: (treeId: number) =>
-        `${PATH.treePage.root}/${treeId}/${PATH.treePage.children.review}/${PATH.treePage.children.review.children.regist}`,
-      edit: (treeId: number) =>
-        `${PATH.treePage.root}/${treeId}/${PATH.treePage.children.review}/${PATH.treePage.children.review.children.edit}`,
+    // 트리 상세 페이지는 데이터를 useLocation의 state로 전달하는건지?
+    detail: PATH.treePage.root,
+    regist: {
+      search: `${PATH.treePage.root}/${PATH.treePage.children.regist.root}`,
+      map: `${PATH.treePage.root}/${PATH.treePage.children.regist.root}/${PATH.treePage.children.regist.children.map}`,
+      detail: `${PATH.treePage.root}/${PATH.treePage.children.regist.root}/${PATH.treePage.children.regist.children.detail}`,
     },
+  },
+
+  reviewPage: {
+    detail: (reviewId: number) => `${PATH.reviewPage.root}/${reviewId}`,
+    regist: (treeId: number) =>
+      `${PATH.reviewPage.root}/${PATH.reviewPage.children.regist}/${treeId}`,
+    edit: (reviewId: number) =>
+      `${PATH.reviewPage.root}/${PATH.reviewPage.children.edit}/${reviewId}`,
   },
 
   myPage: {
