@@ -17,8 +17,7 @@ const PATH_DATABASE = {
   },
 
   treePage: {
-    // 트리 상세 페이지는 데이터를 useLocation의 state로 전달하는건지?
-    detail: PATH.treePage.root,
+    detail: (treeId: number) => `${PATH.treePage.root}/${treeId}`,
     regist: {
       search: `${PATH.treePage.root}/${PATH.treePage.children.regist.root}`,
       map: `${PATH.treePage.root}/${PATH.treePage.children.regist.root}/${PATH.treePage.children.regist.children.map}`,
@@ -43,6 +42,7 @@ const PATH_DATABASE = {
 };
 
 type PATH_DATABASE = typeof PATH_DATABASE;
+// 제네릭의 인자가 객체라면 객체의 키를 입력하도록 하는 옵셔널 타입
 type IfObjectThenRequire<T> = T extends object ? keyof T : never;
 
 type CreatePath = {
@@ -73,14 +73,17 @@ const createPath: CreatePath = <
   d1?: D1,
   d2?: D2,
 ) => {
-  if (d1) {
-    if (d2) {
-      return PATH_DATABASE[p][d1][d2];
-    }
+  const page = PATH_DATABASE[p];
 
-    return PATH_DATABASE[p][d1];
+  if (d1 && d2) {
+    return page[d1][d2];
   }
-  return PATH_DATABASE[p];
+
+  if (d1) {
+    return page[d1];
+  }
+
+  return page;
 };
 
 export default createPath;
