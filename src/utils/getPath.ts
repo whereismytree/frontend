@@ -2,42 +2,42 @@ import PATH from 'constants/path';
 
 const PATH_DATABASE = {
   landingPage: {
-    root: PATH.landingPage,
+    root: `/${PATH.landingPage}`,
   },
 
   mainPage: {
-    root: PATH.mainPage.root,
+    root: `/${PATH.mainPage.root}`,
     search: `${PATH.mainPage.root}/${PATH.mainPage.children.search}`,
   },
 
   loginPage: {
-    root: PATH.loginPage.root,
-    redirect: PATH.loginPage.children.redirect,
-    profileSetting: PATH.loginPage.children.profileSetting,
+    root: `/${PATH.loginPage.root}`,
+    redirect: `${PATH.loginPage.children.redirect}`,
+    profileSetting: `${PATH.loginPage.children.profileSetting}`,
   },
 
   treePage: {
-    detail: (treeId: number) => `${PATH.treePage.root}/${treeId}`,
+    detail: (treeId: number) => `/${PATH.treePage.root}/${treeId}`,
     regist: {
-      search: `${PATH.treePage.root}/${PATH.treePage.children.regist.root}`,
-      map: `${PATH.treePage.root}/${PATH.treePage.children.regist.root}/${PATH.treePage.children.regist.children.map}`,
-      detail: `${PATH.treePage.root}/${PATH.treePage.children.regist.root}/${PATH.treePage.children.regist.children.detail}`,
+      search: `/${PATH.treePage.root}/${PATH.treePage.children.regist.root}`,
+      map: `/${PATH.treePage.root}/${PATH.treePage.children.regist.root}/${PATH.treePage.children.regist.children.map}`,
+      detail: `/${PATH.treePage.root}/${PATH.treePage.children.regist.root}/${PATH.treePage.children.regist.children.detail}`,
     },
   },
 
   reviewPage: {
-    detail: (reviewId: number) => `${PATH.reviewPage.root}/${reviewId}`,
+    detail: (reviewId: number) => `/${PATH.reviewPage.root}/${reviewId}`,
     regist: (treeId: number) =>
-      `${PATH.reviewPage.root}/${PATH.reviewPage.children.regist}/${treeId}`,
+      `/${PATH.reviewPage.root}/${PATH.reviewPage.children.regist}/${treeId}`,
     edit: (reviewId: number) =>
-      `${PATH.reviewPage.root}/${PATH.reviewPage.children.edit}/${reviewId}`,
+      `/${PATH.reviewPage.root}/${PATH.reviewPage.children.edit}/${reviewId}`,
   },
 
   myPage: {
-    root: PATH.myPage.root,
-    savedTrees: `${PATH.myPage.root}/${PATH.myPage.children.savedTrees}`,
-    registedTrees: `${PATH.myPage.root}/${PATH.myPage.children.registedTrees}`,
-    registedReviews: `${PATH.myPage.root}/${PATH.myPage.children.registedReviews}`,
+    root: `/${PATH.myPage.root}`,
+    savedTrees: `/${PATH.myPage.root}/${PATH.myPage.children.savedTrees}`,
+    registedTrees: `/${PATH.myPage.root}/${PATH.myPage.children.registedTrees}`,
+    registedReviews: `/${PATH.myPage.root}/${PATH.myPage.children.registedReviews}`,
   },
 };
 
