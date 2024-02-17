@@ -45,7 +45,7 @@ type PATH_DATABASE = typeof PATH_DATABASE;
 // 제네릭의 인자가 객체라면 객체의 키를 입력하도록 하는 옵셔널 타입
 type IfObjectThenRequire<T> = T extends object ? keyof T : never;
 
-type CreatePath = {
+type GetPath = {
   <P extends keyof PATH_DATABASE>(p: P): PATH_DATABASE[P];
 
   <P extends keyof PATH_DATABASE, D1 extends keyof PATH_DATABASE[P]>(
@@ -64,7 +64,7 @@ type CreatePath = {
   ): PATH_DATABASE[P][D1][D2];
 };
 
-const createPath: CreatePath = <
+const getPath: GetPath = <
   P extends keyof PATH_DATABASE,
   D1 extends keyof PATH_DATABASE[P],
   D2 extends IfObjectThenRequire<PATH_DATABASE[P][D1]>,
@@ -86,4 +86,4 @@ const createPath: CreatePath = <
   return page;
 };
 
-export default createPath;
+export default getPath;
