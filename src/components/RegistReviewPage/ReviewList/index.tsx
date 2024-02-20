@@ -28,7 +28,7 @@ function ReviewItem({
         <S.Image src={image} alt="트리 이미지" />
       </S.FlexBox>
       {tags[0] && <Tag id={parseTagCommentToID(tags[0])} />}
-      <S.AdditionalTags>{tags.length > 2 && `+ ${tags.length - 1}`}</S.AdditionalTags>
+      {tags.length > 2 && <S.AdditionalTags>+ {tags.length - 1}</S.AdditionalTags>}
     </>
   );
 }
