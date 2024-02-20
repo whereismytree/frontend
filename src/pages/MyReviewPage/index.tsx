@@ -1,5 +1,5 @@
 import Navbar from 'components/Navbar';
-import ReviewList from 'components/RegistReviewPage/ReviewList';
+import ReviewList from 'pages/MyReviewPage/ReviewList';
 import Topbar from 'components/Topbar';
 import Guide from 'components/common/Guide';
 import useReviews from './hooks';
