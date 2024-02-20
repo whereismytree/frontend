@@ -4,6 +4,7 @@ import Tag from 'components/common/tag';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
 import { IReviewItem } from 'pages/MyReviewPage/types';
 import ListTitle from 'components/common/ListTitle';
+import getPath from 'utils/getPath';
 import * as S from './style';
 
 function ReviewItem({
@@ -40,8 +41,7 @@ function ReviewList({ reviews }: { reviews: IReviewItem[] }) {
       </S.ReviewListTitleSection>
       {reviews.map((review) => (
         <S.ListItem key={review.reviewId}>
-          {/*  TODO: 리뷰 상세 페이지로 라우팅 해주세요. 리뷰 아이디가 전달되어야 합니다. */}
-          <Link to={`리뷰상세페이지/${review.reviewId}`}>
+          <Link to={getPath('reviewPage', 'detail')(review.reviewId)}>
             <ReviewItem
               image={review.reviewImageUrl}
               treeName={review.treeName}
