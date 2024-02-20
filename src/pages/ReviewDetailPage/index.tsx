@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import TreeInformation from 'components/ReviewPage/TreeInformation';
 import Topbar from 'components/Topbar';
-import { useTreeData } from 'hooks/treeHooks';
 import ReviewProfile from 'components/ReviewPage/ReviewProfile';
 import ReviewContent from 'pages/ReviewDetailPage/ReviewContent';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
@@ -62,9 +60,8 @@ function ReviewDetailPage() {
     canRemove,
     reviewImageUrl,
   } = review;
-  // const { name: treeName, addressType, roadAddress, streetAddress } = treeData;
+
   const parseTags = tags.map((comment) => parseTagCommentToID(comment));
-  // const location = addressType === 'ROAD' ? roadAddress : streetAddress;
 
   const viewSnackBar = () => {
     dispatch(setSnackBarView(true));
@@ -72,9 +69,7 @@ function ReviewDetailPage() {
 
   const handleDelete = () => {
     deleteReview({
-      onSuccess: () => {
-        // TODO: path 상수 작성 후 적용
-      },
+      onSuccess: () => navigate(-2),
     });
   };
 
@@ -90,7 +85,6 @@ function ReviewDetailPage() {
   };
 
   const handleEdit = () => {
-    // TODO: path 상수 작성 후 적용
     navigate(getPath('reviewPage', 'edit')(reviewId));
   };
 
@@ -99,7 +93,8 @@ function ReviewDetailPage() {
       <Topbar.Icon type="tree" />
       <SnackBar during={3000}>URL이 클립보드에 복사되었습니다</SnackBar>
       <S.Main>
-        <TreeInformation treeName={treeName} location="123" src={reviewImageUrl} />
+        {/* TODO: 백엔드에서 리뷰 리스트에 트리 위치 데이터 함께 넘겨주면 location prop에 전달해주세요. */}
+        <TreeInformation treeName={treeName} location="" src={reviewImageUrl} />
         <ReviewProfile
           nickname={nickname}
           profileImageSrc={profileImageUrl}
