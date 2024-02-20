@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import Item from 'components/common/Item';
 import Tag from 'components/common/tag';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
-import { IReviewItem } from 'pages/RegistedReviewPage/types';
+import { IReviewItem } from 'pages/MyReviewPage/types';
 import ListTitle from 'components/common/ListTitle';
+import getPath from 'utils/getPath';
 import * as S from './style';
 
 function ReviewItem({
@@ -27,7 +28,7 @@ function ReviewItem({
         <S.Image src={image} alt="트리 이미지" />
       </S.FlexBox>
       {tags[0] && <Tag id={parseTagCommentToID(tags[0])} />}
-      <S.AdditionalTags>{tags.length > 2 && `+ ${tags.length - 1}`}</S.AdditionalTags>
+      {tags.length > 2 && <S.AdditionalTags>+ {tags.length - 1}</S.AdditionalTags>}
     </>
   );
 }
@@ -40,8 +41,7 @@ function ReviewList({ reviews }: { reviews: IReviewItem[] }) {
       </S.ReviewListTitleSection>
       {reviews.map((review) => (
         <S.ListItem key={review.reviewId}>
-          {/*  TODO: 리뷰 상세 페이지로 라우팅 해주세요. 리뷰 아이디가 전달되어야 합니다. */}
-          <Link to={`리뷰상세페이지/${review.reviewId}`}>
+          <Link to={getPath('reviewPage', 'detail')(review.reviewId)}>
             <ReviewItem
               image={review.reviewImageUrl}
               treeName={review.treeName}

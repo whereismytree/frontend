@@ -12,9 +12,9 @@ import ReviewDetailPage from 'pages/ReviewDetailPage';
 import RegistMap from 'pages/TreeRegi/Map';
 import TreeRegiDetail from 'pages/TreeRegi/Form';
 import Nickname from 'pages/SignIn/ProfileSetting';
-import SavePage from 'pages/SavePage';
-import RegistedTreePage from 'pages/RegistedPage';
-import RegistReviewPage from 'pages/RegistedReviewPage';
+import SavePage from 'pages/SavedTreePage';
+import RegistedTreePage from 'pages/MyTreePage';
+import RegistReviewPage from 'pages/MyReviewPage';
 
 export const Router = () => {
   const landingRoute: RouteObject = {

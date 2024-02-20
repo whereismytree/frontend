@@ -6,8 +6,8 @@ import treeMarker from 'assets/tree_marker.svg';
 import Guide from 'components/common/Guide';
 import TreeList from 'components/TreeList';
 import { useNavigate } from 'react-router-dom';
-import PATH from 'constants/path';
-import useRegistedTree from 'hooks/useRegistedTree';
+import getPath from 'utils/getPath';
+import useRegistedTree from './hooks';
 import * as S from './style';
 
 const RegistedTreePage = () => {
@@ -48,7 +48,7 @@ const RegistedTreePage = () => {
           <Guide.Button
             text="등록한 트리가 없어요"
             btnText="트리 등록하러 가기"
-            onClick={() => navigate(`${PATH.registInfoPage}/search`)}
+            onClick={() => navigate(getPath('treePage', 'regist', 'search'))}
           />
         </S.Wrapper>
       )}

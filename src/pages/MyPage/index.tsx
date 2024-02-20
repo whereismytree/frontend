@@ -1,8 +1,8 @@
 import React from 'react';
 import Topbar from 'components/Topbar';
 import Navbar from 'components/Navbar';
-import OptionList from 'components/MyPage/OptionList';
-import UserInfoSection from 'components/MyPage/UserInfo';
+import OptionList from 'pages/MyPage/components/OptionList';
+import UserInfoSection from 'pages/MyPage/components/UserInfo';
 import useProfile from './hooks';
 import * as S from './style';
 
