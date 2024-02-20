@@ -41,7 +41,10 @@ function ReviewList({ reviews }: { reviews: IReviewItem[] }) {
       </S.ReviewListTitleSection>
       {reviews.map((review) => (
         <S.ListItem key={review.reviewId}>
-          <Link to={getPath('reviewPage', 'detail')(review.reviewId)}>
+          <Link
+            to={getPath('reviewPage', 'detail')(review.reviewId)}
+            state={{ treeName: review.treeName, image: review.reviewImageUrl }}
+          >
             <ReviewItem
               image={review.reviewImageUrl}
               treeName={review.treeName}
