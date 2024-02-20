@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Item from 'components/common/Item';
 import Tag from 'components/common/tag';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
-import { IReviewItem } from 'pages/RegistedReviewPage/types';
+import { IReviewItem } from 'pages/MyReviewPage/types';
 import ListTitle from 'components/common/ListTitle';
 import * as S from './style';
 
