@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import TreeInformation from 'pages/ReviewDetailPage/components/TreeInformation';
 import Topbar from 'components/Topbar';
 import ReviewProfile from 'pages/ReviewDetailPage/components/Profile';
+import TreeItem from 'components/TreeItem';
 import ReviewContent from 'pages/ReviewDetailPage/components/Review';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
 import DropDown from 'pages/ReviewDetailPage/components/KebabDropDown';
@@ -10,6 +10,7 @@ import useReview from 'hooks/useReview';
 import useSnackBar from 'hooks/useSnackBar';
 import getPath from 'utils/getPath';
 import * as S from './style';
+import ReviewImage from './components/ReviewImage';
 
 const validateReviewId = (reviewId: number | undefined) => {
   if (!reviewId) {
@@ -88,14 +89,9 @@ function ReviewDetailPage() {
 
       <S.Main>
         {/* TODO: 백엔드에서 리뷰 리스트에 트리 위치 데이터 함께 넘겨주면 location prop에 전달해주세요. */}
-        <TreeInformation treeName={treeName} location="" src={reviewImageUrl} />
-        <DropDown>
-          <DropDown.Toggle />
-          <DropDown.List>
-            <DropDown.Item onClick={handleShare}>공유하기</DropDown.Item>
-            <DropDown.Item onClick={handleEdit}>수정하기</DropDown.Item>
-          </DropDown.List>
-        </DropDown>
+
+        <TreeItem location="">{treeName}</TreeItem>
+        <ReviewImage src={reviewImageUrl} />
         <ReviewProfile
           nickname={nickname}
           profileImageSrc={profileImageUrl}
