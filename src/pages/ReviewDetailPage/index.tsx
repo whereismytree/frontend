@@ -1,15 +1,13 @@
 import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import TreeInformation from 'components/ReviewPage/TreeInformation';
+import TreeInformation from 'pages/ReviewDetailPage/components/TreeInformation';
 import Topbar from 'components/Topbar';
-import ReviewProfile from 'components/ReviewPage/ReviewProfile';
-import ReviewContent from 'pages/ReviewDetailPage/ReviewContent';
+import ReviewProfile from 'pages/ReviewDetailPage/components/Profile';
+import ReviewContent from 'pages/ReviewDetailPage/components/Review';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
-import DropDown from 'components/ReviewPage/ReviewProfile/DropDown';
-import SnackBar from 'components/SnackBar';
+import DropDown from 'pages/ReviewDetailPage/components/KebabDropDown';
 import useReview from 'hooks/useReview';
-import { useDispatch } from 'react-redux';
-import { setSnackBarView } from 'store/modules/toggleSlice';
+import useSnackBar from 'hooks/useSnackBar';
 import getPath from 'utils/getPath';
 import * as S from './style';
 
@@ -26,7 +24,6 @@ const validateReviewId = (reviewId: number | undefined) => {
 };
 
 const validateTreeData = (treeData: any) => {
-  console.log(treeData);
   if (!treeData) {
     throw new Error('리뷰 상세 페이지를 렌더링하기 위해 Navigate 객체에 state를 전달해주세요.');
   }
@@ -42,11 +39,11 @@ function ReviewDetailPage() {
   const params = useParams();
   const { state: treeData } = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const reviewId = validateReviewId(Number(params.reviewId));
 
   const { review, deleteReview } = useReview(reviewId);
   const { treeName } = validateTreeData(treeData);
+  const { SnackBar, render: renderSnackBar } = useSnackBar();
 
   if (!review) return null;
 
@@ -63,10 +60,6 @@ function ReviewDetailPage() {
 
   const parseTags = tags.map((comment) => parseTagCommentToID(comment));
 
-  const viewSnackBar = () => {
-    dispatch(setSnackBarView(true));
-  };
-
   const handleDelete = () => {
     deleteReview({
       onSuccess: () => navigate(-2),
@@ -78,7 +71,7 @@ function ReviewDetailPage() {
 
     try {
       await navigator.clipboard.writeText(currentUrl);
-      viewSnackBar();
+      renderSnackBar(2);
     } catch (err) {
       console.error('현재 URL을 클립보드에 복사하는 데 실패했습니다.');
     }
@@ -91,10 +84,18 @@ function ReviewDetailPage() {
   return (
     <>
       <Topbar.Icon type="tree" />
-      <SnackBar during={3000}>URL이 클립보드에 복사되었습니다</SnackBar>
+      <SnackBar>URL이 클립보드에 복사되었습니다</SnackBar>
+
       <S.Main>
         {/* TODO: 백엔드에서 리뷰 리스트에 트리 위치 데이터 함께 넘겨주면 location prop에 전달해주세요. */}
         <TreeInformation treeName={treeName} location="" src={reviewImageUrl} />
+        <DropDown>
+          <DropDown.Toggle />
+          <DropDown.List>
+            <DropDown.Item onClick={handleShare}>공유하기</DropDown.Item>
+            <DropDown.Item onClick={handleEdit}>수정하기</DropDown.Item>
+          </DropDown.List>
+        </DropDown>
         <ReviewProfile
           nickname={nickname}
           profileImageSrc={profileImageUrl}
