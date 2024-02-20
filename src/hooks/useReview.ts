@@ -14,7 +14,7 @@ interface ReviewResponse {
   canRemove: boolean;
 }
 
-const useReview = (reviewId: string) => {
+const useReview = (reviewId: number) => {
   const { data, isError: reviewError } = useApiQuery<ReviewResponse>(`v1/reviews/${reviewId}`);
   const { mutate, isError: reviewDeleteError } = useApiMutation(`v1/reviews/${reviewId}`, 'DELETE');
 

@@ -1,37 +1,56 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import TreeInformation from 'components/ReviewPage/TreeInformation';
 import Topbar from 'components/Topbar';
 import { useTreeData } from 'hooks/treeHooks';
-import { useDeleteReview, useReviewData } from 'hooks/reviewHooks';
 import ReviewProfile from 'components/ReviewPage/ReviewProfile';
-import ReviewContent from 'components/ReviewPage/ReviewContent';
-import parseCommentToTagID from 'utils/parseCommentToTagID';
+import ReviewContent from 'pages/ReviewDetailPage/ReviewContent';
+import parseTagCommentToID from 'utils/parseTagCommentToID';
 import DropDown from 'components/ReviewPage/ReviewProfile/DropDown';
 import SnackBar from 'components/SnackBar';
+import useReview from 'hooks/useReview';
 import { useDispatch } from 'react-redux';
 import { setSnackBarView } from 'store/modules/toggleSlice';
+import getPath from 'utils/getPath';
 import * as S from './style';
 
-const validateParamData = (data: string | undefined) => {
-  if (!data) {
-    throw new Error('URL 식별자 데이터가 존재하지 않습니다.');
+const validateReviewId = (reviewId: number | undefined) => {
+  if (!reviewId) {
+    throw new Error('리뷰 상세 페이지를 렌더링하기 위해 PATH에 리뷰 아이디를 전달해주세요.');
   }
 
-  return data;
+  if (Number.isNaN(reviewId)) {
+    throw new Error('리뷰 상세 페이지에 전달된 리뷰 아이디가 숫자 데이터가 아닙니다.');
+  }
+
+  return reviewId;
+};
+
+const validateTreeData = (treeData: any) => {
+  console.log(treeData);
+  if (!treeData) {
+    throw new Error('리뷰 상세 페이지를 렌더링하기 위해 Navigate 객체에 state를 전달해주세요.');
+  }
+
+  if (!treeData.treeName || !treeData.image) {
+    throw new Error('리뷰 상세 페이지를 렌더링하기 위해 Navigate 객체에 state를 전달해주세요.');
+  }
+
+  return treeData as { treeName: string; image: string };
 };
 
 function ReviewDetailPage() {
   const params = useParams();
+  const { state: treeData } = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const treeId = validateParamData(params.treeId);
-  const reviewId = validateParamData(params.reviewId);
+  const reviewId = validateReviewId(Number(params.reviewId));
 
-  const treeData = useTreeData(treeId);
-  const reviewData = useReviewData(reviewId);
-  const deleteReview = useDeleteReview(reviewId);
+  const { review, deleteReview } = useReview(reviewId);
+  const { treeName } = validateTreeData(treeData);
 
-  if (!reviewData || !treeData) return null;
+  if (!review) return null;
 
   const {
     nickname,
@@ -42,10 +61,10 @@ function ReviewDetailPage() {
     canEdit,
     canRemove,
     reviewImageUrl,
-  } = reviewData;
-  const { name: treeName, addressType, roadAddress, streetAddress } = treeData;
-  const parseTags = tags.map((comment) => parseCommentToTagID(comment));
-  const location = addressType === 'ROAD' ? roadAddress : streetAddress;
+  } = review;
+  // const { name: treeName, addressType, roadAddress, streetAddress } = treeData;
+  const parseTags = tags.map((comment) => parseTagCommentToID(comment));
+  // const location = addressType === 'ROAD' ? roadAddress : streetAddress;
 
   const viewSnackBar = () => {
     dispatch(setSnackBarView(true));
@@ -72,6 +91,7 @@ function ReviewDetailPage() {
 
   const handleEdit = () => {
     // TODO: path 상수 작성 후 적용
+    navigate(getPath('reviewPage', 'edit')(reviewId));
   };
 
   return (
@@ -79,7 +99,7 @@ function ReviewDetailPage() {
       <Topbar.Icon type="tree" />
       <SnackBar during={3000}>URL이 클립보드에 복사되었습니다</SnackBar>
       <S.Main>
-        <TreeInformation treeName={treeName} location={location} src={reviewImageUrl} />
+        <TreeInformation treeName={treeName} location="123" src={reviewImageUrl} />
         <ReviewProfile
           nickname={nickname}
           profileImageSrc={profileImageUrl}
@@ -90,9 +110,9 @@ function ReviewDetailPage() {
           <DropDown>
             <DropDown.Toggle />
             <DropDown.List>
-              <DropDown.Item onClick={() => handleShare()}>공유하기</DropDown.Item>
-              <DropDown.Item onClick={() => handleEdit()}>수정하기</DropDown.Item>
-              <DropDown.Item onClick={() => handleDelete()}>삭제하기</DropDown.Item>
+              <DropDown.Item onClick={handleShare}>공유하기</DropDown.Item>
+              <DropDown.Item onClick={handleEdit}>수정하기</DropDown.Item>
+              <DropDown.Item onClick={handleDelete}>삭제하기</DropDown.Item>
             </DropDown.List>
           </DropDown>
         </ReviewProfile>
