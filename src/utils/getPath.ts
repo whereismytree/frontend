@@ -1,9 +1,7 @@
 import PATH from 'constants/path';
 
 const PATH_DATABASE = {
-  landingPage: {
-    root: `/${PATH.landingPage}`,
-  },
+  landingPage: `/${PATH.landingPage}`,
 
   mainPage: {
     root: `/${PATH.mainPage.root}`,

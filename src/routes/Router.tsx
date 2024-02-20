@@ -42,7 +42,7 @@ export const Router = () => {
   };
 
   const treeRoute: RouteObject = {
-    path: `${PATH.treePage.root}/*`,
+    path: PATH.treePage.root,
     element: <Outlet />,
     children: [
       { path: PATH.treePage.children.dynamicParam, element: <TreeInfo /> },
