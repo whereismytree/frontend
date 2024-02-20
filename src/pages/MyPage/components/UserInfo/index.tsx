@@ -18,15 +18,15 @@ function UserInfoSection({
       <S.Name>{nickname}</S.Name>
       <S.LoginInfo $platform={platform}>{email}</S.LoginInfo>
       <S.ActivitiesWrapper>
-        <S.Activity to={`.${getPath('myPage', 'registedTrees')}`}>
+        <S.Activity to={getPath('myPage', 'registedTrees')}>
           <p>{postedTreesCount}</p>
           <p>등록한 트리</p>
         </S.Activity>
-        <S.Activity to={`${getPath('myPage', 'savedTrees')}`}>
+        <S.Activity to={getPath('myPage', 'savedTrees')}>
           <p>{savedTreesCount}</p>
           <p> 저장한 트리</p>
         </S.Activity>
-        <S.Activity to={`${getPath('myPage', 'registedReviews')}`}>
+        <S.Activity to={getPath('myPage', 'registedReviews')}>
           <p>{reviewsCount}</p>
           <p>내가 쓴 후기</p>
         </S.Activity>
