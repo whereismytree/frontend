@@ -1,62 +1,54 @@
-import React from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 import KebabButton from 'components/common/KebabButton';
-import { useDispatch, useSelector } from 'react-redux';
-import { TRootState } from 'store';
-import { setDropDownView } from 'store/modules/toggleSlice';
 import * as S from './style';
 
-function ToggleKebabButton() {
-  const {
-    dropDown: { view },
-  } = useSelector((state: TRootState) => state.toggle);
-  const dispatch = useDispatch();
+type ToggleContext = {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const ToggleContext = createContext<ToggleContext>({ open: false, setOpen: () => {} });
 
-  return (
-    <KebabButton
-      isOpen={view}
-      onClick={() => {
-        dispatch(setDropDownView(!view));
-      }}
-    />
-  );
+function ToggleKebabButton() {
+  const { open, setOpen } = useContext(ToggleContext);
+
+  return <KebabButton active={open} onClick={() => setOpen((prev) => !prev)} />;
 }
 
-function DropDown({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>;
+function KebabDropDown({ children }: { children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const value = useMemo(() => {
+    return { open, setOpen };
+  }, [open]);
+
+  return <ToggleContext.Provider value={value}>{children}</ToggleContext.Provider>;
 }
 
 function DropDownList({ children }: { children: JSX.Element[] }) {
-  const {
-    dropDown: { view },
-  } = useSelector((state: TRootState) => state.toggle);
+  const { open } = useContext(ToggleContext);
 
-  return view ? <S.OptionList>{children}</S.OptionList> : null;
+  return open ? <S.List>{children}</S.List> : null;
 }
 
 function DropDownItem({ children, onClick }: { children: string; onClick: () => void }) {
-  const dispatch = useDispatch();
-
-  const closeDropDown = () => {
-    dispatch(setDropDownView(false));
-  };
+  const { setOpen } = useContext(ToggleContext);
 
   return (
-    <S.Option>
+    <S.Item>
       <button
         type="button"
         onClick={() => {
-          closeDropDown();
+          setOpen(false);
           onClick();
         }}
       >
         {children}
       </button>
-    </S.Option>
+    </S.Item>
   );
 }
 
-DropDown.Toggle = ToggleKebabButton;
-DropDown.List = DropDownList;
-DropDown.Item = DropDownItem;
+KebabDropDown.Toggle = ToggleKebabButton;
+KebabDropDown.List = DropDownList;
+KebabDropDown.Item = DropDownItem;
 
-export default DropDown;
+export default KebabDropDown;
