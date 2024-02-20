@@ -18,7 +18,7 @@ const parseCreateDate = (createDate: string) => {
   return formatDateWithDayOfWeek(date, '.').slice(2).replace(/\(|\)/g, ' ').trim();
 };
 
-function ReviewProfile({
+function Profile({
   profileImageSrc,
   nickname,
   createDate,
@@ -47,4 +47,4 @@ function ReviewProfile({
   );
 }
 
-export default ReviewProfile;
+export default Profile;
