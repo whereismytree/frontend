@@ -24,7 +24,7 @@ export const ViewButton = styled.button`
 `;
 
 export const RegistTreeList = styled.ul`
-  max-height: 396px;
+  max-height: calc(40vh);
   overflow: scroll;
 `;
 
