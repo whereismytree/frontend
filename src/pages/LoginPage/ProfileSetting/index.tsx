@@ -1,60 +1,50 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import ProfileImageSetting from 'pages/LoginPage/ProfileSetting/components/ImageSetting';
+import ProfileImageSetting from 'pages/LoginPage/ProfileSetting/ProfileImage';
+import NicknameSetting from 'pages/LoginPage/ProfileSetting/Nickname';
+import useApiMutation from 'hooks/useApiMutation';
 import { useNavigate } from 'react-router-dom';
-import getPath from 'utils/getPath';
 import Topbar from 'components/Topbar';
-import { useProfile } from './hooks';
-import ProfileSettingProvider from './provider';
-import { ICreateProfileAPIBody } from './types';
 import * as S from './style';
-import SubmitButton from './components/SubmitButton';
-import NicknameSetting from './components/NicknameSetting';
 
-function ProfileSetting() {
-  const navigate = useNavigate();
-  const { create } = useProfile();
-  const methods = useForm<ICreateProfileAPIBody>({ reValidateMode: 'onChange' });
-  const { handleSubmit } = methods;
-
-  const createProfile = (data: Omit<ICreateProfileAPIBody, 'profileImageUrl'>) => {
-    create(
-      { ...data, profileImageUrl: 'http://s3.example.com/image1' },
-      {
-        onSuccess: () => navigate(getPath('mainPage', 'root')),
-      },
-    );
-
-    const createProfile = (data: Omit<ICreateProfileAPIBody, 'profileImageUrl'>) => {
-      create(
-        { ...data, profileImageUrl: 'http://s3.example.com/image1' },
-        {
-          onSuccess: () => navigate(getPath('mainPage', 'root')),
-        },
-      );
-    };
-
-    return (
-      <>
-        <Topbar.Icon type="cookie" />
-        <FormProvider {...methods}>
-          <ProfileSettingProvider>
-            <S.Wrapper onSubmit={handleSubmit(createProfile)}>
-              <ProfileImageSetting />
-              <NicknameSetting />
-              <SubmitButton />
-            </S.Wrapper>
-          </ProfileSettingProvider>
-          <ProfileSettingProvider>
-            <S.Wrapper onSubmit={handleSubmit(createProfile)}>
-              <ProfileImageSetting />
-              <NicknameSetting />
-              <SubmitButton />
-            </S.Wrapper>
-          </ProfileSettingProvider>
-        </FormProvider>
-      </>
-    );
-  };
+interface IProfile {
+  nickname: string;
+  profileImageUrl: string;
 }
 
-export default ProfileSetting;
+function Nickname() {
+  const methods = useForm<IProfile>();
+  const { handleSubmit } = methods;
+  const navigate = useNavigate();
+
+  const { mutate } = useApiMutation<{ nickname: string; profileImageUrl: string }>(
+    'v1/my/profile',
+    'POST',
+    {
+      onSuccess: () => {
+        navigate('');
+      },
+
+      onError: (e) => {
+        console.error(e);
+      },
+    },
+  );
+
+  const createProfile = (data: Omit<IProfile, 'profileImageUrl'>) => {
+    mutate({ ...data, profileImageUrl: 'http://s3.example.com/image1' });
+  };
+
+  return (
+    <>
+      <Topbar.Icon type="cookie" />
+      <FormProvider {...methods}>
+        <S.Wrapper onSubmit={handleSubmit(createProfile)}>
+          <ProfileImageSetting />
+          <NicknameSetting />
+        </S.Wrapper>
+      </FormProvider>
+    </>
+  );
+}
+
+export default Nickname;

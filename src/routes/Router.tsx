@@ -1,14 +1,21 @@
 import { useRoutes, RouteObject, Outlet } from 'react-router-dom';
 import { MainPage } from 'pages/MainPage';
 import { SearchPage } from 'pages/SearchPage';
-import { TreeInfo } from 'pages/TreeInfo';
-import { SignIn } from 'pages/SignIn/SocialLogin';
+import { TreeInfo } from 'pages/TreeInfoPage';
 import { MyPage } from 'pages/MyPage';
 import { LandingPage } from 'pages/LandingPage';
 import SignIn from 'pages/LoginPage/SocialLogin';
 import PATH from 'constants/path';
-import SearchLocation from 'pages/TreeRegi/Search';
-import Redirect from 'pages/SignIn/Redirect';
+import SearchLocation from 'pages/TreeRegistPage/AddressSearch';
+import Redirect from 'pages/LoginPage/Redirect';
+import ReviewDetailPage from 'pages/ReviewDetailPage';
+import RegistMap from 'pages/TreeRegistPage/LocationPickerMap';
+import TreeRegiDetail from 'pages/TreeRegistPage/TreeDetailForm';
+import Nickname from 'pages/LoginPage/ProfileSetting';
+import SavePage from 'pages/SavedTreePage';
+import RegistedTreePage from 'pages/MyTreePage';
+import RegistReviewPage from 'pages/MyReviewPage';
+import ReviewRegistAndEditPage from 'pages/ReviewRegistAndEditPage';
 
 export const Router = () => {
   const landingRoute: RouteObject = {
@@ -65,33 +72,32 @@ export const Router = () => {
     children: [
       { path: PATH.reviewPage.dynamicParam, element: <ReviewDetailPage /> },
       // 리뷰 등록 페이지
-      { path: `${PATH.reviewPage.children.regist}/:treeId`, element: null },
+      { path: `${PATH.reviewPage.children.regist}/:treeId`, element: <ReviewRegistAndEditPage /> },
       // 리뷰 수정 페이지
-      { path: `${PATH.reviewPage.children.edit}/:reviewId`, element: null },
+      { path: `${PATH.reviewPage.children.edit}/:reviewId`, element: <ReviewRegistAndEditPage /> },
     ],
   };
 
-  const myRoutes: RouteObject = {
-    path: PATH.myPage,
-    element: <MyPage />,
+  const myRoute: RouteObject = {
+    path: PATH.myPage.root,
+    element: <Outlet />,
+    children: [
+      { path: '', element: <MyPage /> },
+      { path: PATH.myPage.children.savedTrees, element: <SavePage /> },
+      { path: PATH.myPage.children.registedTrees, element: <RegistedTreePage /> },
+      { path: PATH.myPage.children.registedReviews, element: <RegistReviewPage /> },
+    ],
   };
 
-  const saveRoutes: RouteObject = {
-    path: PATH.savePage,
-    element: <SavePage />,
-  };
-
-  const errorRoutes: RouteObject = {
-    path: PATH.errorPage,
-    element: <ErrorPage />,
-  };
-
-  const redirectdRoute: RouteObject = {
-    path: PATH.redirectPage,
-    element: <Redirect />,
-  };
-
-  const routes = [landingRoute, mainRoute, treeRoute, reviewRoute, loginRoute, myRoute];
+  const routes = [
+    landingRoute,
+    mainRoute,
+    treeRoute,
+    reviewRoute,
+    loginRoute,
+    loginRedirectRoute,
+    myRoute,
+  ];
 
   return useRoutes(routes);
 };
