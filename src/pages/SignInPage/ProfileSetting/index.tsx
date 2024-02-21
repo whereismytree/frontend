@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import ProfileImageSetting from 'pages/LoginPage/ProfileSetting/components/ImageSetting';
-import NicknameSetting from 'pages/LoginPage/ProfileSetting/components/NicknameSetting';
+import ProfileImageSetting from 'components/SignIn/ProfileSetting/ProfileImage';
+import NicknameSetting from 'components/SignIn/ProfileSetting/Nickname';
 import useApiMutation from 'hooks/useApiMutation';
 import { useNavigate } from 'react-router-dom';
 import Topbar from 'components/Topbar';
@@ -22,7 +22,7 @@ function Nickname() {
     'POST',
     {
       onSuccess: () => {
-        navigate(PATH.mainPage.root);
+        navigate(PATH.mainPage);
       },
 
       onError: (e) => {
