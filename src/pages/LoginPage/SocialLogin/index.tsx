@@ -1,4 +1,5 @@
 import React from 'react';
+import getPath from 'utils/getPath';
 import * as S from './style';
 
 function SignIn() {
