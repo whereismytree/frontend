@@ -37,8 +37,15 @@ export const Router = () => {
     children: [
       { path: '', element: <SignIn /> },
       { path: PATH.loginPage.children.profileSetting, element: <Nickname /> },
-      { path: PATH.loginPage.children.redirect, element: <Redirect /> },
+      // TODO: Redirect URI를 설정할 수 있는 기능이 백엔드에 정의되지 않아 loginRedirectRoute를 따로 작성해 구현했습니다.
+      // 백엔드에 구현완료 되면 아래 주석을 풀고 getPath 유틸리티 함수를 통해 리다이렉트 기능 구현하면 됩니다.
+      // { path: PATH.loginPage.children.redirect, element: <Redirect /> },
     ],
+  };
+
+  const loginRedirectRoute: RouteObject = {
+    path: 'oauth/redirect',
+    element: <Redirect />,
   };
 
   const treeRoute: RouteObject = {
@@ -81,7 +88,15 @@ export const Router = () => {
     ],
   };
 
-  const routes = [landingRoute, mainRoute, treeRoute, reviewRoute, loginRoute, myRoute];
+  const routes = [
+    landingRoute,
+    mainRoute,
+    treeRoute,
+    reviewRoute,
+    loginRoute,
+    loginRedirectRoute,
+    myRoute,
+  ];
 
   return useRoutes(routes);
 };
