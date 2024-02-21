@@ -1,13 +1,9 @@
 import React from 'react';
-import getPath from 'utils/getPath';
 import * as S from './style';
 
 export const SignIn = () => {
   const SERVER_URI = process.env.REACT_APP_TREE_API_URL;
-  const googleLoginUrl = `${SERVER_URI}oauth2/authorization/google?redirect_uri=${SERVER_URI}${getPath(
-    'loginPage',
-    'redirect',
-  )}`;
+  const googleLoginUrl = `${SERVER_URI}oauth2/authorization/google`;
   const kakaoLoginUrl = `${SERVER_URI}oauth2/authorization/kakao`;
 
   return (
