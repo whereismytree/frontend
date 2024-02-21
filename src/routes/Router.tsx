@@ -3,6 +3,7 @@ import { MainPage } from 'pages/MainPage';
 import { SearchPage } from 'pages/SearchPage';
 import { TreeInfo } from 'pages/TreeInfo';
 import { SignIn } from 'pages/SignIn/SocialLogin';
+import { SignIn } from 'pages/SignIn/SocialLogin';
 import { MyPage } from 'pages/MyPage';
 import { LandingPage } from 'pages/LandingPage';
 import PATH from 'constants/path';
