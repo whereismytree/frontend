@@ -2,7 +2,7 @@ import Tag from 'components/common/tag';
 import TAG from 'constants/tag';
 import * as S from './style';
 
-function ReviewContent({ content, tags }: { content: string; tags: (typeof TAG)[number]['id'][] }) {
+function Review({ content, tags }: { content: string; tags: (typeof TAG)[number]['id'][] }) {
   return (
     <>
       <S.ReviewText>{content}</S.ReviewText>
@@ -15,4 +15,4 @@ function ReviewContent({ content, tags }: { content: string; tags: (typeof TAG)[
   );
 }
 
-export default ReviewContent;
+export default Review;

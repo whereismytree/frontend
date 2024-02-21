@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const OptionList = styled.ul`
+export const List = styled.ul`
   position: absolute;
   top: 100%;
   right: 0;
@@ -10,7 +10,7 @@ export const OptionList = styled.ul`
   border-radius: 5px;
 `;
 
-export const Option = styled.li`
+export const Item = styled.li`
   font-size: 1rem;
   font-weight: 500;
 
