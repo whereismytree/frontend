@@ -2,15 +2,19 @@ import { useRoutes, RouteObject, Outlet } from 'react-router-dom';
 import { MainPage } from 'pages/MainPage';
 import { SearchPage } from 'pages/SearchPage';
 import { TreeInfo } from 'pages/TreeInfo';
-import { SignIn } from 'pages/SignIn/SocialLogin';
+import { SignIn } from 'pages/LoginPage/SocialLogin';
 import { MyPage } from 'pages/MyPage';
 import { LandingPage } from 'pages/LandingPage';
 import PATH from 'constants/path';
-import Redirect from 'pages/SignIn/Redirect';
-import LocationMap from 'pages/TreeRegi/Map';
-import LocationSearch from 'pages/TreeRegi/Search';
+import SearchLocation from 'pages/TreeRegi/Search';
+import Redirect from 'pages/LoginPage/Redirect';
+import ReviewDetailPage from 'pages/ReviewDetailPage';
+import RegistMap from 'pages/TreeRegi/Map';
 import TreeRegiDetail from 'pages/TreeRegi/Form';
-import Nickname from 'pages/SignIn/ProfileSetting';
+import Nickname from 'pages/LoginPage/ProfileSetting';
+import SavePage from 'pages/SavedTreePage';
+import RegistedTreePage from 'pages/MyTreePage';
+import RegistReviewPage from 'pages/MyReviewPage';
 
 export const Router = () => {
   const landingRoute: RouteObject = {

@@ -1,10 +1,14 @@
 import React from 'react';
-import PATH from 'constants/path';
+import getPath from 'utils/getPath';
 import * as S from './style';
 
 export const SignIn = () => {
-  const googleLoginUrl = `${process.env.REACT_APP_TREE_API_URL}oauth2/authorization/google`;
-  const kakaoLoginUrl = `${process.env.REACT_APP_TREE_API_URL}oauth2/authorization/kakao`;
+  const SERVER_URI = process.env.REACT_APP_TREE_API_URL;
+  const googleLoginUrl = `${SERVER_URI}oauth2/authorization/google?redirect_uri=${SERVER_URI}${getPath(
+    'loginPage',
+    'redirect',
+  )}`;
+  const kakaoLoginUrl = `${SERVER_URI}oauth2/authorization/kakao`;
 
   return (
     <S.BackDrop>
@@ -21,7 +25,7 @@ export const SignIn = () => {
             <strong>Kakao</strong>로 계속
           </S.LoginButton>
         </S.LoginButtonWrapper>
-        <S.SkipButton to={PATH.mainPage}>저쩔추억! Skip</S.SkipButton>
+        <S.SkipButton to="">저쩔추억! Skip</S.SkipButton>
       </S.Modal>
     </S.BackDrop>
   );
