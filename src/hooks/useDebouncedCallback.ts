@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 type ElementType<T> = T extends (infer U)[] ? U : never;
 
 type useDebouncedCallback = {
+  (func: () => void, delay?: number): () => void;
   <T>(func: (arg: T) => void, delay?: number): (arg: T) => void;
   <T extends any[]>(func: (...args: T) => void, delay?: number): (...args: T) => void;
 };
