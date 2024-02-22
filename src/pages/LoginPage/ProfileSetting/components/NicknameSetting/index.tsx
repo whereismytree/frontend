@@ -5,8 +5,7 @@ import ValidateResult from './ValidateResult';
 import * as S from './style';
 
 function NicknameSetting() {
-  const { watch } = useFormContext();
-  const nickname = watch('nickname');
+  const isHaveNickname = !!useFormContext().watch('nickname');
 
   return (
     <>
@@ -14,7 +13,7 @@ function NicknameSetting() {
       <S.InputWrapper>
         <NicknameInput />
         <DupCheckButton />
-        {nickname && <ValidateResult />}
+        {isHaveNickname && <ValidateResult />}
       </S.InputWrapper>
     </>
   );
