@@ -13,10 +13,3 @@ export const InputWrapper = styled.div`
   gap: 8px;
   margin-bottom: 55px;
 `;
-
-export const DupButton = styled.button`
-  border-radius: 5px;
-  padding: 8px 15px;
-  flex-shrink: 0;
-  background-color: var(--grey-light);
-`;
