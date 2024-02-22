@@ -5,7 +5,7 @@ import ReviewProfile from 'pages/ReviewDetailPage/components/Profile';
 import TreeItem from 'components/TreeItem';
 import ReviewContent from 'pages/ReviewDetailPage/components/Review';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
-import DropDown from 'pages/ReviewDetailPage/components/KebabDropDown';
+import KebabDropDown from 'pages/ReviewDetailPage/components/KebabDropDown';
 import useReview from 'hooks/useReview';
 import useSnackBar from 'hooks/useSnackBar';
 import getPath from 'utils/getPath';
@@ -25,11 +25,8 @@ const validateReviewId = (reviewId: number | undefined) => {
 };
 
 const validateTreeData = (treeData: any) => {
-  if (!treeData) {
-    throw new Error('리뷰 상세 페이지를 렌더링하기 위해 Navigate 객체에 state를 전달해주세요.');
-  }
-
-  if (!treeData.treeName || !treeData.image) {
+  // TODO: treeData.location도 validate 및 반환 필요
+  if (!treeData || !treeData.treeName || !treeData.image) {
     throw new Error('리뷰 상세 페이지를 렌더링하기 위해 Navigate 객체에 state를 전달해주세요.');
   }
 
@@ -86,10 +83,8 @@ function ReviewDetailPage() {
     <>
       <Topbar.Icon type="tree" />
       <SnackBar>URL이 클립보드에 복사되었습니다</SnackBar>
-
       <S.Main>
         {/* TODO: 백엔드에서 리뷰 리스트에 트리 위치 데이터 함께 넘겨주면 location prop에 전달해주세요. */}
-
         <TreeItem location="">{treeName}</TreeItem>
         <ReviewImage src={reviewImageUrl} />
         <ReviewProfile
@@ -99,14 +94,14 @@ function ReviewDetailPage() {
           canEdit={canEdit}
           canRemove={canRemove}
         >
-          <DropDown>
-            <DropDown.Toggle />
-            <DropDown.List>
-              <DropDown.Item onClick={handleShare}>공유하기</DropDown.Item>
-              <DropDown.Item onClick={handleEdit}>수정하기</DropDown.Item>
-              <DropDown.Item onClick={handleDelete}>삭제하기</DropDown.Item>
-            </DropDown.List>
-          </DropDown>
+          <KebabDropDown>
+            <KebabDropDown.Toggle />
+            <KebabDropDown.List>
+              <KebabDropDown.Item onClick={handleShare}>공유하기</KebabDropDown.Item>
+              <KebabDropDown.Item onClick={handleEdit}>수정하기</KebabDropDown.Item>
+              <KebabDropDown.Item onClick={handleDelete}>삭제하기</KebabDropDown.Item>
+            </KebabDropDown.List>
+          </KebabDropDown>
         </ReviewProfile>
         <ReviewContent content={content} tags={parseTags} />
       </S.Main>
