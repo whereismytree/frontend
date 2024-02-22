@@ -5,7 +5,7 @@ function ValidateResult() {
   const {
     formState: { isValid, errors },
   } = useFormContext();
-  console.log(errors);
+
   return isValid ? (
     <S.ValidText>좋아요!</S.ValidText>
   ) : (
