@@ -25,12 +25,11 @@ const validateReviewId = (reviewId: number | undefined) => {
 };
 
 const validateTreeData = (treeData: any) => {
-  // TODO: treeData.location도 validate 및 반환 필요
-  if (!treeData || !treeData.treeName || !treeData.image) {
+  if (!treeData || !treeData.treeName || !treeData.location) {
     throw new Error('리뷰 상세 페이지를 렌더링하기 위해 Navigate 객체에 state를 전달해주세요.');
   }
 
-  return treeData as { treeName: string; image: string };
+  return treeData as { treeName: string; location: string };
 };
 
 function ReviewDetailPage() {
@@ -40,7 +39,7 @@ function ReviewDetailPage() {
   const reviewId = validateReviewId(Number(params.reviewId));
 
   const { review, deleteReview } = useReview(reviewId);
-  const { treeName } = validateTreeData(treeData);
+  const { treeName, location } = validateTreeData(treeData);
   const { SnackBar, render: renderSnackBar } = useSnackBar();
 
   if (!review) return null;
@@ -84,8 +83,7 @@ function ReviewDetailPage() {
       <Topbar.Icon type="tree" />
       <SnackBar>URL이 클립보드에 복사되었습니다</SnackBar>
       <S.Main>
-        {/* TODO: 백엔드에서 리뷰 리스트에 트리 위치 데이터 함께 넘겨주면 location prop에 전달해주세요. */}
-        <TreeItem location="">{treeName}</TreeItem>
+        <TreeItem location={location}>{treeName}</TreeItem>
         <ReviewImage src={reviewImageUrl} />
         <ReviewProfile
           nickname={nickname}
