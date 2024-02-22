@@ -5,13 +5,13 @@ const PATH_DATABASE = {
 
   mainPage: {
     root: `/${PATH.mainPage.root}`,
-    search: `${PATH.mainPage.root}/${PATH.mainPage.children.search}`,
+    search: `/${PATH.mainPage.root}/${PATH.mainPage.children.search}`,
   },
 
   loginPage: {
     root: `/${PATH.loginPage.root}`,
-    redirect: `${PATH.loginPage.children.redirect}`,
-    profileSetting: `${PATH.loginPage.children.profileSetting}`,
+    redirect: `${PATH.loginPage.root}/${PATH.loginPage.children.redirect}`,
+    profileSetting: `${PATH.loginPage.root}/${PATH.loginPage.children.profileSetting}`,
   },
 
   treePage: {
