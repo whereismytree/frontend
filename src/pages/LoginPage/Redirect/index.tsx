@@ -24,7 +24,7 @@ function Redirect() {
     }
   }, []);
 
-  return <div />;
+  return null;
 }
 
 export default Redirect;
