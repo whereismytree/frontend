@@ -39,21 +39,31 @@ function ReviewList({ reviews }: { reviews: IReviewItem[] }) {
       <S.ReviewListTitleSection>
         <ListTitle count={reviews.length}>내가 쓴 후기</ListTitle>
       </S.ReviewListTitleSection>
-      {reviews.map((review) => (
-        <S.ListItem key={review.reviewId}>
-          <Link
-            to={getPath('reviewPage', 'detail')(review.reviewId)}
-            state={{ treeName: review.treeName, image: review.reviewImageUrl }}
-          >
-            <ReviewItem
-              image={review.reviewImageUrl}
-              treeName={review.treeName}
-              content={review.content}
-              tags={review.tags}
-            />
-          </Link>
-        </S.ListItem>
-      ))}
+      {reviews.map((review) => {
+        const {
+          tree: { treeName, address },
+          reviewId,
+          reviewImageUrl,
+          content,
+          tags,
+        } = review;
+
+        return (
+          <S.ListItem key={reviewId}>
+            <Link
+              to={getPath('reviewPage', 'detail')(reviewId)}
+              state={{ treeName, location: address }}
+            >
+              <ReviewItem
+                image={reviewImageUrl}
+                treeName={treeName}
+                content={content}
+                tags={tags}
+              />
+            </Link>
+          </S.ListItem>
+        );
+      })}
     </S.ReviewList>
   );
 }
