@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import Item from 'components/common/Item';
 import Tag from 'components/common/tag';
+import getPath from 'utils/getPath';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
 import { IReviewItem } from 'pages/MyReviewPage/types';
 import ListTitle from 'components/common/ListTitle';
-import getPath from 'utils/getPath';
 import * as S from './style';
 
 function ReviewItem({
