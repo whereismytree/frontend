@@ -13,7 +13,7 @@ import NicknameSetting from './components/NicknameSetting';
 function ProfileSetting() {
   const navigate = useNavigate();
   const { create } = useProfile();
-  const methods = useForm<ICreateProfileAPIBody>({ reValidateMode: 'onChange' });
+  const methods = useForm<ICreateProfileAPIBody>({ mode: 'onChange' });
   const { handleSubmit } = methods;
 
   const createProfile = (data: Omit<ICreateProfileAPIBody, 'profileImageUrl'>) => {
@@ -23,38 +23,22 @@ function ProfileSetting() {
         onSuccess: () => navigate(getPath('mainPage', 'root')),
       },
     );
-
-    const createProfile = (data: Omit<ICreateProfileAPIBody, 'profileImageUrl'>) => {
-      create(
-        { ...data, profileImageUrl: 'http://s3.example.com/image1' },
-        {
-          onSuccess: () => navigate(getPath('mainPage', 'root')),
-        },
-      );
-    };
-
-    return (
-      <>
-        <Topbar.Icon type="cookie" />
-        <FormProvider {...methods}>
-          <ProfileSettingProvider>
-            <S.Wrapper onSubmit={handleSubmit(createProfile)}>
-              <ProfileImageSetting />
-              <NicknameSetting />
-              <SubmitButton />
-            </S.Wrapper>
-          </ProfileSettingProvider>
-          <ProfileSettingProvider>
-            <S.Wrapper onSubmit={handleSubmit(createProfile)}>
-              <ProfileImageSetting />
-              <NicknameSetting />
-              <SubmitButton />
-            </S.Wrapper>
-          </ProfileSettingProvider>
-        </FormProvider>
-      </>
-    );
   };
+
+  return (
+    <>
+      <Topbar.Icon type="cookie" />
+      <FormProvider {...methods}>
+        <ProfileSettingProvider>
+          <S.Wrapper onSubmit={handleSubmit(createProfile)}>
+            <ProfileImageSetting />
+            <NicknameSetting />
+            <SubmitButton />
+          </S.Wrapper>
+        </ProfileSettingProvider>
+      </FormProvider>
+    </>
+  );
 }
 
 export default ProfileSetting;
