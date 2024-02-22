@@ -13,7 +13,7 @@ import NicknameSetting from './components/NicknameSetting';
 function ProfileSetting() {
   const navigate = useNavigate();
   const { create } = useProfile();
-  const methods = useForm<ICreateProfileAPIBody>({ reValidateMode: 'onChange' });
+  const methods = useForm<ICreateProfileAPIBody>({ mode: 'onChange' });
   const { handleSubmit } = methods;
 
   const createProfile = (data: Omit<ICreateProfileAPIBody, 'profileImageUrl'>) => {
