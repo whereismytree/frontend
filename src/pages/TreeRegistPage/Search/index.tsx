@@ -1,32 +1,16 @@
-import Search from 'pages/TreeRegistPage/Search/components';
-import usePlaceSearch from 'hooks/usePlaceSearch';
-import { useSelector } from 'react-redux';
-import { TRootState } from 'store';
 import Topbar from 'components/Topbar';
 import Navbar from 'components/Navbar';
+import SearchResult from './components/SearchResult';
+import SearchInput from './components/Input';
+import * as S from './style';
 
 function SearchLocation() {
-  const searchKeyword = useSelector((state: TRootState) => state.location.searchKeyword);
-  const searchResult = usePlaceSearch(searchKeyword);
-
   return (
     <>
       <Topbar.Icon type="candy" />
-      <Search>
-        <Search.Header>
-          <Search.Input />
-          <Search.CurrentLocationButton />
-        </Search.Header>
-        {searchKeyword && searchResult && searchResult.length ? (
-          <Search.ResultList>
-            {searchResult.map((searchItem) => (
-              <Search.ResultItem key={searchItem.id} data={searchItem} />
-            ))}
-          </Search.ResultList>
-        ) : (
-          <Search.Tip />
-        )}
-      </Search>
+      <S.Wrapper>
+        <SearchInput render={(keyword) => <SearchResult keyword={keyword} />} />
+      </S.Wrapper>
       <Navbar />
     </>
   );

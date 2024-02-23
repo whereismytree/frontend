@@ -1,44 +1,39 @@
-import { useCallback, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setSearchKeyword } from 'store/modules/treeRegistLocationSlice';
+import React, { useState } from 'react';
+import useDebounce from 'hooks/useDebounce';
+import CurrentLocationButton from './CurrentLocationButton';
 import * as S from './style';
 
-function SearchInput() {
-  const [value, setValue] = useState<string>('');
-  const dispatch = useDispatch();
-  const timer = useRef<NodeJS.Timeout | null>(null);
+function SearchInput({ render }: { render: (keyword: string) => void }) {
+  const { data: keyword, watch } = useDebounce('', 300);
+  const [haveKeyword, setHaveKeyword] = useState(false);
+  const [input, setInput] = useState('');
 
-  const debounceSetKeyword = useCallback(
-    (value: string) => {
-      if (timer.current) {
-        clearTimeout(timer.current);
-      }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    watch(e.target.value);
+    setInput(e.target.value);
+    setHaveKeyword(!!e.target.value);
+  };
 
-      timer.current = setTimeout(() => {
-        dispatch(setSearchKeyword(value));
-      }, 500);
-    },
-    [dispatch],
-  );
-
-  const clearKeyword = () => {
-    setValue('');
-    dispatch(setSearchKeyword(''));
+  const handleClearButtonClick = () => {
+    setInput('');
   };
 
   return (
-    <S.SearchWrapper>
-      <S.StyleSearchInput
-        type="search"
-        value={value}
-        placeholder="지번, 도로명, 건물명으로 검색"
-        onChange={(e) => {
-          debounceSetKeyword(e.target.value);
-          setValue(e.target.value);
-        }}
-      />
-      {value && <S.ClearButton type="reset" onClick={() => clearKeyword()} />}
-    </S.SearchWrapper>
+    <>
+      <S.SearchBox>
+        <S.InputWrapper>
+          <S.Input
+            type="search"
+            value={input}
+            placeholder="지번, 도로명, 건물명으로 검색"
+            onChange={handleChange}
+          />
+          {haveKeyword && <S.ClearButton type="reset" onClick={handleClearButtonClick} />}
+        </S.InputWrapper>
+        <CurrentLocationButton />
+      </S.SearchBox>
+      {render(keyword)}
+    </>
   );
 }
 

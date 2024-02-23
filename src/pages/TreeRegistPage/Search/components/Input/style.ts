@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import search from 'assets/search.svg';
 
-export const StyleSearchInput = styled.input`
+export const Input = styled.input`
   width: 100%;
   height: 5rem;
   font-size: 1.4rem;
@@ -18,7 +18,14 @@ export const StyleSearchInput = styled.input`
   }
 `;
 
-export const SearchWrapper = styled.div`
+export const SearchBox = styled.article`
+  background-color: var(--main-white);
+  padding: 20px 24px 12px;
+  border-bottom: 1px solid var(--grey-medium);
+  box-sizing: border-box;
+`;
+
+export const InputWrapper = styled.div`
   position: relative;
 
   &::before {
