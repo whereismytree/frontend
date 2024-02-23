@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SearchInput from 'components/main/SearchInput';
+import SearchInput from 'pages/MainPage/components/SearchInput';
 import { ITreeItem } from 'types/apiResponse';
 // import useApiQuery from 'hooks/useApiQuery';
 import TreeImageItem from 'components/TreeImageItem';
