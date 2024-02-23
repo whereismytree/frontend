@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Topbar from 'components/Topbar';
-import TreeTitle from 'components/treeinfo/TreeTitle';
-import TreeDetails from 'components/treeinfo/TreeDetails';
-import VisitorPhotoList from 'components/treeinfo/VisitorPhotoList';
-import VisitorReviewList from 'components/treeinfo/VisitorReviewList';
+import TreeTitle from 'pages/TreeInfoPage/components/TreeTitle';
+import TreeDetails from 'pages/TreeInfoPage/components/TreeDetails';
+import VisitorPhotoList from 'pages/TreeInfoPage/components/VisitorPhotoList';
+import VisitorReviewList from 'pages/TreeInfoPage/components/VisitorReviewList';
 import Button from 'components/common/button';
 import { useLocation } from 'react-router-dom';
 import { ITreeItem } from 'types/apiResponse';
@@ -49,8 +49,8 @@ export const TreeInfo = () => {
         <S.Map ref={mapContainer}>TreeInfo</S.Map>
         <TreeTitle treeInfo={data} />
         <TreeDetails treeId={treeId} />
-        <VisitorPhotoList treeId={treeId} />
-        <VisitorReviewList treeId={treeId} />
+        <VisitorPhotoList treeInfo={data} />
+        <VisitorReviewList treeInfo={data} />
       </S.InfoContainer>
       <S.ButtonContainer>
         <Button>후기 작성하기</Button>
