@@ -13,11 +13,12 @@ const useFetchTreeData = (
   const [url, setUrl] = useState<string>('');
   let selectedMarker: any = null;
   // TODO: 트리 조회 안됨. 백엔드 확인 요청 !!
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data } = useApiQuery<ITreeItem[]>(url);
-  console.log('### url ###');
-  console.log(url);
-  console.log('#### data ####');
-  console.log(data);
+  // console.log('### url ###');
+  // console.log(url);
+  // console.log('#### data ####');
+  // console.log(data);
 
   const createMarker = (map: any, treeInfo: ITreeItem) => {
     const imageSrc = defaultMarkerImg;
