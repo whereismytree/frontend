@@ -15,6 +15,7 @@ import Nickname from 'pages/LoginPage/ProfileSetting';
 import SavePage from 'pages/SavedTreePage';
 import RegistedTreePage from 'pages/MyTreePage';
 import RegistReviewPage from 'pages/MyReviewPage';
+import ReviewRegistAndEditPage from 'pages/ReviewRegistAndEditPage';
 
 export const Router = () => {
   const landingRoute: RouteObject = {
@@ -71,9 +72,9 @@ export const Router = () => {
     children: [
       { path: PATH.reviewPage.dynamicParam, element: <ReviewDetailPage /> },
       // 리뷰 등록 페이지
-      { path: `${PATH.reviewPage.children.regist}/:treeId`, element: null },
+      { path: `${PATH.reviewPage.children.regist}/:treeId`, element: <ReviewRegistAndEditPage /> },
       // 리뷰 수정 페이지
-      { path: `${PATH.reviewPage.children.edit}/:reviewId`, element: null },
+      { path: `${PATH.reviewPage.children.edit}/:reviewId`, element: <ReviewRegistAndEditPage /> },
     ],
   };
 
