@@ -33,7 +33,7 @@ const Navbar = () => {
       <NavButton
         src={navbarImg.candy}
         text="트리 등록하기"
-        page={`/${PATH.treePage.root}/${PATH.treePage.children.regist.root}/${PATH.treePage.children.regist.children.map}`}
+        page={`/${PATH.treePage.root}/${PATH.treePage.children.regist.root}`}
         alt="regist"
       />
       <NavButton
