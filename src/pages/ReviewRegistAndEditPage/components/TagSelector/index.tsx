@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TAG from 'constants/tag';
 import Tag from '../Tag';
 import * as S from './style';
 
-const TagSelector = () => {
-  const [tagIds, setTagIds] = useState<number[]>([]);
+interface ITagSelectorProp {
+  tagIds: number[];
+  setTagIds: React.Dispatch<React.SetStateAction<number[]>>;
+}
+
+const TagSelector = ({ tagIds, setTagIds }: ITagSelectorProp) => {
   const handleTagSelect = (id: number) => {
     if (tagIds.includes(id)) {
       setTagIds((prev) => prev.filter((tagId) => tagId !== id));
