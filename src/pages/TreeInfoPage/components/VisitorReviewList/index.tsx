@@ -2,15 +2,20 @@ import React from 'react';
 import Tag from 'components/common/tag';
 import TAG, { TagId } from 'constants/tag';
 import useApiQuery from 'hooks/useApiQuery';
-import { IReviewList } from 'types/apiResponse';
+import { IReviewList, ITreeItem } from 'types/apiResponse';
+import { useNavigate } from 'react-router-dom';
 import * as S from '../style';
 
 interface IProps {
-  treeId: string;
+  treeInfo: ITreeItem;
 }
 
-const VisitorReviewList = ({ treeId }: IProps) => {
-  const { data, isError, error } = useApiQuery<IReviewList>(`v1/reviews?treeId=${treeId}`);
+const VisitorReviewList = ({ treeInfo }: IProps) => {
+  console.log('### VisitorReviewList ###');
+  console.log(treeInfo);
+  const id = 2;
+  const { data, isError, error } = useApiQuery<IReviewList>(`v1/reviews?treeId=${id}`);
+  const navigate = useNavigate();
 
   if (isError) {
     console.error(error);
@@ -24,6 +29,12 @@ const VisitorReviewList = ({ treeId }: IProps) => {
     return tag!.id;
   };
 
+  const handleReview = () => {
+    navigate(`/review/${id}`, {
+      state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
+    });
+  };
+
   return (
     <S.Wrapper>
       <S.TitleContainer>
@@ -34,7 +45,7 @@ const VisitorReviewList = ({ treeId }: IProps) => {
         {data?.totalReviews !== 0 ? (
           data?.reviews.map((e) => {
             return (
-              <S.Review key={e.reviewId}>
+              <S.Review key={e.reviewId} onClick={handleReview}>
                 <S.ReviewCard hasPhotoReview={!!e.reviewImageUrl}>
                   <S.Profile>
                     <S.ProfileImg src={e.profileImageUrl} />
