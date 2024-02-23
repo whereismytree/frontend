@@ -5,7 +5,7 @@ import { IReviewImages } from 'types/apiResponse';
 import * as S from '../style';
 
 interface IProps {
-  treeId: number;
+  treeId: string;
 }
 
 const VisitorPhotoList = ({ treeId }: IProps) => {

@@ -1,31 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ITreeItem } from 'types/apiResponse';
 import treeJSON from 'assets/treedata.json';
 import defaultMarkerImg from 'assets/tree_marker_default.svg';
 import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
-// import useApiQuery from './useApiQuery';
+import useApiQuery from './useApiQuery';
 
 const useFetchTreeData = (
   map: any,
   setTreeInfoData: React.Dispatch<React.SetStateAction<ITreeItem | null>>,
   setShowTreeInfo: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
+  const [url, setUrl] = useState<string>('');
   let selectedMarker: any = null;
-
-  // TODO: api에 데이터가 없어 주석처리. 추후 수정 필요
-  // const bounds = map.getBounds();
-  // const swLatLng = bounds.getSouthWest();
-  // const neLatLng = bounds.getNorthEast();
-  // const topLeftLat: number = swLatLng.getLat();
-  // const topLeftLng: number = swLatLng.getLng();
-  // const topRightLat: number = neLatLng.getLat();
-  // const topRightLng: number = swLatLng.getLng();
-  // const bottomLeftLat: number = swLatLng.getLat();
-  // const bottomLeftLng: number = neLatLng.getLng();
-  // const bottomRightLat: number = neLatLng.getLat();
-  // const bottomRightLng: number = neLatLng.getLng();
-  // const url = `v1/trees/map?topLeftLat=${topLeftLat}&topLeftLng=${topLeftLng}&topRightLat=${topRightLat}&topRightLng=${topRightLng}&bottomLeftLat=${bottomLeftLat}&bottomLeftLng=${bottomLeftLng}&bottomRightLat=${bottomRightLat}&bottomRightLng=${bottomRightLng}`;
-  // const { data } = useApiQuery<ITreeItem[]>(url);
+  // TODO: 트리 조회 안됨. 백엔드 확인 요청 !!
+  const { data } = useApiQuery<ITreeItem[]>(url);
+  console.log('### url ###');
+  console.log(url);
+  console.log('#### data ####');
+  console.log(data);
 
   const createMarker = (map: any, treeInfo: ITreeItem) => {
     const imageSrc = defaultMarkerImg;
@@ -48,6 +40,25 @@ const useFetchTreeData = (
   };
 
   const drawTree = async () => {
+    if (!map) {
+      return;
+    }
+
+    const bounds = map.getBounds();
+    const swLatLng = bounds.getSouthWest();
+    const neLatLng = bounds.getNorthEast();
+    const topLeftLat: number = swLatLng.getLat();
+    const topLeftLng: number = swLatLng.getLng();
+    const topRightLat: number = neLatLng.getLat();
+    const topRightLng: number = neLatLng.getLng();
+    const bottomLeftLat: number = swLatLng.getLat();
+    const bottomLeftLng: number = swLatLng.getLng();
+    const bottomRightLat: number = neLatLng.getLat();
+    const bottomRightLng: number = neLatLng.getLng();
+    setUrl(
+      `v1/trees/map?topLeftLat=${topLeftLat}&topLeftLng=${topLeftLng}&topRightLat=${topRightLat}&topRightLng=${topRightLng}&bottomLeftLat=${bottomLeftLat}&bottomLeftLng=${bottomLeftLng}&bottomRightLat=${bottomRightLat}&bottomRightLng=${bottomRightLng}`,
+    );
+
     const treeMarkers = treeJSON.trees;
     if (treeMarkers) {
       treeMarkers.forEach((tree: ITreeItem) => {
