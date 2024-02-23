@@ -87,6 +87,7 @@ export const PhotoList = styled.div`
 `;
 
 export const Photo = styled.img`
+  cursor: pointer;
   width: 100%;
   height: 12rem;
   object-fit: cover;
@@ -110,6 +111,7 @@ export const PhotoMoreButton = styled.button`
 export const ReviewList = styled.ul``;
 
 export const Review = styled.li`
+  cursor: pointer;
   border-bottom: 0.1rem solid var(--grey-light);
   &:last-child {
     border-bottom: none;

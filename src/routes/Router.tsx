@@ -1,7 +1,7 @@
 import { useRoutes, RouteObject, Outlet } from 'react-router-dom';
 import { MainPage } from 'pages/MainPage';
 import { SearchPage } from 'pages/SearchPage';
-import { TreeInfo } from 'pages/TreeInfo';
+import { TreeInfo } from 'pages/TreeInfoPage';
 import { MyPage } from 'pages/MyPage';
 import { LandingPage } from 'pages/LandingPage';
 import SignIn from 'pages/LoginPage/SocialLogin';

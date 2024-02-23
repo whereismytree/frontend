@@ -4,7 +4,7 @@ import useApiQuery from 'hooks/useApiQuery';
 import * as S from '../style';
 
 interface IProps {
-  treeId: number;
+  treeId: string;
 }
 
 const TreeDetails = ({ treeId }: IProps) => {
