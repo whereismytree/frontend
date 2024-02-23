@@ -14,7 +14,7 @@ const TreeInfoCard = ({ data }: IProps) => {
   const [isSave, setIsSave] = useState<boolean>(false);
   const navigate = useNavigate();
   const handleGoToTreeInfo = () => {
-    navigate('/treeinfo', { state: { treeInfo: data } });
+    navigate(`/tree/${data?.treeId}`);
   };
 
   return data ? (

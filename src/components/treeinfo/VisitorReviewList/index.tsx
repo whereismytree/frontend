@@ -6,7 +6,7 @@ import { IReviewList } from 'types/apiResponse';
 import * as S from '../style';
 
 interface IProps {
-  treeId: number;
+  treeId: string;
 }
 
 const VisitorReviewList = ({ treeId }: IProps) => {
