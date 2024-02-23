@@ -1,5 +1,5 @@
 import Item from 'components/common/Item';
-import { AddressType } from 'components/TreeRegi/Location/Search/Result/style';
+import { AddressType } from 'pages/TreeRegistPage/Search/components/Result/style';
 import { useSelector } from 'react-redux';
 import { TRootState } from 'store';
 import { useFormContext } from 'react-hook-form';

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import ISearchPlaceData from 'types/SearchPlaceData';
 import { setAddressType, setLatitude, setLongitude } from 'store/modules/treeRegistLocationSlice';
 import { Link } from 'react-router-dom';
+import getPath from 'utils/getPath';
 import * as S from './style';
 
 function SearchListItem({ data }: { data: ISearchPlaceData }) {
@@ -20,7 +21,7 @@ function SearchListItem({ data }: { data: ISearchPlaceData }) {
 
   return (
     <S.ResultListItem onClick={() => setRegistLocation()}>
-      <Link to="../map">
+      <Link to={getPath('treePage', 'regist', 'map')}>
         <Item.Title size={1.4} weight={400}>
           {data.place_name}
         </Item.Title>
