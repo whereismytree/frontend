@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.button`
+interface StyledProps {
+  isSelected: boolean;
+}
+
+export const Wrapper = styled.button<StyledProps>`
   all: unset;
+  cursor: pointer;
   height: 3.8rem;
   display: flex;
   justify-content: center;
@@ -11,11 +16,14 @@ export const Wrapper = styled.button`
   border-radius: 1rem;
   padding: 0.85rem 1.2rem;
   box-sizing: border-box;
+  background-color: ${({ isSelected }) => (isSelected ? 'var(--main-green)' : 'white')};
+  transition: all 0.2s;
 `;
 
-export const Text = styled.p`
+export const Text = styled.p<StyledProps>`
   font-size: 1.4rem;
   font-weight: 300;
+  color: ${({ isSelected }) => (isSelected ? 'white' : 'var(--main-black)')};
 `;
 
 export const TagImg = styled.img`
