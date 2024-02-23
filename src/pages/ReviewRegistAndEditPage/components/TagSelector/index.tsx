@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TAG from 'constants/tag';
 import Tag from '../Tag';
 import * as S from './style';
 
 const TagSelector = () => {
+  const [tagIds, setTagIds] = useState<number[]>([]);
+  const handleTagSelect = (id: number) => {
+    if (tagIds.includes(id)) {
+      setTagIds((prev) => prev.filter((tagId) => tagId !== id));
+    } else {
+      setTagIds((prev) => [...prev, id]);
+    }
+  };
+
   return (
     <S.Wrapper>
       <S.Title>
@@ -13,7 +22,7 @@ const TagSelector = () => {
       {TAG.map(({ id }) => {
         return (
           <S.TagContainer key={id}>
-            <Tag id={id} />
+            <Tag id={id} isSelected={tagIds.includes(id)} onClick={() => handleTagSelect(id)} />
           </S.TagContainer>
         );
       })}
