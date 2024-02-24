@@ -10,8 +10,6 @@ interface IProps {
 }
 
 const VisitorPhotoList = ({ treeInfo }: IProps) => {
-  console.log('### VisitorPhotoList ###');
-  console.log(treeInfo);
   const id = 2;
   const { data, isError, error } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${id}`);
   const navigate = useNavigate();

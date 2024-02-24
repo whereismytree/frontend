@@ -1,7 +1,12 @@
 import { RefObject, useEffect, useState } from 'react';
 import { ILocation, getMyLocation } from 'utils/getMyLocation';
 
-const useKakaoMap = (mapContainer: RefObject<HTMLDivElement>) => {
+type TPosition = number | undefined;
+
+const useKakaoMap = (
+  mapContainer: RefObject<HTMLDivElement>,
+  latLng?: { lat: TPosition; lng: TPosition },
+) => {
   const [map, setMap] = useState<any>(null);
 
   useEffect(() => {
@@ -31,6 +36,13 @@ const useKakaoMap = (mapContainer: RefObject<HTMLDivElement>) => {
       loadMap();
     }
   }, []);
+
+  useEffect(() => {
+    if (map && latLng?.lat && latLng?.lng) {
+      const center = new window.kakao.maps.LatLng(latLng.lat, latLng.lng);
+      map.setCenter(center);
+    }
+  }, [map, latLng?.lat, latLng?.lng]);
 
   return { map };
 };
