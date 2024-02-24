@@ -8,11 +8,14 @@ interface IAddressData {
 
 const useLocationMap = (
   mapContainer: RefObject<HTMLDivElement>,
-): { map: any; roadAddress: string | null; address: string; buildingName: string | undefined } => {
+): {
+  map: any;
+  address: { road: string | null; street: string; location?: string };
+} => {
   const { map } = useKakaoMap(mapContainer);
   const [roadAddressName, setRoadAddressName] = useState<string | null>(null);
   const [streetAddressName, setStreetAddressName] = useState<string>('');
-  const [buildingName, setBuildingName] = useState<string | undefined>('');
+  const [location, setLocation] = useState<string | undefined>('');
 
   const convertAddressToString = (addressData: IAddressData) => {
     const { address_name: addressName } = addressData;
@@ -50,21 +53,24 @@ const useLocationMap = (
     if (map) {
       (async () => {
         const { roadAddress, address } = await getMapCenterAddress(map);
-        const { building_name: changeBuildingName } = roadAddress || {};
-        setBuildingName(changeBuildingName && String(changeBuildingName));
+        const { building_name: changeLocation } = roadAddress || {};
+        setLocation(changeLocation && String(changeLocation));
         applyAddressName(address, roadAddress);
       })();
 
       window.kakao.maps.event.addListener(map, 'idle', async () => {
         const { roadAddress, address } = await getMapCenterAddress(map);
-        const { building_name: changeBuildingName } = roadAddress || {};
-        setBuildingName(changeBuildingName && String(changeBuildingName));
+        const { building_name: changeLocation } = roadAddress || {};
+        setLocation(changeLocation && String(changeLocation));
         applyAddressName(address, roadAddress);
       });
     }
   }, [map]);
 
-  return { map, roadAddress: roadAddressName, address: streetAddressName, buildingName };
+  return {
+    map,
+    address: { road: roadAddressName, street: streetAddressName, location },
+  };
 };
 
 export default useLocationMap;
