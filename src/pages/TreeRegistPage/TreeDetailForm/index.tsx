@@ -1,6 +1,6 @@
 import Navbar from 'components/Navbar';
 import Topbar from 'components/Topbar';
-import TreeRegiForm from 'pages/TreeRegistPage/Form/components';
+import TreeRegiForm from 'pages/TreeRegistPage/TreeDetailForm/components';
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
