@@ -3,7 +3,7 @@ import useDebounce from 'hooks/useDebounce';
 import CurrentLocationButton from './CurrentLocationButton';
 import * as S from './style';
 
-function SearchInput({ render }: { render: (keyword: string) => void }) {
+function SearchInput({ render }: { render: (keyword: string) => React.ReactNode }) {
   const { data: keyword, watch } = useDebounce('', 300);
   const [haveKeyword, setHaveKeyword] = useState(false);
   const [input, setInput] = useState('');
