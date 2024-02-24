@@ -25,11 +25,12 @@ const ReviewRegistAndEditPage = () => {
   const treeName = '명동 신세계 트리';
   const [tagIds, setTagIds] = useState<number[]>([]);
   const contentRef = useRef<HTMLTextAreaElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const { mutate } = useApiMutation<{ treeId: number; isFavorite: boolean }>('v1/reviews', 'POST', {
     onSuccess: (data) => console.log(data),
     onError: (e) => console.error(e),
   });
+
   const handleReviewRegistButton = () => {
     mutate(
       { treeId, tagIds, content: contentRef.current?.value, imageUrl: '' },
@@ -38,7 +39,7 @@ const ReviewRegistAndEditPage = () => {
           console.log('### 리뷰 등록! ###');
           console.log(treeId);
           console.log(tagIds);
-          console.log(contentRef.current);
+          console.log(contentRef.current?.value);
         },
         onError: (e) => {
           console.error(e);

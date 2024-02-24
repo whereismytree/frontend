@@ -52,3 +52,16 @@ export const TextBox = styled.textarea`
     color: var(--grey-mideum);
   }
 `;
+
+export const TextLength = styled.p`
+  z-index: 10;
+  text-align: right;
+  margin: -3rem calc(2.4rem + 1.8rem) 0 0;
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.8rem;
+  color: var(--grey-medium);
+  strong {
+    color: var(--main-black);
+  }
+`;
