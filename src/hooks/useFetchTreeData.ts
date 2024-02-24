@@ -15,10 +15,10 @@ const useFetchTreeData = (
   // TODO: 트리 조회 안됨. 백엔드 확인 요청 !!
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data } = useApiQuery<ITreeItem[]>(url);
-  // console.log('### url ###');
-  // console.log(url);
-  // console.log('#### data ####');
-  // console.log(data);
+  console.log('### url ###');
+  console.log(url);
+  console.log('#### data ####');
+  console.log(data);
 
   const createMarker = (map: any, treeInfo: ITreeItem) => {
     const imageSrc = defaultMarkerImg;
@@ -48,14 +48,18 @@ const useFetchTreeData = (
     const bounds = map.getBounds();
     const swLatLng = bounds.getSouthWest();
     const neLatLng = bounds.getNorthEast();
-    const topLeftLat: number = swLatLng.getLat();
-    const topLeftLng: number = swLatLng.getLng();
-    const topRightLat: number = neLatLng.getLat();
-    const topRightLng: number = neLatLng.getLng();
-    const bottomLeftLat: number = swLatLng.getLat();
-    const bottomLeftLng: number = swLatLng.getLng();
-    const bottomRightLat: number = neLatLng.getLat();
-    const bottomRightLng: number = neLatLng.getLng();
+    // 북서쪽(Top Left) 좌표
+    const topLeftLat = neLatLng.getLat();
+    const topLeftLng = swLatLng.getLng();
+    // 북동쪽(Top Right) 좌표
+    const topRightLat = neLatLng.getLat();
+    const topRightLng = neLatLng.getLng();
+    // 남서쪽(Bottom Left) 좌표
+    const bottomLeftLat = swLatLng.getLat();
+    const bottomLeftLng = swLatLng.getLng();
+    // 남동쪽(Bottom Right) 좌표
+    const bottomRightLat = swLatLng.getLat();
+    const bottomRightLng = neLatLng.getLng();
     setUrl(
       `v1/trees/map?topLeftLat=${topLeftLat}&topLeftLng=${topLeftLng}&topRightLat=${topRightLat}&topRightLng=${topRightLng}&bottomLeftLat=${bottomLeftLat}&bottomLeftLng=${bottomLeftLng}&bottomRightLat=${bottomRightLat}&bottomRightLng=${bottomRightLng}`,
     );
