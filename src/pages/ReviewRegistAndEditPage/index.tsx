@@ -8,44 +8,36 @@ import TagSelector from './components/TagSelector';
 import ReviewForm from './components/ReviewForm';
 import * as S from './style';
 
-// const validateTreeData = (treeData: any) => {
-//   if (!treeData || !treeData.treeName || !treeData.location) {
-//     throw new Error('리뷰 상세 페이지를 렌더링하기 위해 Navigate 객체에 state를 전달해주세요.');
-//   }
+const validateTreeData = (treeData: any) => {
+  if (!treeData || !treeData.treeName || !treeData.location) {
+    throw new Error('리뷰 상세 페이지를 렌더링하기 위해 Navigate 객체에 state를 전달해주세요.');
+  }
 
-//   return treeData as { treeName: string; location: string };
-// };
+  return treeData as { treeName: string; location: string };
+};
 
 const ReviewRegistAndEditPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { pathname, state: treeData } = useLocation();
-  // const { treeName, location } = validateTreeData(treeData);
+  const { treeName, location } = validateTreeData(treeData);
   const treeId = Number(pathname.split('/')[3]);
-  const location = '서울 중구 퇴계로 77';
-  const treeName = '명동 신세계 트리';
   const [tagIds, setTagIds] = useState<number[]>([]);
   const contentRef = useRef<HTMLTextAreaElement>(null);
+  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
 
   const { mutate } = useApiMutation<{ treeId: number; isFavorite: boolean }>('v1/reviews', 'POST', {
-    onSuccess: (data) => console.log(data),
-    onError: (e) => console.error(e),
+    onSuccess: (data) => {
+      console.log('### 리뷰 등록! ###');
+      console.log(data);
+    },
+    onError: (e, data) => {
+      console.error(e);
+      console.log(data);
+    },
   });
 
   const handleReviewRegistButton = () => {
-    mutate(
-      { treeId, tagIds, content: contentRef.current?.value, imageUrl: '' },
-      {
-        onSuccess: () => {
-          console.log('### 리뷰 등록! ###');
-          console.log(treeId);
-          console.log(tagIds);
-          console.log(contentRef.current?.value);
-        },
-        onError: (e) => {
-          console.error(e);
-        },
-      },
-    );
+    mutate({ treeId, tagIds, content: contentRef.current?.value, imageUrl: '' });
   };
 
   return (
@@ -56,7 +48,11 @@ const ReviewRegistAndEditPage = () => {
           <TreeItem location={location}>{treeName}</TreeItem>
         </S.TreeInfo>
         <TagSelector tagIds={tagIds} setTagIds={setTagIds} />
-        <ReviewForm contentRef={contentRef} />
+        <ReviewForm
+          contentRef={contentRef}
+          selectedFiles={selectedFiles}
+          setSelectedFiles={setSelectedFiles}
+        />
       </S.Wrapper>
       <S.Button>
         <Button onClick={handleReviewRegistButton}>후기 등록하기</Button>

@@ -5,7 +5,7 @@ import TreeDetails from 'pages/TreeInfoPage/components/TreeDetails';
 import VisitorPhotoList from 'pages/TreeInfoPage/components/VisitorPhotoList';
 import VisitorReviewList from 'pages/TreeInfoPage/components/VisitorReviewList';
 import Button from 'components/common/button';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ITreeItem } from 'types/apiResponse';
 import useApiQuery from 'hooks/useApiQuery';
 import treeMarker from 'assets/tree_marker.svg';
@@ -19,9 +19,10 @@ interface ILatLng {
 }
 
 export const TreeInfo = () => {
-  const mapContainer = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   const location = useLocation();
   const treeId = location.pathname.split('/')[2];
+  const mapContainer = useRef<HTMLDivElement>(null);
   const [latLng, setLatLng] = useState<ILatLng>();
   const { data } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
   const map = useKakaoMap(mapContainer, latLng);
@@ -54,6 +55,12 @@ export const TreeInfo = () => {
     });
   }, [map, data, latLng]);
 
+  const handleGoToReviewRegist = () => {
+    navigate(`/review/regist/${treeId}`, {
+      state: { treeName: data?.name, location: data?.roadAddress },
+    });
+  };
+
   return data ? (
     <>
       <Topbar.Icon type="tree" />
@@ -66,7 +73,7 @@ export const TreeInfo = () => {
         <VisitorReviewList treeInfo={data} />
       </S.InfoContainer>
       <S.ButtonContainer>
-        <Button>후기 작성하기</Button>
+        <Button onClick={handleGoToReviewRegist}>후기 작성하기</Button>
       </S.ButtonContainer>
     </>
   ) : null;

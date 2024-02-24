@@ -5,12 +5,13 @@ import * as S from './style';
 
 interface IReviewFormProp {
   contentRef: React.RefObject<HTMLTextAreaElement>;
+  selectedFiles: FileList | null;
+  setSelectedFiles: React.Dispatch<React.SetStateAction<FileList | null>>;
 }
-const ReviewForm = ({ contentRef }: IReviewFormProp) => {
+const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles }: IReviewFormProp) => {
   const [textLength, setTextLength] = useState<number>(
     contentRef.current ? contentRef.current.value.length : 0,
   );
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
 
   const handleOnInput = () => {
     if (contentRef.current) {
@@ -25,8 +26,6 @@ const ReviewForm = ({ contentRef }: IReviewFormProp) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     e.persist();
-    console.log(selectedFiles);
-    console.log(e.target.files);
     setSelectedFiles(e.target.files);
   };
 
