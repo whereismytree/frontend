@@ -44,7 +44,7 @@ const SearchInput = ({ setKeyword }: TSearchInputProps) => {
         onChange={(e) => handleInputChange(e)}
         onKeyDown={(e) => handleKeyDown(e)}
       />
-      {inputRef.current && <S.ClearSearchIcon src={clearSearchIcon} onClick={handleClear} />}
+      {inputRef.current?.value && <S.ClearSearchIcon src={clearSearchIcon} onClick={handleClear} />}
     </Topbar>
   );
 };
