@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useCallback, useContext, useMemo, useReducer } from 'react';
+import { TAddressType } from 'types/addressType';
 
 type initialState = {
   latLng: {
@@ -11,7 +12,7 @@ type initialState = {
       [key in initialState['address']['type']['en']]: string;
     };
     location: string;
-    type: { ko: '도로명' | '지번'; en: 'road' | 'street' };
+    type: TAddressType;
   };
 
   setAddress: (address: {
