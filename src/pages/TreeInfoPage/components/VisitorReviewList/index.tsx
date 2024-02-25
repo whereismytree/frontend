@@ -11,8 +11,6 @@ interface IProps {
 }
 
 const VisitorReviewList = ({ treeInfo }: IProps) => {
-  console.log('### VisitorReviewList ###');
-  console.log(treeInfo);
   const id = 2;
   const { data, isError, error } = useApiQuery<IReviewList>(`v1/reviews?treeId=${id}`);
   const navigate = useNavigate();

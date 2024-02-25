@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TAG from 'constants/tag';
+import { IGetReview } from 'types/apiResponse';
 import Tag from '../Tag';
 import * as S from './style';
 
 interface ITagSelectorProp {
   tagIds: number[];
   setTagIds: React.Dispatch<React.SetStateAction<number[]>>;
+  data: IGetReview | undefined;
 }
 
-const TagSelector = ({ tagIds, setTagIds }: ITagSelectorProp) => {
+const TagSelector = ({ tagIds, setTagIds, data }: ITagSelectorProp) => {
+  useEffect(() => {
+    if (data) {
+      setTagIds(
+        data.tags.map((tag) => {
+          const foundTag = TAG.find((el) => el.comment === tag);
+          return foundTag ? foundTag.id : 0;
+        }),
+      );
+    }
+  }, [data]);
+
   const handleTagSelect = (id: number) => {
     if (tagIds.includes(id)) {
       setTagIds((prev) => prev.filter((tagId) => tagId !== id));
