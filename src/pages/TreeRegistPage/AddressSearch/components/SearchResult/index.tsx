@@ -54,7 +54,7 @@ function SearchResult({ keyword }: { keyword: string }) {
       {searchResult.map((result) => {
         const addressType = result.road_address_name ? 'ROAD' : 'STREET';
         const address = result.road_address_name || result.address_name;
-        const latlng = { lat: result.x, lng: result.y };
+        const latlng = { lat: Number(result.y), lng: Number(result.x) };
 
         return (
           <SearchListItem

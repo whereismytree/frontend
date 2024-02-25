@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
-import ISearchPlaceData from 'types/SearchPlaceData';
+
+interface ISearchPlaceData {
+  id: string;
+  place_name: string;
+  address_name: string;
+  road_address_name: string;
+  x: string;
+  y: string;
+}
 
 const usePlaceSearch = (keyword: string) => {
   const [result, setResult] = useState<ISearchPlaceData[]>([]);
