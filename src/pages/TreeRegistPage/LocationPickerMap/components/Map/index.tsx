@@ -4,15 +4,27 @@ import useKakaoMapWithAddress from 'hooks/useKakaoMapWithAddress';
 import { useTreeRegistMapContext } from '../../provider';
 import * as S from './style';
 
-function TreeLocation({ initialLatLng }: { initialLatLng: { lat: number; lng: number } }) {
+function LocationPickerMap({ initialLatLng }: { initialLatLng: { lat: number; lng: number } }) {
   const mapContainer = useRef(null);
   const { map, address } = useKakaoMapWithAddress(mapContainer);
   const { road: roadAddress, street: streetAddress, location } = address;
   const { setAddress } = useTreeRegistMapContext();
 
-  // latLng가 바뀌면, address, location update
-  useEffect(() => {
-    if (map) {
+  const prohibitMapZoom = useCallback(() => {
+    map.setZoomable(false);
+  }, [map]);
+
+  const moveMapCenterToLatlng = useCallback(
+    (moveLatLng: typeof initialLatLng) => {
+      const { lat, lng } = moveLatLng;
+      const moveLatLon = new window.kakao.maps.LatLng(lat, lng);
+      map.setCenter(moveLatLon);
+    },
+    [map],
+  );
+
+  const updateAddress = useCallback(
+    (map: any) => {
       const center = map.getCenter();
 
       const address = {
@@ -26,20 +38,8 @@ function TreeLocation({ initialLatLng }: { initialLatLng: { lat: number; lng: nu
       };
 
       setAddress(address);
-    }
-  }, [map, roadAddress, streetAddress, location, setAddress]);
-
-  const prohibitMapZoom = useCallback(() => {
-    map.setZoomable(false);
-  }, [map]);
-
-  const moveToLatlng = useCallback(
-    (moveLatLng: typeof initialLatLng) => {
-      const { lat, lng } = moveLatLng;
-      const moveLatLon = new window.kakao.maps.LatLng(lat, lng);
-      map.setCenter(moveLatLon);
     },
-    [map],
+    [location, setAddress, streetAddress, roadAddress],
   );
 
   useEffect(() => {
@@ -49,10 +49,16 @@ function TreeLocation({ initialLatLng }: { initialLatLng: { lat: number; lng: nu
       prohibitMapZoom();
 
       if (!isEmpty(initialLatLng)) {
-        moveToLatlng(initialLatLng);
+        moveMapCenterToLatlng(initialLatLng);
       }
     }
-  }, [map, initialLatLng, moveToLatlng, prohibitMapZoom]);
+  }, [map, initialLatLng, moveMapCenterToLatlng, prohibitMapZoom]);
+
+  useEffect(() => {
+    if (map) {
+      updateAddress(map);
+    }
+  }, [map, updateAddress, roadAddress, streetAddress, location]);
 
   return (
     <S.MapContainer ref={mapContainer}>
@@ -62,4 +68,4 @@ function TreeLocation({ initialLatLng }: { initialLatLng: { lat: number; lng: nu
   );
 }
 
-export default React.memo(TreeLocation);
+export default React.memo(LocationPickerMap);

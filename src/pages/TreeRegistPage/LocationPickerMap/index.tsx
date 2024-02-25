@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from 'components/Navbar';
 import Topbar from 'components/Topbar';
-import TreeLocation from './components/Map';
+import LocationPickerMap from './components/Map';
 import TreeRegistMapProvider from './provider';
 import * as S from './style';
 import AddressInfo from './components/AddressInfo';
@@ -30,7 +30,7 @@ function RegistMap() {
     <>
       <Topbar.Icon type="candy" />
       <TreeRegistMapProvider>
-        <TreeLocation initialLatLng={latLng} />
+        <LocationPickerMap initialLatLng={latLng} />
         <S.AddressInfo>
           <AddressInfo />
           <SubmitButton />
