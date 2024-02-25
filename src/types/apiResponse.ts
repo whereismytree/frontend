@@ -40,3 +40,14 @@ export interface IReviewList {
   reviews: IReview[];
   totalReviews: 0;
 }
+
+export interface IGetReview {
+  nickname: string;
+  profileImageUrl: string;
+  createdAt: string;
+  reviewImageUrl: string;
+  content: string;
+  tags: string[];
+  canEdit: boolean;
+  canRemove: boolean;
+}
