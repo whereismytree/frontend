@@ -55,7 +55,6 @@ function SubmitButton() {
   };
 
   const refineAddress = convertAddress(address);
-  console.log(refineAddress);
 
   const handleClick = () => {
     navigate(getPath('treePage', 'regist', 'detail'), { state: refineAddress });

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { RefObject, useCallback, useEffect, useState } from 'react';
 import useKakaoMap from './useKakaoMap';
 
