@@ -75,7 +75,9 @@ function ReviewDetailPage() {
   };
 
   const handleEdit = () => {
-    navigate(getPath('reviewPage', 'edit')(reviewId));
+    navigate(getPath('reviewPage', 'edit')(reviewId), {
+      state: { treeName, location, type: 'edit' },
+    });
   };
 
   return (

@@ -57,7 +57,7 @@ export const TreeInfo = () => {
 
   const handleGoToReviewRegist = () => {
     navigate(`/review/regist/${treeId}`, {
-      state: { treeName: data?.name, location: data?.roadAddress },
+      state: { treeName: data?.name, location: data?.roadAddress, type: 'regist' },
     });
   };
 
