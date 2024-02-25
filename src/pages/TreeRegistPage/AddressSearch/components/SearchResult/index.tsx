@@ -2,6 +2,8 @@ import React from 'react';
 import Item from 'components/common/Item';
 import { Link } from 'react-router-dom';
 import getPath from 'utils/getPath';
+import ADDRESS_TYPE from 'constants/addressTypes';
+import AddressType from 'components/common/AddressType';
 import usePlaceSearch from '../../hooks';
 import * as S from './style';
 
@@ -26,7 +28,7 @@ function SearchListItem({
 }: {
   location: string;
   address: string;
-  addressType: '도로명' | '지번';
+  addressType: keyof typeof ADDRESS_TYPE;
   latlng: { lat: number; lng: number };
 }) {
   return (
@@ -36,24 +38,13 @@ function SearchListItem({
           {location}
         </Item.Title>
         <S.ResultItemAddress>
-          <S.AddressType>{addressType}</S.AddressType>
+          <AddressType type={addressType} />
           {address}
         </S.ResultItemAddress>
       </Link>
     </S.ResultListItem>
   );
 }
-
-const ADDRESS_DATA = {
-  STREET: {
-    ko: '지번',
-    en: 'street',
-  },
-  ROAD: {
-    ko: '도로명',
-    en: 'road',
-  },
-} as const;
 
 function SearchResult({ keyword }: { keyword: string }) {
   const searchResult = usePlaceSearch(keyword);
@@ -70,7 +61,7 @@ function SearchResult({ keyword }: { keyword: string }) {
             key={result.id}
             location={result.place_name}
             address={address}
-            addressType={ADDRESS_DATA[addressType].ko}
+            addressType={addressType}
             latlng={latlng}
           />
         );
