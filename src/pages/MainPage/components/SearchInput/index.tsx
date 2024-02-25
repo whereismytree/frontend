@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Topbar from 'components/Topbar';
 import clearSearchIcon from 'assets/topbar-clear-search.svg';
+import { debounce } from 'lodash';
 import * as S from './style';
 
 interface TSearchInputProps {
@@ -8,31 +9,42 @@ interface TSearchInputProps {
 }
 
 const SearchInput = ({ setKeyword }: TSearchInputProps) => {
-  const [inputValue, setInputValue] = useState<string>('');
+  const inputRef = useRef<HTMLInputElement>(null);
+  const debouncedSetKeyword = debounce(setKeyword, 300);
+
+  useEffect(() => {
+    // debounce cleanup
+    return () => {
+      debouncedSetKeyword.cancel();
+    };
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    debouncedSetKeyword(e.target.value);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      setKeyword(inputValue);
+      debouncedSetKeyword(e.currentTarget.value);
     }
   };
 
   const handleClear = () => {
-    setInputValue('');
+    if (inputRef.current) {
+      inputRef.current.value = '';
+      debouncedSetKeyword('');
+    }
   };
 
   return (
     <Topbar>
       <S.Input
-        value={inputValue}
+        ref={inputRef}
         placeholder="트리, 주소 검색"
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
+        onChange={(e) => handleInputChange(e)}
+        onKeyDown={(e) => handleKeyDown(e)}
       />
-      {inputValue && <S.ClearSearchIcon src={clearSearchIcon} onClick={handleClear} />}
+      {inputRef.current?.value && <S.ClearSearchIcon src={clearSearchIcon} onClick={handleClear} />}
     </Topbar>
   );
 };
