@@ -1,19 +1,24 @@
 import * as S from './style';
 
+export type ButtonType = 'button' | 'submit' | 'reset' | 'cancel';
+
 interface IButtonProps {
   children: string;
   onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
+  type?: ButtonType;
   disabled?: boolean;
 }
 
-type TPartialButtonProps = Partial<IButtonProps>;
-
-type TCancelButtonProps = Pick<TPartialButtonProps, 'children' | 'onClick'>;
+const nomalizeButtonType = (type: ButtonType) => (type === 'cancel' ? 'button' : type);
 
 function Button({ children, onClick = () => {}, type = 'button', disabled = false }: IButtonProps) {
   return (
-    <S.Button type={type} onClick={() => onClick()} disabled={disabled}>
+    <S.Button
+      type={nomalizeButtonType(type)}
+      $type={type}
+      onClick={() => onClick()}
+      disabled={disabled}
+    >
       {children}
     </S.Button>
   );
@@ -26,7 +31,12 @@ function SmallButton({
   disabled = false,
 }: IButtonProps) {
   return (
-    <S.SmallButton type={type} onClick={() => onClick()} disabled={disabled}>
+    <S.SmallButton
+      type={nomalizeButtonType(type)}
+      $type={type}
+      onClick={() => onClick()}
+      disabled={disabled}
+    >
       {children}
     </S.SmallButton>
   );
@@ -39,22 +49,18 @@ function MediumButton({
   disabled = false,
 }: IButtonProps) {
   return (
-    <S.MediumButton type={type} onClick={() => onClick()} disabled={disabled}>
+    <S.MediumButton
+      type={nomalizeButtonType(type)}
+      $type={type}
+      onClick={() => onClick()}
+      disabled={disabled}
+    >
       {children}
     </S.MediumButton>
   );
 }
 
-function CancelButton({ children, onClick = () => {} }: TCancelButtonProps) {
-  return (
-    <S.CancelButton type="button" onClick={() => onClick()}>
-      {children || '취소하기'}
-    </S.CancelButton>
-  );
-}
-
 Button.Small = SmallButton;
 Button.Medium = MediumButton;
-Button.Cancel = CancelButton;
 
 export default Button;
