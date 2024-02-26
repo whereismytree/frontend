@@ -5,8 +5,9 @@ import { useTreeRegistMapContext } from '../../provider';
 
 function SubmitButton() {
   const navigate = useNavigate();
-  const { address } = useTreeRegistMapContext();
+  const { address, latLng } = useTreeRegistMapContext();
   type address = typeof address;
+  type latLng = typeof latLng;
 
   const checkAddressValid = (address: address) => {
     const addressType = address.type.en;
@@ -28,7 +29,7 @@ function SubmitButton() {
     return type === 'road' ? 'street' : 'road';
   };
 
-  const convertAddress = (
+  const parseAddress = (
     address: address,
   ): {
     location: address['location'];
@@ -54,10 +55,10 @@ function SubmitButton() {
     };
   };
 
-  const refineAddress = convertAddress(address);
+  const refineAddress = parseAddress(address);
 
   const handleClick = () => {
-    navigate(getPath('treePage', 'regist', 'detail'), { state: refineAddress });
+    navigate(getPath('treePage', 'regist', 'detail'), { state: { ...refineAddress, latLng } });
   };
 
   return <Button onClick={handleClick}>이 위치로 트리 등록하기</Button>;

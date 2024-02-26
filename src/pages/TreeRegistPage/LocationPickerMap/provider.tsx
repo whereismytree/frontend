@@ -59,9 +59,11 @@ type Actions =
 const reducer = (state: initialState, action: Actions) => {
   switch (action.type) {
     case SET_ADDRESS: {
-      const { street, road, location } = action.payload;
+      const { latLng, street, road, location } = action.payload;
+
       const updateState: initialState = {
         ...state,
+        latLng,
         address: {
           ...state.address,
           name: { street, road },
@@ -118,6 +120,7 @@ function TreeRegistMapProvider({ children }: { children: ReactNode }) {
         () => ({
           address: memoAddress,
           latLng: memoLatLng,
+
           setAddress,
           toggleAddressType,
         }),
