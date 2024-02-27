@@ -1,6 +1,7 @@
 import Button from 'components/common/button';
 import { useNavigate } from 'react-router-dom';
 import getPath from 'utils/getPath';
+import { AddressType } from 'constants/addressTypes';
 import { useTreeRegistMapContext } from '../../provider';
 
 function SubmitButton() {
@@ -34,7 +35,7 @@ function SubmitButton() {
   ): {
     location: address['location'];
     address: address['name']['road'] | address['name']['street'];
-    addressType: address['type']['en'];
+    addressType: AddressType;
   } => {
     const isValidAddress = checkAddressValid(address);
 
@@ -43,15 +44,15 @@ function SubmitButton() {
 
       return {
         location: address.location,
-        address: address.name[anotherAddressType].toUpperCase(),
-        addressType: anotherAddressType,
+        address: address.name[anotherAddressType],
+        addressType: anotherAddressType.toUpperCase() as AddressType,
       };
     }
 
     return {
       location: address.location,
-      address: address.name[address.type.en].toUpperCase(),
-      addressType: address.type.en,
+      address: address.name[address.type.en],
+      addressType: address.type.en.toUpperCase() as AddressType,
     };
   };
 
