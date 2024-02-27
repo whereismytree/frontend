@@ -1,66 +1,50 @@
 import * as S from './style';
 
-export type ButtonType = 'button' | 'submit' | 'reset' | 'cancel';
-
-interface IButtonProps {
+type IButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: string;
-  onClick?: () => void;
-  type?: ButtonType;
-  disabled?: boolean;
-}
+};
 
-const nomalizeButtonType = (type: ButtonType) => (type === 'cancel' ? 'button' : type);
-
-function Button({ children, onClick = () => {}, type = 'button', disabled = false }: IButtonProps) {
+function Button({ children, type = 'button', ...rest }: IButtonProps) {
   return (
-    <S.Button
-      type={nomalizeButtonType(type)}
-      $type={type}
-      onClick={() => onClick()}
-      disabled={disabled}
-    >
+    <S.Button type={type} {...rest}>
       {children}
     </S.Button>
   );
 }
 
-function SmallButton({
-  children,
-  onClick = () => {},
-  type = 'button',
-  disabled = false,
-}: IButtonProps) {
+function MediumButton({ children, type = 'button', ...rest }: IButtonProps) {
   return (
-    <S.SmallButton
-      type={nomalizeButtonType(type)}
-      $type={type}
-      onClick={() => onClick()}
-      disabled={disabled}
-    >
-      {children}
-    </S.SmallButton>
-  );
-}
-
-function MediumButton({
-  children,
-  onClick = () => {},
-  type = 'button',
-  disabled = false,
-}: IButtonProps) {
-  return (
-    <S.MediumButton
-      type={nomalizeButtonType(type)}
-      $type={type}
-      onClick={() => onClick()}
-      disabled={disabled}
-    >
+    <S.MediumButton type={type} {...rest}>
       {children}
     </S.MediumButton>
   );
 }
 
+function SmallButton({ children, type = 'button', ...rest }: IButtonProps) {
+  return (
+    <S.SmallButton type={type} {...rest}>
+      {children}
+    </S.SmallButton>
+  );
+}
+
+function WhiteButton({ children, ...rest }: IButtonProps) {
+  return <S.WhiteButton {...rest}>{children}</S.WhiteButton>;
+}
+
+function WhiteMediumButton({ children, ...rest }: IButtonProps) {
+  return <S.WhiteMediumButton {...rest}>{children}</S.WhiteMediumButton>;
+}
+
+function WhiteSmallButton({ children, ...rest }: IButtonProps) {
+  return <S.WhiteSmallButton {...rest}>{children}</S.WhiteSmallButton>;
+}
+
 Button.Small = SmallButton;
 Button.Medium = MediumButton;
+WhiteButton.Medium = WhiteMediumButton;
+WhiteButton.Small = WhiteSmallButton;
+
+export { WhiteButton };
 
 export default Button;
