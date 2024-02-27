@@ -1,3 +1,5 @@
+export type AddressType = keyof typeof ADDRESS_TYPES;
+
 const ADDRESS_TYPES = {
   STREET: {
     ko: '지번',
