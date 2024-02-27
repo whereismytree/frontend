@@ -43,14 +43,14 @@ function SubmitButton() {
 
       return {
         location: address.location,
-        address: address.name[anotherAddressType],
+        address: address.name[anotherAddressType].toUpperCase(),
         addressType: anotherAddressType,
       };
     }
 
     return {
       location: address.location,
-      address: address.name[address.type.en],
+      address: address.name[address.type.en].toUpperCase(),
       addressType: address.type.en,
     };
   };
@@ -58,7 +58,9 @@ function SubmitButton() {
   const refineAddress = parseAddress(address);
 
   const handleClick = () => {
-    navigate(getPath('treePage', 'regist', 'detail'), { state: { ...refineAddress, latLng } });
+    navigate(getPath('treePage', 'regist', 'detail'), {
+      state: { ...refineAddress, addressType: refineAddress.addressType, latLng },
+    });
   };
 
   return <Button onClick={handleClick}>이 위치로 트리 등록하기</Button>;
