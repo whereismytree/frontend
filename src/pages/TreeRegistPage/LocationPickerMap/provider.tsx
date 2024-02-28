@@ -1,7 +1,16 @@
-import { ReactNode, createContext, useCallback, useContext, useMemo, useReducer } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import { TAddressType } from 'types/addressType';
 
-type initialState = {
+export type initialTreeRegistMapState = {
   latLng: {
     lat: number;
     lng: number;
@@ -9,27 +18,31 @@ type initialState = {
 
   address: {
     name: {
-      [key in initialState['address']['type']['en']]: string;
+      [key in initialTreeRegistMapState['address']['type']['en']]: string;
     };
     location: string;
     type: TAddressType;
   };
 
+  isHaveAddress: boolean;
+
   setAddress: (address: {
-    latLng: initialState['latLng'];
-    road: initialState['address']['name']['road'];
-    street: initialState['address']['name']['street'];
-    location: initialState['address']['location'];
+    latLng: initialTreeRegistMapState['latLng'];
+    road: initialTreeRegistMapState['address']['name']['road'];
+    street: initialTreeRegistMapState['address']['name']['street'];
+    location: initialTreeRegistMapState['address']['location'];
   }) => void;
 
   toggleAddressType: () => void;
 };
 
-const initialState: initialState = {
+const initialTreeRegistMapState: initialTreeRegistMapState = {
   latLng: {
     lat: 0,
     lng: 0,
   },
+
+  isHaveAddress: false,
 
   address: {
     name: {
@@ -53,15 +66,15 @@ type Actions =
     }
   | {
       type: typeof SET_ADDRESS;
-      payload: Parameters<initialState['setAddress']>[0];
+      payload: Parameters<initialTreeRegistMapState['setAddress']>[0];
     };
 
-const reducer = (state: initialState, action: Actions) => {
+const reducer = (state: initialTreeRegistMapState, action: Actions) => {
   switch (action.type) {
     case SET_ADDRESS: {
       const { latLng, street, road, location } = action.payload;
 
-      const updateState: initialState = {
+      const updateState: initialTreeRegistMapState = {
         ...state,
         latLng,
         address: {
@@ -75,11 +88,11 @@ const reducer = (state: initialState, action: Actions) => {
     }
 
     case TOGGLE_ADDRESS_TYPE: {
-      const changeAddressTypeEn: initialState['address']['type']['en'] =
+      const changeAddressTypeEn: initialTreeRegistMapState['address']['type']['en'] =
         state.address.type.en === 'road' ? 'street' : 'road';
-      const changeAddressTypeKo: initialState['address']['type']['ko'] =
+      const changeAddressTypeKo: initialTreeRegistMapState['address']['type']['ko'] =
         state.address.type.ko === '지번' ? '도로명' : '지번';
-      const updateState: initialState = {
+      const updateState: initialTreeRegistMapState = {
         ...state,
         address: {
           ...state.address,
@@ -98,16 +111,24 @@ const reducer = (state: initialState, action: Actions) => {
   }
 };
 
-const TreeRegistMapContext = createContext<initialState>(initialState);
+const TreeRegistMapContext = createContext<initialTreeRegistMapState>(initialTreeRegistMapState);
 
 export const useTreeRegistMapContext = () => useContext(TreeRegistMapContext);
 
 function TreeRegistMapProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialTreeRegistMapState);
+  const [isHaveAddress, setIsHaveAddress] = useState(false);
 
-  const setAddress = useCallback((address: Parameters<initialState['setAddress']>[0]) => {
-    dispatch({ type: SET_ADDRESS, payload: address });
-  }, []);
+  useEffect(() => {
+    setIsHaveAddress(!!(state.latLng.lat && state.latLng.lng));
+  }, [state.address, state.latLng]);
+
+  const setAddress = useCallback(
+    (address: Parameters<initialTreeRegistMapState['setAddress']>[0]) => {
+      dispatch({ type: SET_ADDRESS, payload: address });
+    },
+    [],
+  );
 
   const toggleAddressType = useCallback(() => dispatch({ type: TOGGLE_ADDRESS_TYPE }), []);
 
@@ -120,11 +141,11 @@ function TreeRegistMapProvider({ children }: { children: ReactNode }) {
         () => ({
           address: memoAddress,
           latLng: memoLatLng,
-
+          isHaveAddress,
           setAddress,
           toggleAddressType,
         }),
-        [memoAddress, memoLatLng, setAddress, toggleAddressType],
+        [memoAddress, memoLatLng, isHaveAddress, setAddress, toggleAddressType],
       )}
     >
       {children}
