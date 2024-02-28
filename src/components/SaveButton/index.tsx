@@ -22,20 +22,18 @@ const SaveButton = ({ treeId, isSave, setIsSave }: ISaveButtonProps) => {
     },
   );
 
-  console.log(mutate);
-
   const handleSaveButton = () => {
     setIsSave((prev) => !prev);
     // TODO: 추후 서버상태 변경으로 수정
-    // mutate(
-    //   { treeId, isFavorite: !isSave },
-    //   {
-    //     onSuccess: () => {
-    //       console.log('저장 상태 변경!');
-    //       setIsSave((prev) => !prev);
-    //     },
-    //   },
-    // );
+    mutate(
+      { treeId, isFavorite: !isSave },
+      {
+        onSuccess: () => {
+          console.log('저장 상태 변경!');
+          setIsSave((prev) => !prev);
+        },
+      },
+    );
   };
 
   return (

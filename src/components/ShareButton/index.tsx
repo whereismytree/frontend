@@ -38,7 +38,7 @@ const ShareButton = ({ treeId, treeName }: IShareButtonProps) => {
   }, []);
 
   const handleCopyButton = () => {
-    const url = `http://localhost:3000/treeInfo/${treeId}`;
+    const url = `http://localhost:3000/tree/${treeId}`;
     navigator.clipboard.writeText(url).then(() => {
       alert('클립보드 복사 완료!');
     });

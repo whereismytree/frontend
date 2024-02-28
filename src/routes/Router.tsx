@@ -1,20 +1,21 @@
 import { useRoutes, RouteObject, Outlet } from 'react-router-dom';
 import { MainPage } from 'pages/MainPage';
 import { SearchPage } from 'pages/SearchPage';
-import { TreeInfo } from 'pages/TreeInfo';
-import { SignIn } from 'pages/SignIn/SocialLogin';
+import { TreeInfo } from 'pages/TreeInfoPage';
 import { MyPage } from 'pages/MyPage';
 import { LandingPage } from 'pages/LandingPage';
+import SignIn from 'pages/LoginPage/SocialLogin';
 import PATH from 'constants/path';
-import SearchLocation from 'pages/TreeRegi/Search';
-import Redirect from 'pages/SignIn/Redirect';
+import SearchLocation from 'pages/TreeRegistPage/AddressSearch';
+import Redirect from 'pages/LoginPage/Redirect';
 import ReviewDetailPage from 'pages/ReviewDetailPage';
-import RegistMap from 'pages/TreeRegi/Map';
-import TreeRegiDetail from 'pages/TreeRegi/Form';
-import Nickname from 'pages/SignIn/ProfileSetting';
+import RegistMap from 'pages/TreeRegistPage/LocationPickerMap';
+import TreeRegiDetail from 'pages/TreeRegistPage/TreeDetailForm';
+import Nickname from 'pages/LoginPage/ProfileSetting';
 import SavePage from 'pages/SavedTreePage';
 import RegistedTreePage from 'pages/MyTreePage';
 import RegistReviewPage from 'pages/MyReviewPage';
+import ReviewRegistAndEditPage from 'pages/ReviewRegistAndEditPage';
 
 export const Router = () => {
   const landingRoute: RouteObject = {
@@ -37,8 +38,15 @@ export const Router = () => {
     children: [
       { path: '', element: <SignIn /> },
       { path: PATH.loginPage.children.profileSetting, element: <Nickname /> },
-      { path: PATH.loginPage.children.redirect, element: <Redirect /> },
+      // TODO: Redirect URI를 설정할 수 있는 기능이 백엔드에 정의되지 않아 loginRedirectRoute를 따로 작성해 구현했습니다.
+      // 백엔드에 구현완료 되면 아래 주석을 풀고 getPath 유틸리티 함수를 통해 리다이렉트 기능 구현하면 됩니다.
+      // { path: PATH.loginPage.children.redirect, element: <Redirect /> },
     ],
+  };
+
+  const loginRedirectRoute: RouteObject = {
+    path: 'oauth/redirect',
+    element: <Redirect />,
   };
 
   const treeRoute: RouteObject = {
@@ -64,9 +72,9 @@ export const Router = () => {
     children: [
       { path: PATH.reviewPage.dynamicParam, element: <ReviewDetailPage /> },
       // 리뷰 등록 페이지
-      { path: `${PATH.reviewPage.children.regist}/:treeId`, element: null },
+      { path: `${PATH.reviewPage.children.regist}/:treeId`, element: <ReviewRegistAndEditPage /> },
       // 리뷰 수정 페이지
-      { path: `${PATH.reviewPage.children.edit}/:reviewId`, element: null },
+      { path: `${PATH.reviewPage.children.edit}/:reviewId`, element: <ReviewRegistAndEditPage /> },
     ],
   };
 
@@ -81,7 +89,15 @@ export const Router = () => {
     ],
   };
 
-  const routes = [landingRoute, mainRoute, treeRoute, reviewRoute, loginRoute, myRoute];
+  const routes = [
+    landingRoute,
+    mainRoute,
+    treeRoute,
+    reviewRoute,
+    loginRoute,
+    loginRedirectRoute,
+    myRoute,
+  ];
 
   return useRoutes(routes);
 };

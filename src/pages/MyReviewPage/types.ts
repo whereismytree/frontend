@@ -6,8 +6,12 @@ export interface IReviewsAPIResponse {
 }
 
 export interface IReviewItem {
+  tree: {
+    treeId: number;
+    treeName: string;
+    address: string;
+  };
   reviewId: number;
-  treeName: string;
   createdAt: string;
   reviewImageUrl: string;
   content: string;

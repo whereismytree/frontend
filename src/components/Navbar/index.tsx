@@ -7,20 +7,20 @@ interface INavButtonProps {
   src: { basic: string; active: string };
   text: string;
   page: string;
+  alt: string;
 }
 
-const NavButton = ({ src, text, page }: INavButtonProps) => {
+const NavButton = ({ src, text, page, alt }: INavButtonProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isActive = location.pathname === page;
   const handleGoToPage = () => {
-    // TODO: 라우팅 수정 필요
     navigate(page);
   };
 
   return (
     <S.Button onClick={handleGoToPage}>
-      <S.Img src={isActive ? src.active : src.basic} alt={`${page.replace('/', '')}Icon`} />
+      <S.Img src={isActive ? src.active : src.basic} alt={`${alt}Icon`} />
       <S.Text>{text}</S.Text>
     </S.Button>
   );
@@ -29,10 +29,20 @@ const NavButton = ({ src, text, page }: INavButtonProps) => {
 const Navbar = () => {
   return (
     <S.Wrapper>
-      <NavButton src={navbarImg.home} text="홈" page={PATH.mainPage} />
-      <NavButton src={navbarImg.candy} text="트리 등록하기" page={PATH.registInfoPage} />
-      <NavButton src={navbarImg.star} text="저장한 트리" page={PATH.savePage} />
-      <NavButton src={navbarImg.cookie} text="MY" page={PATH.myPage} />
+      <NavButton src={navbarImg.home} text="홈" page={`/${PATH.mainPage.root}`} alt="main" />
+      <NavButton
+        src={navbarImg.candy}
+        text="트리 등록하기"
+        page={`/${PATH.treePage.root}/${PATH.treePage.children.regist.root}`}
+        alt="regist"
+      />
+      <NavButton
+        src={navbarImg.star}
+        text="저장한 트리"
+        page={`/${PATH.myPage.root}/${PATH.myPage.children.savedTrees}`}
+        alt="save"
+      />
+      <NavButton src={navbarImg.cookie} text="MY" page={`/${PATH.myPage.root}`} alt="my" />
     </S.Wrapper>
   );
 };
