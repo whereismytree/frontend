@@ -15,7 +15,7 @@ export const Form = styled.form`
 
   label ~ div,
   label ~ input,
-  label ~ button {
+  label ~ button[type='button'] {
     margin-bottom: 20px;
   }
 `;
