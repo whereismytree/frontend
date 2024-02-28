@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Button = styled.button`
   width: 100%;
@@ -29,13 +29,20 @@ export const MediumButton = styled(Button)`
   border-radius: 5px;
 `;
 
-export const CancelButton = styled(Button)`
+const WhiteButtonStyle = css`
   color: var(--grey-medium);
   background-color: var(--main-white);
   border: 1px solid var(--grey-light);
+`;
 
-  &:disabled {
-    color: initial;
-    background-color: initial;
-  }
+export const WhiteButton = styled(Button)`
+  ${WhiteButtonStyle}
+`;
+
+export const WhiteMediumButton = styled(MediumButton)`
+  ${WhiteButtonStyle}
+`;
+
+export const WhiteSmallButton = styled(SmallButton)`
+  ${WhiteButtonStyle}
 `;
