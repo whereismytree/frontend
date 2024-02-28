@@ -125,7 +125,7 @@ const validateAddress = (addressData: Partial<TAddress>): TAddress => {
 
   const { address, addressType, latLng, location } = addressData;
 
-  if (!address || !addressType || !latLng || !location) {
+  if (!address || !addressType || !latLng || typeof location === 'undefined') {
     throw new Error(`올바른 주소 데이터를 전달해주세요.`);
   }
 
