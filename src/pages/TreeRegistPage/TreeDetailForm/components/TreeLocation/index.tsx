@@ -14,9 +14,11 @@ function TreeLocation({
 }) {
   return (
     <Item gap={0.7}>
-      <Item.Title size={1.6} weight={500}>
-        {location ?? ''}
-      </Item.Title>
+      {location && (
+        <Item.Title size={1.6} weight={500}>
+          {location}
+        </Item.Title>
+      )}
       <S.Address>
         <AddressType type={addressType} />
         {address}

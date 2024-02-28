@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import * as S from './style';
 
 interface ISubTitleProps {
@@ -15,7 +15,7 @@ interface ITitleProps {
 }
 
 interface IItemWrapperProps {
-  children: [React.ReactElement, React.ReactElement];
+  children: ReactNode;
   gap?: number;
 }
 
