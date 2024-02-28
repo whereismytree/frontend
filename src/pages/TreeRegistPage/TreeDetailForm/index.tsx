@@ -21,6 +21,7 @@ import {
   TAddress,
   TreeRegistFormDatas,
   ServerExpectedFormData,
+  NonFalsy,
 } from './types';
 import * as S from './style';
 
@@ -37,6 +38,7 @@ function TreeRegiDetail() {
     const unrefinedBody = {
       ...data,
       ...latLng,
+      // roadAddress 혹은 streetAddress 옵션이 주소의 타입에 맞게 존재
       [`${toCamelCase(addressType, 'address')}`]: `${address} ${location}`,
       addressType,
     } as UnrefinedTreeRegistApiBody;
@@ -136,11 +138,7 @@ const validateAddress = (addressData: Partial<TAddress>): TAddress => {
   return { address, addressType, latLng, location };
 };
 
-type NonFalsy<T> = {
-  [K in keyof T]: T[K] extends undefined | null | false | '' | 0 | [] ? never : K;
-}[keyof T];
-
-const removeFalsyValues = <T extends object>(obj: T) => {
+const removeFalsyValues = <T extends object>(obj: T): Pick<T, NonFalsy<T>> => {
   const filteredEntries = Object.entries(obj).filter(([, value]) =>
     Array.isArray(value) ? value.length : Boolean(value),
   );

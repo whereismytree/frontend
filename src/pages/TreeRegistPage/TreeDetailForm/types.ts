@@ -57,3 +57,7 @@ export type TreeRegistAPIBody = TreeDatas & ServerExpectedFormData;
 
 // 정제되지 않은 타입, 유저에게 입력받는 폼에서 받는 데이터는 모두 optional인 타입.
 export type UnrefinedTreeRegistApiBody = TreeDatas & TreeRegistFormDatas;
+
+export type NonFalsy<T> = {
+  [K in keyof T]: T[K] extends undefined | null | false | '' | 0 | [] ? never : K;
+}[keyof T];
