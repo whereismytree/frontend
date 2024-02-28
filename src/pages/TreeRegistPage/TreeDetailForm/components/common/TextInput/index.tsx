@@ -1,9 +1,15 @@
 import React from 'react';
 import * as S from './style';
 
-const TextInput = React.forwardRef<HTMLInputElement, React.HTMLAttributes<HTMLInputElement>>(
-  ({ ...rest }, ref) => {
-    return <S.TextInput ref={ref} type="text" {...rest} />;
+type TextInputProps = {
+  valid?: boolean;
+  invalid?: boolean;
+  rest?: React.HTMLAttributes<HTMLInputElement>;
+} & React.HTMLAttributes<HTMLInputElement>;
+
+const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
+  ({ valid, invalid, ...rest }: TextInputProps, ref) => {
+    return <S.TextInput ref={ref} type="text" $valid={valid} $invalid={invalid} {...rest} />;
   },
 );
 

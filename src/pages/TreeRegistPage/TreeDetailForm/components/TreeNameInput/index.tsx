@@ -2,13 +2,16 @@ import { useId } from 'react';
 import { useFormContext } from 'react-hook-form';
 import TextInput from '../common/TextInput';
 import Label from '../common/Label';
+import * as S from './style';
 
 function TreeNameInput() {
   const {
     register,
     formState: { errors },
   } = useFormContext();
+  const formKey = 'name';
   const id = useId();
+  const isError = !!errors[formKey];
 
   return (
     <>
@@ -18,7 +21,8 @@ function TreeNameInput() {
       <TextInput
         placeholder="장소나 건물명 특징적인 이름을 지어주세요. ex) 더현대 서울 트리"
         id={id}
-        {...register('name', {
+        invalid={isError}
+        {...register(formKey, {
           required: '트리 이름을 입력해주세요.',
           validate: (value: string): string | true => {
             const patterns = [
@@ -39,7 +43,7 @@ function TreeNameInput() {
           },
         })}
       />
-      <p>{errors.name && errors.name.message?.toString()}</p>
+      <S.ErrorText>{isError && errors[formKey]?.message?.toString()}</S.ErrorText>
     </>
   );
 }

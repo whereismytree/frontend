@@ -13,9 +13,9 @@ export const Form = styled.form`
     margin-top: 12px;
   }
 
-  label ~ div,
-  label ~ input,
-  label ~ button[type='button'] {
+  label + input,
+  label + div,
+  label + button[type='button'] {
     margin-bottom: 20px;
   }
 `;
