@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
-import ZoomControl from 'components/main/ZoomControl';
+import ZoomControl from 'pages/MainPage/components/ZoomControl';
 import MyLocationButton from 'components/common/MyLocationButton';
-import MainSearchInput from 'components/main/SearchBar';
-import ResearchButton from 'components/main/ReSearchButton';
-import TreeInfoCard from 'components/main/TreeInfoCard';
+import MainSearchInput from 'pages/MainPage/components/SearchBar';
+import ResearchButton from 'pages/MainPage/components/ReSearchButton';
+import TreeInfoCard from 'pages/MainPage/components/TreeInfoCard';
 import Navbar from 'components/Navbar';
 import { ITreeItem } from 'types/apiResponse';
 import useFetchTreeData from 'hooks/useFetchTreeData';

@@ -1,8 +1,9 @@
 import ProfileImage from 'components/common/ProfileImage';
 import Item from 'components/common/Item';
-import isValidDate from 'utils/isValidDate';
+import isValidDate from 'utils/dateUtils/isValidDate';
 import { InvalidDateError } from 'error/HumanError';
-import formatDateWithDayOfWeek from 'utils/formatDateWithDayOfWeek';
+import formatDate from 'utils/dateUtils/formatDate';
+import getDayOfWeek from 'utils/dateUtils/getDayofWeek';
 import * as S from './style';
 
 const parseCreateDate = (createDate: string) => {
@@ -15,7 +16,7 @@ const parseCreateDate = (createDate: string) => {
     );
   }
 
-  return formatDateWithDayOfWeek(date, '.').slice(2).replace(/\(|\)/g, ' ').trim();
+  return `${formatDate(date, '.')} ${getDayOfWeek(date.getDay())}`;
 };
 
 function Profile({
