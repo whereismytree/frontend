@@ -9,18 +9,6 @@ import AddressInfo from './components/AddressInfo';
 import SubmitButton from './components/SubmitButton';
 import * as S from './style';
 
-const validateLatLng = (LatLng: { lat: number; lng: number }) => {
-  if (!LatLng || isEmptyObject(LatLng)) {
-    throw new Error('올바르지 않은 접근입니다.');
-  }
-
-  if (typeof LatLng.lat === 'undefined' || typeof LatLng.lng === 'undefined') {
-    throw new Error('올바른 key로 위도 경도를 전달해주세요. ex) {lat: number, lat: number}');
-  }
-
-  return LatLng;
-};
-
 function RegistMap() {
   const { state } = useLocation();
   const latLng = validateLatLng(state);
@@ -39,5 +27,17 @@ function RegistMap() {
     </>
   );
 }
+
+const validateLatLng = (LatLng: { lat: number; lng: number }) => {
+  if (!LatLng || isEmptyObject(LatLng)) {
+    throw new Error('올바르지 않은 접근입니다.');
+  }
+
+  if (typeof LatLng.lat === 'undefined' || typeof LatLng.lng === 'undefined') {
+    throw new Error('올바른 key로 위도 경도를 전달해주세요. ex) {lat: number, lat: number}');
+  }
+
+  return LatLng;
+};
 
 export default RegistMap;
