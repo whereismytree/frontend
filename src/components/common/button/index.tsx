@@ -1,60 +1,50 @@
 import * as S from './style';
 
-interface IButtonProps {
+type IButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: string;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-}
+};
 
-type TPartialButtonProps = Partial<IButtonProps>;
-
-type TCancelButtonProps = Pick<TPartialButtonProps, 'children' | 'onClick'>;
-
-function Button({ children, onClick = () => {}, type = 'button', disabled = false }: IButtonProps) {
+function Button({ children, type = 'button', ...rest }: IButtonProps) {
   return (
-    <S.Button type={type} onClick={() => onClick()} disabled={disabled}>
+    <S.Button type={type} {...rest}>
       {children}
     </S.Button>
   );
 }
 
-function SmallButton({
-  children,
-  onClick = () => {},
-  type = 'button',
-  disabled = false,
-}: IButtonProps) {
+function MediumButton({ children, type = 'button', ...rest }: IButtonProps) {
   return (
-    <S.SmallButton type={type} onClick={() => onClick()} disabled={disabled}>
-      {children}
-    </S.SmallButton>
-  );
-}
-
-function MediumButton({
-  children,
-  onClick = () => {},
-  type = 'button',
-  disabled = false,
-}: IButtonProps) {
-  return (
-    <S.MediumButton type={type} onClick={() => onClick()} disabled={disabled}>
+    <S.MediumButton type={type} {...rest}>
       {children}
     </S.MediumButton>
   );
 }
 
-function CancelButton({ children, onClick = () => {} }: TCancelButtonProps) {
+function SmallButton({ children, type = 'button', ...rest }: IButtonProps) {
   return (
-    <S.CancelButton type="button" onClick={() => onClick()}>
-      {children || '취소하기'}
-    </S.CancelButton>
+    <S.SmallButton type={type} {...rest}>
+      {children}
+    </S.SmallButton>
   );
+}
+
+function WhiteButton({ children, ...rest }: IButtonProps) {
+  return <S.WhiteButton {...rest}>{children}</S.WhiteButton>;
+}
+
+function WhiteMediumButton({ children, ...rest }: IButtonProps) {
+  return <S.WhiteMediumButton {...rest}>{children}</S.WhiteMediumButton>;
+}
+
+function WhiteSmallButton({ children, ...rest }: IButtonProps) {
+  return <S.WhiteSmallButton {...rest}>{children}</S.WhiteSmallButton>;
 }
 
 Button.Small = SmallButton;
 Button.Medium = MediumButton;
-Button.Cancel = CancelButton;
+WhiteButton.Medium = WhiteMediumButton;
+WhiteButton.Small = WhiteSmallButton;
+
+export { WhiteButton };
 
 export default Button;
