@@ -1,20 +1,33 @@
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import * as S from './style';
 
 interface IOptionProps {
-  children: string;
+  children: ReactNode;
+  onClick?: () => void;
 }
 
 function OptionList({ children }: { children: ReactElement<IOptionProps>[] }) {
   return <ul>{children}</ul>;
 }
 
-function Option({ children }: IOptionProps) {
-  return <S.Option>{children}</S.Option>;
+function Option({ children, onClick }: IOptionProps) {
+  return (
+    <S.OptionItem onClick={onClick}>
+      <button type="button" onClick={onClick}>
+        {children}
+      </button>
+    </S.OptionItem>
+  );
 }
 
-function DangerOption({ children }: IOptionProps) {
-  return <S.DangerOption>{children}</S.DangerOption>;
+function DangerOption({ children, onClick }: IOptionProps) {
+  return (
+    <S.DangerOptionItem>
+      <button type="button" onClick={onClick}>
+        {children}
+      </button>
+    </S.DangerOptionItem>
+  );
 }
 
 OptionList.Option = Option;
