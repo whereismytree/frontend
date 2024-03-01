@@ -10,7 +10,7 @@ function Redirect() {
   const dispath = useDispatch();
   const queryParams = new URLSearchParams(location.search);
   const accessToken = queryParams.get('accessToken');
-  const nicknameRequire = queryParams.get('isNicknameRequired');
+  const nicknameRequire = JSON.parse(queryParams.get('isNicknameRequired')!);
 
   useEffect(() => {
     if (accessToken) {
