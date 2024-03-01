@@ -1,22 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { TRootState } from 'store';
-import { setAccessToken } from 'store/modules/userInfoSlice';
-
 const useUser = () => {
-  const { accessToken } = useSelector((state: TRootState) => state.user);
-  const dispatch = useDispatch();
+  const localStorageKey = 'token';
+  const token = sessionStorage.getItem(localStorageKey);
 
   const login = (accessToken: string) => {
-    dispatch(setAccessToken(accessToken));
+    sessionStorage.setItem(localStorageKey, accessToken);
   };
 
   const logout = () => {
-    dispatch(setAccessToken(''));
+    sessionStorage.removeItem(localStorageKey);
   };
 
-  const isLogin = !!accessToken;
-
-  return { token: accessToken, login, logout, isLogin };
+  return { token, login, logout, isLogin: !!token };
 };
 
 export default useUser;
