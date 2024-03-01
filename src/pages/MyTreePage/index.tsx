@@ -1,40 +1,37 @@
 import Navbar from 'components/Navbar';
 import Topbar from 'components/Topbar';
 import { useEffect, useRef, useState } from 'react';
-import useMarkerMap from 'hooks/useMarkerMap';
+import useMarkerMap, { TreePostionItem } from 'hooks/useMarkerMap';
 import treeMarker from 'assets/tree_marker.svg';
 import Guide from 'components/common/Guide';
 import TreeList from 'components/TreeList';
 import { useNavigate } from 'react-router-dom';
 import getPath from 'utils/getPath';
+import formatTreeListToPostions from 'utils/formatTreeListToPostions';
 import useRegistedTree from './hooks';
 import * as S from './style';
 
 const RegistedTreePage = () => {
-  const mapContainer = useRef(null);
-  const [positions, setPositions] = useState<any>();
-  const registedTrees = useRegistedTree();
   const navigate = useNavigate();
+  const mapContainer = useRef(null);
+  const [positions, setPositions] = useState<TreePostionItem[]>([]);
+  const registedTrees = useRegistedTree();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { map } = useMarkerMap({
-    mapContainer,
+  const { map } = useMarkerMap(mapContainer, {
+    initialMapLevel: 6,
     markerImageSrc: treeMarker,
     positions,
-    imageSize: [24, 24],
+    imageSize: [32, 32],
   });
 
   useEffect(() => {
     window.kakao.maps.load(() => {
-      setPositions(
-        registedTrees.map((tree) => {
-          return {
-            name: tree.name,
-            latlng: new window.kakao.maps.LatLng(tree.lat, tree.lng),
-          };
-        }),
-      );
+      if (map && registedTrees) {
+        const postions = formatTreeListToPostions(registedTrees);
+        setPositions(postions);
+      }
     });
-  }, []);
+  }, [map, registedTrees]);
 
   return (
     <>
