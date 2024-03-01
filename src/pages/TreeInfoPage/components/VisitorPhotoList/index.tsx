@@ -1,15 +1,18 @@
 import React from 'react';
 import defaultImg from 'assets/treeinfo-default.svg';
 import useApiQuery from 'hooks/useApiQuery';
-import { IReviewImages } from 'types/apiResponse';
+import { IReviewImages, ITreeItem } from 'types/apiResponse';
+import { useNavigate } from 'react-router-dom';
 import * as S from '../style';
 
 interface IProps {
-  treeId: number;
+  treeInfo: ITreeItem;
 }
 
-const VisitorPhotoList = ({ treeId }: IProps) => {
-  const { data, isError, error } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${treeId}`);
+const VisitorPhotoList = ({ treeInfo }: IProps) => {
+  const id = 2;
+  const { data, isError, error } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${id}`);
+  const navigate = useNavigate();
 
   if (isError) {
     console.error(error);
@@ -18,7 +21,11 @@ const VisitorPhotoList = ({ treeId }: IProps) => {
     return null;
   }
 
-  console.log(data);
+  const handleReviewPhoto = () => {
+    navigate(`/review/${id}`, {
+      state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
+    });
+  };
 
   return (
     <S.Wrapper>
@@ -29,7 +36,7 @@ const VisitorPhotoList = ({ treeId }: IProps) => {
       <S.PhotoList>
         {data?.totalImages !== 0 ? (
           data?.images.map((e) => {
-            return <S.Photo key={e.reviewId} src={e.imageUrl} />;
+            return <S.Photo key={e.reviewId} src={e.imageUrl} onClick={handleReviewPhoto} />;
           })
         ) : (
           <S.Photo src={defaultImg} />

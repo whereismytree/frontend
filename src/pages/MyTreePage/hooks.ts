@@ -9,9 +9,7 @@ const useRegistedTree = () => {
     throw new HTTPError('내가 등록한 트리를 불러오던 중 오류가 발생했습니다.');
   }
 
-  const trees = data?.trees || [];
-
-  return trees;
+  return data?.trees || [];
 };
 
 export default useRegistedTree;

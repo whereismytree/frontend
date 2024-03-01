@@ -1,13 +1,15 @@
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { HTTPError } from 'error/HTTPError';
+import useUser from './useUser';
 
-const useApiQuery = <TData = unknown>(queryParam: string): UseQueryResult<TData, unknown> => {
-  // TODO: 실제 서비스 배포시에는 아래 액세스 토큰을 가져오는 코드로 사용해야 합니다.
-  const accessToken: string | undefined = process.env.REACT_APP_TREE_ACCESS_TOKEN;
-  // const accessToken = useAccessToken();
+const useApiQuery = <TData = unknown>(
+  queryParam: string,
+  enabled?: boolean,
+): UseQueryResult<TData, unknown> => {
+  const { token } = useUser();
 
-  if (!accessToken) {
+  if (!token) {
     throw new Error('사용자의 액세스 토큰을 찾을 수 없습니다.');
   }
 
@@ -18,7 +20,7 @@ const useApiQuery = <TData = unknown>(queryParam: string): UseQueryResult<TData,
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${token}`,
           },
         },
       );
@@ -36,6 +38,7 @@ const useApiQuery = <TData = unknown>(queryParam: string): UseQueryResult<TData,
   return useQuery<TData, Error>({
     queryKey: [queryParam],
     queryFn: fetchData,
+    enabled: enabled !== undefined ? enabled : true,
   });
 };
 

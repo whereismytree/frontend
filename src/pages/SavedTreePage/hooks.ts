@@ -12,7 +12,7 @@ function useSavedTrees() {
     throw new Error('저장한 트리 데이터가 없습니다!');
   }
 
-  return data;
+  return data?.trees || [];
 }
 
 export default useSavedTrees;
