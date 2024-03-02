@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TreeLocationItem from 'components/TreeLocationItem';
 import SaveButton from 'components/SaveButton';
 import ShareButton from 'components/ShareButton';
@@ -10,14 +10,14 @@ interface IProps {
 }
 
 const TreeTitle = ({ treeInfo }: IProps) => {
-  const [isSave, setIsSave] = useState<boolean>(false);
+  // TODO: 저장 기능 수정 필요
   return (
     <S.Title>
       <TreeLocationItem location={treeInfo.roadAddress} distance={138}>
         {treeInfo.name}
       </TreeLocationItem>
       <S.Btns>
-        <SaveButton treeId={1} isSave={isSave} setIsSave={setIsSave} />
+        <SaveButton treeId={1} isFavorite={false} />
         <ShareButton treeId={1} treeName={treeInfo.name} />
       </S.Btns>
     </S.Title>

@@ -1,3 +1,10 @@
+export interface IMapItem {
+  id: number;
+  name: string;
+  lat: number;
+  lng: number;
+}
+
 export interface ITreeItem {
   treeId: number;
   name: string;
@@ -14,6 +21,7 @@ export interface ITreeItem {
   isPet?: boolean;
   title: string;
   extraInfo?: string;
+  isFavorite: boolean;
 }
 
 interface IImage {
