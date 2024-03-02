@@ -18,7 +18,6 @@ import ExhibitionDateCalendar from './components/ExhibitionDateCalendar';
 import { useRegistTree } from './hooks';
 import {
   UnrefinedTreeRegistApiBody,
-  TreeRegistAPIBody,
   TAddress,
   TreeRegistFormDatas,
   ServerExpectedFormData,
@@ -26,8 +25,6 @@ import {
 } from './types';
 import * as S from './style';
 
-// TODO: BE에서 spaceType을 불리언으로 받아 처리하는 로직에 오류가 존재하는 것 같습니다.
-// 오류가 해결되기 이전까지 spaceType은 request body에서 제외하고 서버에 요청하는 방향으로 코드를 작성해두었으니, 추후 수정해야 합니다.
 function TreeRegiDetail() {
   const navigate = useNavigate();
   const methods = useForm({ mode: 'onSubmit' });
@@ -45,9 +42,9 @@ function TreeRegiDetail() {
       [`${toCamelCase(addressType, 'address')}`]: `${address} ${location}`,
       addressType,
     } as UnrefinedTreeRegistApiBody;
-
     const serverExpectBodyData = convertApiBody(unrefinedBody);
-    const body = removeFalsyValues(serverExpectBodyData) as TreeRegistAPIBody;
+    const body = removeFalsyValues(serverExpectBodyData);
+
     regist(body, {
       onSuccess: () => {
         navigate(getPath('myPage', 'registedTrees'));
@@ -84,7 +81,7 @@ function TreeRegiDetail() {
   );
 }
 
-const convertApiBody = (apiBody: UnrefinedTreeRegistApiBody): TreeRegistAPIBody => {
+const convertApiBody = (apiBody: UnrefinedTreeRegistApiBody) => {
   const convertedBody: ServerExpectedFormData = {};
 
   if (apiBody.businessDays && apiBody.businessDays.length) {
@@ -105,17 +102,9 @@ const convertApiBody = (apiBody: UnrefinedTreeRegistApiBody): TreeRegistAPIBody 
     convertedBody.isPet = !!apiBody.isPet;
   }
 
-  if (apiBody.spaceType) {
-    convertedBody.spaceType = !!apiBody.spaceType;
-  }
-
-  // TODO: BE에서 spaceType을 불리언으로 처리하는 로직이 fix되면 아래 구문 지워주세요.
-  delete apiBody.spaceType;
-  delete convertedBody.spaceType;
-
   const convertResult = { ...apiBody, ...convertedBody };
 
-  return removeFalsyValues(convertResult) as TreeRegistAPIBody;
+  return removeFalsyValues(convertResult);
 };
 
 const formatBusineessDays = (dates: TreeRegistFormDatas['businessDays']) => dates?.join(',');

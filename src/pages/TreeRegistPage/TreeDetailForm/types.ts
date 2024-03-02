@@ -32,7 +32,7 @@ export type TreeRegistFormDatas = {
   exhibitionStartDate?: Date;
   exhibitionEndDate?: Date;
   businessDays?: string[];
-  spaceType?: 'true' | 'false';
+  spaceType?: 'INDOOR' | 'OUTDOOR';
   isPet?: 'true' | 'false';
   extraInfo?: string;
 };
@@ -41,7 +41,6 @@ type differentFormDataTypeKeys =
   | 'businessDays'
   | 'exhibitionStartDate'
   | 'exhibitionEndDate'
-  | 'spaceType'
   | 'isPet';
 
 // 서버가 기대하는 폼에서 입력받은 데이터의 타입
@@ -49,7 +48,6 @@ export type ServerExpectedFormData = Omit<TreeRegistFormDatas, differentFormData
   businessDays?: string;
   exhibitionStartDate?: string;
   exhibitionEndDate?: string;
-  spaceType?: boolean;
   isPet?: boolean;
 };
 
