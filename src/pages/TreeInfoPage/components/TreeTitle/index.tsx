@@ -3,25 +3,27 @@ import TreeLocationItem from 'components/TreeLocationItem';
 import SaveButton from 'components/SaveButton';
 import ShareButton from 'components/ShareButton';
 import { ITreeItem } from 'types/apiResponse';
+import useApiQuery from 'hooks/useApiQuery';
 import * as S from '../style';
 
 interface IProps {
-  treeInfo: ITreeItem;
+  treeId: number;
 }
 
-const TreeTitle = ({ treeInfo }: IProps) => {
-  // TODO: 저장 기능 수정 필요
-  return (
+const TreeTitle = ({ treeId }: IProps) => {
+  const { data } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
+
+  return data ? (
     <S.Title>
-      <TreeLocationItem location={treeInfo.roadAddress} distance={138}>
-        {treeInfo.name}
+      <TreeLocationItem location={data.roadAddress} distance={138}>
+        {data.name}
       </TreeLocationItem>
       <S.Btns>
-        <SaveButton treeId={1} isFavorite={false} />
-        <ShareButton treeId={1} treeName={treeInfo.name} />
+        <SaveButton treeId={treeId} isFavorite={data.isFavorite} />
+        <ShareButton treeId={treeId} treeName={data.name} />
       </S.Btns>
     </S.Title>
-  );
+  ) : null;
 };
 
 export default TreeTitle;
