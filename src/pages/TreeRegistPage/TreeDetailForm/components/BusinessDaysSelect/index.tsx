@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import MultiSelect from '../common/MultiSelect';
 import Label from '../common/Label';
+import { SelectChangeEvent } from '../common/MultiSelect/types';
 
 function BusinessDaysSelect() {
   const formKey = 'businessDays';
@@ -12,10 +13,7 @@ function BusinessDaysSelect() {
     setValue(formKey, []);
   }, [setValue]);
 
-  const handleSelectChange = (e: {
-    target: EventTarget & HTMLInputElement;
-    selected: string[];
-  }) => {
+  const handleSelectChange = (e: SelectChangeEvent) => {
     setValue(
       formKey,
       e.selected.sort((a, b) => Number(a) - Number(b)).map((value) => days[Number(value)]),
