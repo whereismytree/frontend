@@ -7,7 +7,7 @@ import ResearchButton from 'pages/MainPage/components/ReSearchButton';
 import TreeInfoCard from 'pages/MainPage/components/TreeInfoCard';
 import Navbar from 'components/Navbar';
 import { IMapItem } from 'types/apiResponse';
-import useFetchTreeData from 'hooks/useFetchTreeData';
+import useFetchTreeData from 'pages/MainPage/hooks';
 import * as S from './style';
 
 export const MainPage = () => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { IMapItem } from 'types/apiResponse';
 import defaultMarkerImg from 'assets/tree_marker_default.svg';
 import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
-import useApiQuery from './useApiQuery';
+import useApiQuery from '../../hooks/useApiQuery';
 
 const useFetchTreeData = (
   map: any,
@@ -86,7 +86,7 @@ const useFetchTreeData = (
     if (map) {
       drawTree();
     }
-  }, [map]);
+  }, [map, data]);
 
   return drawTree;
 };
