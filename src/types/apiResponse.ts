@@ -21,6 +21,7 @@ export interface ITreeItem {
   isPet?: boolean;
   title: string;
   extraInfo?: string;
+  isFavorite: boolean;
 }
 
 interface IImage {

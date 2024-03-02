@@ -19,6 +19,7 @@ export const Wrapper = styled.article`
 export const Title = styled.div`
   cursor: pointer;
   color: #1a1a1a;
+  flex-basis: 70%;
 `;
 
 export const Name = styled.h2`

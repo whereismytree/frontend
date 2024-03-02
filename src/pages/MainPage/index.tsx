@@ -26,7 +26,7 @@ export const MainPage = () => {
           <MyLocationButton map={map} />
           <ZoomControl map={map} />
         </S.MapButtons>
-        {showTreeInfo && <TreeInfoCard id={currentTreeInfoData?.id} />}
+        {showTreeInfo && <TreeInfoCard id={currentTreeInfoData?.id as number} />}
       </S.Map>
       <Navbar />
     </div>
