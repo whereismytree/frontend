@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FieldValues, FormProvider, useForm } from 'react-hook-form';
 import Navbar from 'components/Navbar';
 import Topbar from 'components/Topbar';
@@ -6,6 +6,7 @@ import Button from 'components/common/button';
 import isEmptyObject from 'utils/isEmptyObject';
 import formatDate from 'utils/dateUtils/formatDate';
 import toCamelCase from 'utils/stringUtils/toCamelCase';
+import getPath from 'utils/getPath';
 import TreeNameInput from './components/TreeNameInput';
 import TreeLocation from './components/TreeLocation';
 import DetailAddressInput from './components/DetailAddressInput';
@@ -28,6 +29,7 @@ import * as S from './style';
 // TODO: BE에서 spaceType을 불리언으로 받아 처리하는 로직에 오류가 존재하는 것 같습니다.
 // 오류가 해결되기 이전까지 spaceType은 request body에서 제외하고 서버에 요청하는 방향으로 코드를 작성해두었으니, 추후 수정해야 합니다.
 function TreeRegiDetail() {
+  const navigate = useNavigate();
   const methods = useForm({ mode: 'onSubmit' });
   const { handleSubmit } = methods;
   const { state } = useLocation();
@@ -46,7 +48,11 @@ function TreeRegiDetail() {
 
     const serverExpectBodyData = convertApiBody(unrefinedBody);
     const body = removeFalsyValues(serverExpectBodyData) as TreeRegistAPIBody;
-    regist(body);
+    regist(body, {
+      onSuccess: () => {
+        navigate(getPath('myPage', 'registedTrees'));
+      },
+    });
   };
 
   return (
