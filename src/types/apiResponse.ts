@@ -51,3 +51,12 @@ export interface IGetReview {
   canEdit: boolean;
   canRemove: boolean;
 }
+
+export interface IMainSearchResult {
+  id: number;
+  name: string;
+  lat: number;
+  lng: number;
+  address: string;
+  imageUrl: string;
+}
