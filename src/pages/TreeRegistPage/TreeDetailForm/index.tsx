@@ -30,7 +30,8 @@ import * as S from './style';
 function TreeRegiDetail() {
   const methods = useForm({ mode: 'onSubmit' });
   const { handleSubmit } = methods;
-  const addressData = validateAddress(useLocation().state);
+  const { state } = useLocation();
+  const addressData = validateAddress(state);
   const { regist } = useRegistTree();
   const { address, addressType, location, latLng } = addressData;
 
