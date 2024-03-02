@@ -1,26 +1,19 @@
 import { useEffect, useState } from 'react';
-import { ITreeItem } from 'types/apiResponse';
-import treeJSON from 'assets/treedata.json';
+import { IMapItem } from 'types/apiResponse';
 import defaultMarkerImg from 'assets/tree_marker_default.svg';
 import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
 import useApiQuery from './useApiQuery';
 
 const useFetchTreeData = (
   map: any,
-  setTreeInfoData: React.Dispatch<React.SetStateAction<ITreeItem | null>>,
+  setTreeInfoData: React.Dispatch<React.SetStateAction<IMapItem | null>>,
   setShowTreeInfo: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const [url, setUrl] = useState<string>('');
+  const { data } = useApiQuery<{ trees: IMapItem[] }>(url);
   let selectedMarker: any = null;
-  // TODO: 트리 조회 안됨. 백엔드 확인 요청 !!
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data } = useApiQuery<ITreeItem[]>(url);
-  console.log('### url ###');
-  console.log(url);
-  console.log('#### data ####');
-  console.log(data);
 
-  const createMarker = (map: any, treeInfo: ITreeItem) => {
+  const createMarker = (map: any, treeInfo: IMapItem) => {
     const imageSrc = defaultMarkerImg;
     const imageSize = new window.kakao.maps.Size(64, 69);
     const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -64,9 +57,9 @@ const useFetchTreeData = (
       `v1/trees/map?topLeftLat=${topLeftLat}&topLeftLng=${topLeftLng}&topRightLat=${topRightLat}&topRightLng=${topRightLng}&bottomLeftLat=${bottomLeftLat}&bottomLeftLng=${bottomLeftLng}&bottomRightLat=${bottomRightLat}&bottomRightLng=${bottomRightLng}`,
     );
 
-    const treeMarkers = treeJSON.trees;
+    const treeMarkers = data?.trees;
     if (treeMarkers) {
-      treeMarkers.forEach((tree: ITreeItem) => {
+      treeMarkers.forEach((tree: IMapItem) => {
         const marker = createMarker(map, tree);
         window.kakao.maps.event.addListener(marker, 'click', () => {
           if (selectedMarker === marker) {

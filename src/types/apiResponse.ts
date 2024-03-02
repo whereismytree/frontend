@@ -1,3 +1,10 @@
+export interface IMapItem {
+  id: number;
+  name: string;
+  lat: number;
+  lng: number;
+}
+
 export interface ITreeItem {
   treeId: number;
   name: string;

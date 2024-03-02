@@ -4,17 +4,19 @@ import SaveButton from 'components/SaveButton';
 import ShareButton from 'components/ShareButton';
 import defaultImg from 'assets/treeinfo-default.svg';
 import { useNavigate } from 'react-router-dom';
+import useApiQuery from 'hooks/useApiQuery';
 import * as S from './style';
 
 interface IProps {
-  data: ITreeItem | null;
+  id: number | undefined;
 }
 
-const TreeInfoCard = ({ data }: IProps) => {
+const TreeInfoCard = ({ id }: IProps) => {
   const [isSave, setIsSave] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { data } = useApiQuery<ITreeItem>(`v1/trees/${id}`);
   const handleGoToTreeInfo = () => {
-    navigate(`/tree/${data?.treeId}`);
+    navigate(`/tree/${id}`);
   };
 
   return data ? (

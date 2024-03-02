@@ -6,7 +6,7 @@ import MainSearchInput from 'pages/MainPage/components/SearchBar';
 import ResearchButton from 'pages/MainPage/components/ReSearchButton';
 import TreeInfoCard from 'pages/MainPage/components/TreeInfoCard';
 import Navbar from 'components/Navbar';
-import { ITreeItem } from 'types/apiResponse';
+import { IMapItem } from 'types/apiResponse';
 import useFetchTreeData from 'hooks/useFetchTreeData';
 import * as S from './style';
 
@@ -14,7 +14,7 @@ export const MainPage = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const { map } = useKakaoMap(mapContainer);
   const [showTreeInfo, setShowTreeInfo] = useState<boolean>(false);
-  const [currentTreeInfoData, setTreeInfoData] = useState<ITreeItem | null>(null);
+  const [currentTreeInfoData, setTreeInfoData] = useState<IMapItem | null>(null);
   const redrawTree = useFetchTreeData(map, setTreeInfoData, setShowTreeInfo);
 
   return (
@@ -26,7 +26,7 @@ export const MainPage = () => {
           <MyLocationButton map={map} />
           <ZoomControl map={map} />
         </S.MapButtons>
-        {showTreeInfo && <TreeInfoCard data={currentTreeInfoData} />}
+        {showTreeInfo && <TreeInfoCard id={currentTreeInfoData?.id} />}
       </S.Map>
       <Navbar />
     </div>
