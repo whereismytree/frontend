@@ -66,8 +66,8 @@ export const TreeInfo = () => {
       <Topbar.Icon type="tree" />
       <h1 className="hidden">트리 상세 정보 페이지</h1>
       <S.InfoContainer>
-        <S.Map ref={mapContainer}>TreeInfo</S.Map>
-        <TreeTitle treeInfo={data} />
+        <S.Map ref={mapContainer}>로딩중</S.Map>
+        <TreeTitle treeId={Number(treeId)} />
         <TreeDetails treeId={treeId} />
         <VisitorPhotoList treeInfo={data} />
         <VisitorReviewList treeInfo={data} />

@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import SearchInput from 'pages/MainPage/components/SearchInput';
-import { ITreeItem } from 'types/apiResponse';
+import { IMainSearchResult } from 'types/apiResponse';
 import useApiQuery from 'hooks/useApiQuery';
 import TreeImageItem from 'components/TreeImageItem';
+import { useNavigate } from 'react-router-dom';
 import * as S from './style';
 
 export const SearchPage = () => {
   const [keyword, setKeyword] = useState<string>('');
-  // TODO: 조회안됨 백엔드 확인 필요!!
-  const { data } = useApiQuery<ITreeItem[]>(`v1/trees/list?name=${keyword}&address=${keyword}`);
+  const { data } = useApiQuery<{ trees: IMainSearchResult[] }>(`v1/trees/list?query=${keyword}`);
+  const navigate = useNavigate();
+  const handleGoToTreeInfo = (id: number) => {
+    navigate(`/tree/${id}`);
+  };
 
   return (
     <>
       <SearchInput setKeyword={setKeyword} />
       {data && keyword ? (
         <section>
-          {data.map((tree) => {
+          {data.trees.map((tree) => {
             return (
-              <S.ItemWrapper key={tree.name}>
-                <TreeImageItem location={tree.roadAddress}>{tree.name}</TreeImageItem>
+              <S.ItemWrapper key={tree.name} onClick={() => handleGoToTreeInfo(tree.id)}>
+                <TreeImageItem location={tree.address}>{tree.name}</TreeImageItem>
               </S.ItemWrapper>
             );
           })}
