@@ -6,8 +6,17 @@ import { Provider } from 'react-redux';
 import { Router } from 'routes/Router';
 import GlobalStyle from 'style/globalStyle';
 import { BrowserRouter } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
+import FallbackComponent from 'components/FallbackComponent';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnReconnect: false,
+    },
+  },
+});
 
 function App() {
   return (
@@ -16,7 +25,9 @@ function App() {
         <BrowserRouter>
           <ReactQueryDevtools initialIsOpen={false} />
           <GlobalStyle />
-          <Router />
+          <ErrorBoundary FallbackComponent={FallbackComponent}>
+            <Router />
+          </ErrorBoundary>
         </BrowserRouter>
       </QueryClientProvider>
     </Provider>

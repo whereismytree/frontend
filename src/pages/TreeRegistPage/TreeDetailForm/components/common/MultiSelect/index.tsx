@@ -1,11 +1,6 @@
 import React, { useState, ForwardRefRenderFunction, useEffect, useId } from 'react';
-import { Option } from '../Select/types';
 import * as S from '../Select/style';
-
-interface MultiSelectProps {
-  options: Option[];
-  onSelectChange?: (e: { target: EventTarget & HTMLInputElement; selected: string[] }) => void;
-}
+import { MultiSelectProps } from './types';
 
 const MultiSelect: ForwardRefRenderFunction<
   HTMLInputElement,

@@ -20,8 +20,8 @@ function SpaceTypeSelect() {
       <Label optional>트리 공간</Label>
       <Select
         options={[
-          { text: '야외', value: 'false' },
-          { text: '실내', value: 'true' },
+          { text: '야외', value: 'OUTDOOR' },
+          { text: '실내', value: 'INDOOR' },
         ]}
         onSelectChange={handleSelectChange}
       />
