@@ -1,5 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
 import treeAnimation from 'assets/tree-animation.png';
+import stars from 'assets/landing-stars.png';
 
 export const Wrapper = styled.div`
   position: relative;
@@ -57,11 +58,17 @@ export const StartButton = styled.button`
     border-color: ${hoverColor};
   }
 `;
+
 export const Background = styled.div`
   height: 85vh;
-  background-color: #000;
   color: white;
+  background: url(${stars}) center / contain;
+  background-color: #000;
 `;
+
+const treeReductionScale = 5;
+const treeZoom = 1.3;
+const calculatedTreeHeight = `${(1276 / treeReductionScale) * treeZoom}px`;
 
 const sparkle = keyframes`
     to {
@@ -79,11 +86,11 @@ export const Snow = styled.div<{ $isHover: boolean }>`
     content: '';
     display: block;
     position: absolute;
-    top: -290px;
+    top: calc(-${calculatedTreeHeight} + 20px);
     left: 50%;
     transform: translateX(-50%);
-    width: calc(999px / 4);
-    height: 319px;
+    width: calc((4995px / ${treeReductionScale}) / 5 * ${treeZoom});
+    height: ${calculatedTreeHeight};
     overflow: hidden;
     background: url(${treeAnimation}) no-repeat 0px / auto 100%;
     animation: ${sparkle} 1.2s steps(4) infinite;
