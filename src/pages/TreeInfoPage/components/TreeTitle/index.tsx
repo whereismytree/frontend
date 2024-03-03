@@ -1,27 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TreeLocationItem from 'components/TreeLocationItem';
 import SaveButton from 'components/SaveButton';
 import ShareButton from 'components/ShareButton';
 import { ITreeItem } from 'types/apiResponse';
+import useApiQuery from 'hooks/useApiQuery';
 import * as S from '../style';
 
 interface IProps {
-  treeInfo: ITreeItem;
+  treeId: number;
 }
 
-const TreeTitle = ({ treeInfo }: IProps) => {
-  const [isSave, setIsSave] = useState<boolean>(false);
-  return (
+const TreeTitle = ({ treeId }: IProps) => {
+  const { data } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
+
+  return data ? (
     <S.Title>
-      <TreeLocationItem location={treeInfo.roadAddress} distance={138}>
-        {treeInfo.name}
+      <TreeLocationItem location={data.roadAddress} distance={138}>
+        {data.name}
       </TreeLocationItem>
       <S.Btns>
-        <SaveButton treeId={1} isSave={isSave} setIsSave={setIsSave} />
-        <ShareButton treeId={1} treeName={treeInfo.name} />
+        <SaveButton treeId={treeId} isFavorite={data.isFavorite} />
+        <ShareButton treeId={treeId} treeName={data.name} />
       </S.Btns>
     </S.Title>
-  );
+  ) : null;
 };
 
 export default TreeTitle;

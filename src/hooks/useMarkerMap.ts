@@ -1,44 +1,48 @@
-import { RefObject } from 'react';
+import { RefObject, useCallback, useEffect } from 'react';
 import useKakaoMap from './useKakaoMap';
 
-type treePostionItem = { name: string; latlng: { lat(): number; lng(): number } };
+export type TreePostionItem = { name: string; latlng: { getLat(): number; getLng(): number } };
 
-type UseMarkerMap = ({
-  mapContainer,
-  markerImageSrc,
-  positions,
-  imageSize,
-}: {
-  mapContainer: RefObject<HTMLDivElement>;
+type MarkerOptions = {
+  positions: TreePostionItem[];
+  initialMapLevel: number;
   markerImageSrc: string;
-  positions: treePostionItem[];
   imageSize: [number, number];
-}) => any;
+};
 
-const useMarkerMap: UseMarkerMap = ({ mapContainer, markerImageSrc, positions, imageSize }) => {
+type UseMarkerMap = (mapContainer: RefObject<HTMLDivElement>, markerOptions: MarkerOptions) => any;
+
+const useMarkerMap: UseMarkerMap = (mapContainer, markerOptions): { map: any } => {
   const { map } = useKakaoMap(mapContainer);
+  const { positions, imageSize, markerImageSrc, initialMapLevel } = markerOptions;
 
-  window.kakao.maps.load(() => {
-    if (map) {
-      map.setCenter(new window.kakao.maps.LatLng(37.54, 126.978));
-      map.setLevel(6);
-    }
-  });
+  const setMarkers = useCallback(
+    (width: number, height: number) => {
+      positions.forEach((position) => {
+        const imageSize = new window.kakao.maps.Size(width, height);
+        const markerImage = new window.kakao.maps.MarkerImage(markerImageSrc, imageSize);
 
-  if (positions && positions.length) {
-    positions.forEach((position) => {
-      const imgSize = new window.kakao.maps.Size(...imageSize);
-      const markerImage = new window.kakao.maps.MarkerImage(markerImageSrc, imgSize);
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const marker = new window.kakao.maps.Marker({
-        position: position.latlng,
-        map,
-        title: position.name,
-        image: markerImage,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const marker = new window.kakao.maps.Marker({
+          map,
+          position: position.latlng,
+          title: position.name,
+          image: markerImage,
+        });
       });
+    },
+    [map, markerImageSrc, positions],
+  );
+
+  useEffect(() => {
+    window.kakao.maps.load(() => {
+      if (map && positions && positions.length) {
+        const latLng = positions[0].latlng;
+        map.setCenter(new window.kakao.maps.LatLng(latLng.getLat(), latLng.getLng()));
+        setMarkers(...imageSize);
+      }
     });
-  }
+  }, [map, initialMapLevel, positions, imageSize, setMarkers]);
 
   return { map };
 };
