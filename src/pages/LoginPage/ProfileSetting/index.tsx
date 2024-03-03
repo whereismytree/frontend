@@ -30,11 +30,11 @@ function ProfileSetting() {
       <Topbar.Icon type="cookie" />
       <FormProvider {...methods}>
         <ProfileSettingProvider>
-          <S.Wrapper onSubmit={handleSubmit(createProfile)}>
+          <S.Form onSubmit={handleSubmit(createProfile)}>
             <ProfileImageSetting />
             <NicknameSetting />
             <SubmitButton />
-          </S.Wrapper>
+          </S.Form>
         </ProfileSettingProvider>
       </FormProvider>
     </>
