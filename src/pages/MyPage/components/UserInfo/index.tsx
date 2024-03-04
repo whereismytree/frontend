@@ -26,7 +26,7 @@ function UserInfoSection({
           <p>{savedTreesCount}</p>
           <p> 저장한 트리</p>
         </S.Activity>
-        <S.Activity to={getPath('myPage', 'registedReviews')}>
+        <S.Activity to={reviewsCount ? getPath('myPage', 'registedReviews') : ''}>
           <p>{reviewsCount}</p>
           <p>내가 쓴 후기</p>
         </S.Activity>

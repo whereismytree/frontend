@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 export const BackDrop = styled.div`
   position: relative;
-  background: url(${backdrop}) no-repeat center;
+  background: url(${backdrop}) no-repeat center / cover;
   width: 100%;
   height: 100vh;
 `;
