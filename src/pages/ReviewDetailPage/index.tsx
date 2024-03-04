@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Topbar from 'components/Topbar';
 import ReviewProfile from 'pages/ReviewDetailPage/components/Profile';
@@ -7,6 +6,7 @@ import ReviewContent from 'pages/ReviewDetailPage/components/Review';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
 import KebabDropDown from 'pages/ReviewDetailPage/components/KebabDropDown';
 import useReview from 'hooks/useReview';
+import { HTTPError } from 'error/HTTPError';
 import getPath from 'utils/getPath';
 import * as S from './style';
 import ReviewImage from './components/ReviewImage';
@@ -16,7 +16,6 @@ function ReviewDetailPage() {
   const { state: treeData } = useLocation();
   const navigate = useNavigate();
   const reviewId = validateReviewId(Number(params.reviewId));
-
   const { review, deleteReview } = useReview(reviewId);
   const { treeName, location } = validateTreeData(treeData);
 
@@ -74,24 +73,20 @@ function ReviewDetailPage() {
   );
 }
 
-const validateReviewId = (reviewId: number | undefined) => {
-  if (!reviewId) {
-    throw new Error('리뷰 상세 페이지를 렌더링하기 위해 PATH에 리뷰 아이디를 전달해주세요.');
+const validateTreeData = (treeData: { treeName: string; location: string } | null) => {
+  if (!treeData || (treeData && (!treeData.treeName || !treeData.location))) {
+    throw new HTTPError('올바르지 않은 접근입니다.', 404);
   }
 
-  if (Number.isNaN(reviewId)) {
-    throw new Error('리뷰 상세 페이지에 전달된 리뷰 아이디가 숫자 데이터가 아닙니다.');
+  return treeData;
+};
+
+const validateReviewId = (reviewId: number | undefined) => {
+  if (!reviewId || Number.isNaN(reviewId)) {
+    throw new HTTPError('리뷰를 찾을 수 없습니다.', 404);
   }
 
   return reviewId;
-};
-
-const validateTreeData = (treeData: any) => {
-  if (!treeData || !treeData.treeName || !treeData.location) {
-    throw new Error('리뷰 상세 페이지를 렌더링하기 위해 Navigate 객체에 state를 전달해주세요.');
-  }
-
-  return treeData as { treeName: string; location: string };
 };
 
 export default ReviewDetailPage;
