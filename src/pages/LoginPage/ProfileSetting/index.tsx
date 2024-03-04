@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ProfileImageSetting from 'pages/LoginPage/ProfileSetting/components/ImageSetting';
@@ -18,13 +19,11 @@ function ProfileSetting() {
   const methods = useForm<ICreateProfileAPIBody>({ mode: 'onChange' });
   const { handleSubmit } = methods;
 
-  if (!state) {
-    return <InvalidAccess />;
-  }
-
-  if (!state.nicknameRequire) {
-    navigate(getPath('mainPage', 'root'));
-  }
+  useEffect(() => {
+    if (state && !state.nicknameRequire) {
+      navigate(getPath('mainPage', 'root'));
+    }
+  }, [navigate, state]);
 
   const createProfile = (data: Omit<ICreateProfileAPIBody, 'profileImageUrl'>) => {
     create(
@@ -35,7 +34,7 @@ function ProfileSetting() {
     );
   };
 
-  return (
+  return state ? (
     <>
       <Topbar.Icon type="cookie" />
       <FormProvider {...methods}>
@@ -48,6 +47,8 @@ function ProfileSetting() {
         </ProfileSettingProvider>
       </FormProvider>
     </>
+  ) : (
+    <InvalidAccess />
   );
 }
 
