@@ -18,11 +18,7 @@ function Redirect() {
       throw new Error('로그인 중 알 수 없는 에러가 발생했습니다.');
     }
 
-    if (nicknameRequire) {
-      navigate(`../${getPath('loginPage', 'profileSetting')}`);
-    } else {
-      navigate(`../${getPath('mainPage', 'root')}`);
-    }
+    navigate(`../${getPath('loginPage', 'profileSetting')}`, { state: { nicknameRequire } });
   }, []);
 
   return null;

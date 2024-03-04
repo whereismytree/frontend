@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.form`
+export const Form = styled.form`
   position: relative;
   width: calc(100% - 120px);
   margin-top: 30%;
