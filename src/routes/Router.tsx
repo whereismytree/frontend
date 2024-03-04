@@ -4,6 +4,7 @@ import { SearchPage } from 'pages/SearchPage';
 import { TreeInfo } from 'pages/TreeInfoPage';
 import { MyPage } from 'pages/MyPage';
 import { LandingPage } from 'pages/LandingPage';
+import { ErrorPage } from 'pages/ErrorPage';
 import SignIn from 'pages/LoginPage/SocialLogin';
 import PATH from 'constants/path';
 import SearchLocation from 'pages/TreeRegistPage/AddressSearch';
@@ -100,6 +101,11 @@ const Router = () => {
     ],
   };
 
+  const NotFoundRoute: RouteObject = {
+    path: '*',
+    element: <ErrorPage />,
+  };
+
   const routes = [
     landingRoute,
     mainRoute,
@@ -108,6 +114,7 @@ const Router = () => {
     loginRoute,
     loginRedirectRoute,
     myRoute,
+    NotFoundRoute,
   ];
 
   return useRoutes(routes);
