@@ -10,10 +10,6 @@ const useApiMutation = <TData = unknown, TVariables = unknown>(
 ) => {
   const { token } = useUser();
 
-  if (!token) {
-    throw new Error('사용자의 액세스 토큰을 찾을 수 없습니다.');
-  }
-
   const mutationFn = async (variables: TVariables): Promise<TData> => {
     try {
       const response: AxiosResponse<TData> = await axios({

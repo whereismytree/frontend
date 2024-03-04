@@ -9,10 +9,6 @@ const useApiQuery = <TData = unknown>(
 ): UseQueryResult<TData, unknown> => {
   const { token } = useUser();
 
-  if (!token) {
-    throw new Error('사용자의 액세스 토큰을 찾을 수 없습니다.');
-  }
-
   const fetchData = async () => {
     try {
       const response: AxiosResponse<TData> = await axios.get(
