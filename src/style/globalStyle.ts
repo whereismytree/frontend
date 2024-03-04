@@ -60,7 +60,7 @@ a {
 }
 
 #root {
-  max-width: 420px;
+  width: 420px;
   min-height: 100vh;
   background: #fff;
   margin-left: 50%;
