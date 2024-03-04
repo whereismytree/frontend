@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ProfileImageSetting from 'pages/LoginPage/ProfileSetting/components/ImageSetting';
 import getPath from 'utils/getPath';
 import Topbar from 'components/Topbar';
-import InvalidAccess from 'components/Error/InvalidAccess';
+import InvalidAccess from 'components/Guides/InvalidAccess';
 import { useProfile } from './hooks';
 import ProfileSettingProvider from './provider';
 import { ICreateProfileAPIBody } from './types';
