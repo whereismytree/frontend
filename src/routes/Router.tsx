@@ -4,6 +4,7 @@ import { SearchPage } from 'pages/SearchPage';
 import { TreeInfo } from 'pages/TreeInfoPage';
 import { MyPage } from 'pages/MyPage';
 import { LandingPage } from 'pages/LandingPage';
+import { ErrorPage } from 'pages/ErrorPage';
 import SignIn from 'pages/LoginPage/SocialLogin';
 import PATH from 'constants/path';
 import SearchLocation from 'pages/TreeRegistPage/AddressSearch';
@@ -16,8 +17,13 @@ import SavePage from 'pages/SavedTreePage';
 import RegistedTreePage from 'pages/MyTreePage';
 import RegistReviewPage from 'pages/MyReviewPage';
 import ReviewRegistAndEditPage from 'pages/ReviewRegistAndEditPage';
+import useUser from 'hooks/useUser';
+import Unauthorized from 'components/Guides/Unauthorized';
 
-export const Router = () => {
+const Router = () => {
+  const { isLogin } = useUser();
+  const AuthElement = (element: JSX.Element) => (isLogin ? element : <Unauthorized />);
+
   const landingRoute: RouteObject = {
     path: PATH.landingPage,
     element: <LandingPage />,
@@ -56,7 +62,7 @@ export const Router = () => {
       { path: PATH.treePage.children.dynamicParam, element: <TreeInfo /> },
       {
         path: PATH.treePage.children.regist.root,
-        element: <Outlet />,
+        element: AuthElement(<Outlet />),
         children: [
           { path: '', element: <SearchLocation /> },
           { path: PATH.treePage.children.regist.children.map, element: <RegistMap /> },
@@ -72,21 +78,32 @@ export const Router = () => {
     children: [
       { path: PATH.reviewPage.dynamicParam, element: <ReviewDetailPage /> },
       // 리뷰 등록 페이지
-      { path: `${PATH.reviewPage.children.regist}/:treeId`, element: <ReviewRegistAndEditPage /> },
+      {
+        path: `${PATH.reviewPage.children.regist}/:treeId`,
+        element: AuthElement(<ReviewRegistAndEditPage />),
+      },
       // 리뷰 수정 페이지
-      { path: `${PATH.reviewPage.children.edit}/:reviewId`, element: <ReviewRegistAndEditPage /> },
+      {
+        path: `${PATH.reviewPage.children.edit}/:reviewId`,
+        element: AuthElement(<ReviewRegistAndEditPage />),
+      },
     ],
   };
 
   const myRoute: RouteObject = {
     path: PATH.myPage.root,
-    element: <Outlet />,
+    element: AuthElement(<Outlet />),
     children: [
       { path: '', element: <MyPage /> },
       { path: PATH.myPage.children.savedTrees, element: <SavePage /> },
       { path: PATH.myPage.children.registedTrees, element: <RegistedTreePage /> },
       { path: PATH.myPage.children.registedReviews, element: <RegistReviewPage /> },
     ],
+  };
+
+  const NotFoundRoute: RouteObject = {
+    path: '*',
+    element: <ErrorPage />,
   };
 
   const routes = [
@@ -97,7 +114,10 @@ export const Router = () => {
     loginRoute,
     loginRedirectRoute,
     myRoute,
+    NotFoundRoute,
   ];
 
   return useRoutes(routes);
 };
+
+export default Router;
