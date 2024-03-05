@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import treeMarker from 'assets/tree_marker.svg';
+import marker from 'assets/tree_marker.svg';
 import { LOCATION_INFO_HEIGHT } from '../../style';
 
 export const MapContainer = styled.div`
   position: relative;
   height: calc(100vh - (var(--navbar-height) + var(--header-height) + ${LOCATION_INFO_HEIGHT}px));
 
-  img {
+  img[alt='현재 위치'] {
     position: absolute;
     z-index: 100;
     right: 12px;
@@ -14,45 +14,62 @@ export const MapContainer = styled.div`
   }
 `;
 
-export const Overlay = styled.p`
-  font-size: 1.4rem;
-  font-weight: 500;
-  white-space: nowrap;
-  color: var(--main-white);
-  padding: 10px 25px 8px;
-  border-radius: 20px;
-  width: fit-content;
-  background-color: var(--main-green);
+export const Overlay = styled.div`
+  height: 0;
   position: absolute;
-  z-index: 100;
-  top: 30%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 100;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 
   &::after {
-    content: '';
+    content: url(${marker});
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 100%;
+  }
+`;
 
-    border-top: 10px solid var(--main-green);
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 0px solid transparent;
+const overlayTooltipBorderWidth = '2px';
+
+export const ToolTip = styled.span`
+  font-size: 1.4rem;
+  position: relative;
+  top: -40px;
+  font-weight: 500;
+  color: var(--main-white);
+  border: ${overlayTooltipBorderWidth} solid #fff;
+  background-color: var(--main-green);
+  white-space: nowrap;
+  padding: 10px 25px 8px;
+  border-radius: 20px;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    border-style: solid;
+    border-width: 10px 5px 0 5px;
+    border-color: var(--main-green) transparent;
   }
 
   &::before {
-    content: url(${treeMarker});
+    content: '';
+    display: block;
     position: absolute;
-    height: 50px;
-    aspect-ratio: 1/1;
-    top: 220%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
+    bottom: calc(-10px - ${overlayTooltipBorderWidth});
+    border-style: solid;
+    border-width: calc(10px + ${overlayTooltipBorderWidth}) calc(5px + ${overlayTooltipBorderWidth})
+      0 calc(5px + ${overlayTooltipBorderWidth});
+    border-color: #fff transparent;
   }
 `;
