@@ -62,7 +62,9 @@ function LocationPickerMap({ initialLatLng }: { initialLatLng: { lat: number; ln
 
   return (
     <S.MapContainer ref={mapContainer}>
-      <S.Overlay>지도를 움직여 트리를 심어주세요</S.Overlay>
+      <S.Overlay>
+        <S.ToolTip>지도를 움직여 트리를 심어주세요</S.ToolTip>
+      </S.Overlay>
       <MyLocationButton map={map} />
     </S.MapContainer>
   );
