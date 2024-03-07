@@ -6,7 +6,7 @@ import useUser from './useUser';
 const useApiQuery = <TData = unknown>(
   queryParam: string,
   enabled?: boolean,
-): UseQueryResult<TData, unknown> => {
+): UseQueryResult<TData, Error> => {
   const { token } = useUser();
 
   const fetchData = async () => {

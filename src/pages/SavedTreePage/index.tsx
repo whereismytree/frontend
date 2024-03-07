@@ -1,45 +1,42 @@
+import { useRef } from 'react';
 import Navbar from 'components/Navbar';
 import Topbar from 'components/Topbar';
-import { useEffect, useRef, useState } from 'react';
-import useMarkerMap, { TreePostionItem } from 'hooks/useMarkerMap';
-import treeMarker from 'assets/tree_marker.svg';
 import Guide from 'components/common/Guide';
-import formatTreeListToPostions from 'utils/formatTreeListToPostions';
+import SlideBox from 'components/SlideBox';
 import TreeList from 'components/TreeList';
+import useMarkerMap from 'hooks/useMarkerMap';
+import treeMarker from 'assets/tree_marker.svg';
 import useSavedTrees from './hooks';
 import * as S from './style';
 
 const SavePage = () => {
+  const savedTrees = useSavedTrees();
+
   const mapContainer = useRef(null);
-  const [positions, setPositions] = useState<TreePostionItem[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { map } = useMarkerMap(mapContainer, {
-    positions,
-    initialMapLevel: 6,
+    trees: savedTrees,
     markerImageSrc: treeMarker,
     imageSize: [32, 32],
   });
-  const savedTrees = useSavedTrees();
-
-  useEffect(() => {
-    window.kakao.maps.load(() => {
-      if (map && savedTrees) {
-        const positions = formatTreeListToPostions(savedTrees);
-        setPositions(positions);
-      }
-    });
-  }, [map, savedTrees]);
 
   return (
     <>
       <Topbar.Icon type="star" />
       {savedTrees.length ? (
-        <S.Map ref={mapContainer}>
-          <TreeList list={savedTrees} type="saved" />
-        </S.Map>
+        <S.Content>
+          <SlideBox>
+            <S.Map ref={mapContainer} />
+            <SlideBox.Menu maxHeight="400px">
+              <SlideBox.Toggle>{(isOpen) => `${isOpen ? '지도' : '목록'}보기`}</SlideBox.Toggle>
+              <TreeList type="saved" list={savedTrees} />
+            </SlideBox.Menu>
+          </SlideBox>
+        </S.Content>
       ) : (
-        <S.Wrapper>
+        <S.GuideWrapper>
           <Guide text="저장한 트리가 없어요" />
-        </S.Wrapper>
+        </S.GuideWrapper>
       )}
       <Navbar />
     </>
