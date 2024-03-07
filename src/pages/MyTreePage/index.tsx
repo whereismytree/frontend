@@ -1,57 +1,56 @@
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from 'components/Navbar';
 import Topbar from 'components/Topbar';
-import { useEffect, useRef, useState } from 'react';
-import useMarkerMap, { TreePostionItem } from 'hooks/useMarkerMap';
+import useMarkerMap from 'hooks/useMarkerMap';
 import treeMarker from 'assets/tree_marker.svg';
 import Guide from 'components/common/Guide';
 import TreeList from 'components/TreeList';
-import { useNavigate } from 'react-router-dom';
+import SlideBox from 'components/SlideBox';
 import getPath from 'utils/getPath';
-import formatTreeListToPostions from 'utils/formatTreeListToPostions';
-import useRegistedTree from './hooks';
+import useRegistedTrees from './hooks';
 import * as S from './style';
 
-const RegistedTreePage = () => {
+const SavePage = () => {
   const navigate = useNavigate();
+  const savedTrees = useRegistedTrees();
   const mapContainer = useRef(null);
-  const [positions, setPositions] = useState<TreePostionItem[]>([]);
-  const registedTrees = useRegistedTree();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { map } = useMarkerMap(mapContainer, {
-    initialMapLevel: 6,
+    trees: savedTrees,
     markerImageSrc: treeMarker,
-    positions,
     imageSize: [32, 32],
   });
 
-  useEffect(() => {
-    window.kakao.maps.load(() => {
-      if (map && registedTrees) {
-        const postions = formatTreeListToPostions(registedTrees);
-        setPositions(postions);
-      }
-    });
-  }, [map, registedTrees]);
+  const handleGoRegistTreePage = () => {
+    navigate(getPath('treePage', 'regist', 'search'));
+  };
 
   return (
     <>
-      <Topbar.Icon type="cookie" />
-      {registedTrees.length ? (
-        <S.Map ref={mapContainer}>
-          <TreeList list={registedTrees} type="registed" />
-        </S.Map>
+      <Topbar.Icon type="star" />
+      {savedTrees.length ? (
+        <S.Content>
+          <SlideBox>
+            <S.Map ref={mapContainer} />
+            <SlideBox.Menu maxHeight="400px">
+              <SlideBox.Toggle>{(isOpen) => `${isOpen ? '지도' : '목록'}보기`}</SlideBox.Toggle>
+              <TreeList type="saved" list={savedTrees} />
+            </SlideBox.Menu>
+          </SlideBox>
+        </S.Content>
       ) : (
-        <S.Wrapper>
+        <S.GuideWrapper>
           <Guide.Button
-            text="등록한 트리가 없어요"
+            text="저장한 트리가 없어요"
             btnText="트리 등록하러 가기"
-            onClick={() => navigate(getPath('treePage', 'regist', 'search'))}
+            onClick={handleGoRegistTreePage}
           />
-        </S.Wrapper>
+        </S.GuideWrapper>
       )}
       <Navbar />
     </>
   );
 };
 
-export default RegistedTreePage;
+export default SavePage;
