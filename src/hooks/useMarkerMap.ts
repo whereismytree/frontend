@@ -1,11 +1,12 @@
-import { RefObject, useCallback, useEffect } from 'react';
+import { RefObject, useCallback, useEffect, useState } from 'react';
+import { ITreeListItem } from 'types/TreeListApiResponse';
+import formatTreeListToPostions from 'utils/formatTreeListToPostions';
 import useKakaoMap from './useKakaoMap';
 
-export type TreePostionItem = { name: string; latlng: { getLat(): number; getLng(): number } };
+type TreePostionItem = { name: string; latlng: { getLat: () => number; getLng: () => number } };
 
 type MarkerOptions = {
-  positions: TreePostionItem[];
-  initialMapLevel: number;
+  trees: ITreeListItem[];
   markerImageSrc: string;
   imageSize: [number, number];
 };
@@ -14,7 +15,8 @@ type UseMarkerMap = (mapContainer: RefObject<HTMLDivElement>, markerOptions: Mar
 
 const useMarkerMap: UseMarkerMap = (mapContainer, markerOptions): { map: any } => {
   const { map } = useKakaoMap(mapContainer);
-  const { positions, imageSize, markerImageSrc, initialMapLevel } = markerOptions;
+  const { trees, imageSize, markerImageSrc } = markerOptions;
+  const [positions, setPositions] = useState<TreePostionItem[]>([]);
 
   const setMarkers = useCallback(
     (width: number, height: number) => {
@@ -35,14 +37,21 @@ const useMarkerMap: UseMarkerMap = (mapContainer, markerOptions): { map: any } =
   );
 
   useEffect(() => {
+    if (map && trees) {
+      const positions = formatTreeListToPostions(trees);
+      setPositions(positions);
+    }
+  }, [map, trees]);
+
+  useEffect(() => {
     window.kakao.maps.load(() => {
       if (map && positions && positions.length) {
-        const latLng = positions[0].latlng;
-        map.setCenter(new window.kakao.maps.LatLng(latLng.getLat(), latLng.getLng()));
+        const { latlng } = positions[0];
+        map.setCenter(latlng);
         setMarkers(...imageSize);
       }
     });
-  }, [map, initialMapLevel, positions, imageSize, setMarkers]);
+  }, [map, positions, imageSize, setMarkers]);
 
   return { map };
 };
