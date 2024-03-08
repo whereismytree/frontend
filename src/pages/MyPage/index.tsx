@@ -5,11 +5,11 @@ import OptionList from 'pages/MyPage/components/OptionList';
 import useUser from 'hooks/useUser';
 import getPath from 'utils/getPath';
 import UserInfoSection from 'pages/MyPage/components/UserInfo';
-import Button, { WhiteButton } from 'components/common/button';
 import useModal from 'hooks/useModal';
-import Modal from 'components/common/Modal';
 import { useProfile } from './hooks';
 import * as S from './style';
+import LogoutModal from './components/Modals/LogoutModal';
+import WithrawModal from './components/Modals/WithrawModal';
 
 export const MyPage = () => {
   const userData = useProfile();
@@ -37,46 +37,23 @@ export const MyPage = () => {
       </S.MyPage>
       <Navbar />
 
-      <Modal
+      <LogoutModal
         ref={logoutModal.ref}
-        title="로그아웃하시겠습니까?"
-        footer={
-          <S.ButtonsWrapper>
-            <WhiteButton.Small onClick={logoutModal.close}>취소</WhiteButton.Small>
-            <Button.Small
-              onClick={() => {
-                logout();
-                logoutModal.close();
-                navigate(getPath('loginPage', 'root'));
-              }}
-            >
-              로그아웃
-            </Button.Small>
-          </S.ButtonsWrapper>
-        }
+        onSubmit={() => {
+          logout();
+          logoutModal.close();
+          navigate(getPath('landingPage'));
+        }}
+        onCancel={logoutModal.close}
       />
-
-      <Modal
+      <WithrawModal
         ref={withrawModal.ref}
-        title="탈퇴하시겠습니까?"
-        content={
-          <>
-            탈퇴한 이후 <S.redText>재가입이 불가</S.redText>합니다.
-          </>
-        }
-        footer={
-          <S.ButtonsWrapper>
-            <WhiteButton.Small onClick={withrawModal.close}>취소</WhiteButton.Small>
-            <Button.Small
-              onClick={() => {
-                withraw();
-                navigate(getPath('landingPage'));
-              }}
-            >
-              탈퇴할게요
-            </Button.Small>
-          </S.ButtonsWrapper>
-        }
+        onSubmit={() => {
+          withraw();
+          withrawModal.close();
+          navigate(getPath('landingPage'));
+        }}
+        onCancel={withrawModal.close}
       />
     </>
   );
