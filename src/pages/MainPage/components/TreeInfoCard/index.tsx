@@ -5,6 +5,7 @@ import ShareButton from 'components/ShareButton';
 import defaultImg from 'assets/treeinfo-default.svg';
 import { useNavigate } from 'react-router-dom';
 import useApiQuery from 'hooks/useApiQuery';
+import TreeLocationItem from 'components/TreeLocationItem';
 import * as S from './style';
 
 interface IProps {
@@ -22,14 +23,9 @@ const TreeInfoCard = ({ id }: IProps) => {
   return treeInfo ? (
     <S.Wrapper>
       <S.Title onClick={handleGoToTreeInfo}>
-        <S.Name>{treeInfo.name}</S.Name>
-        <S.Address>
-          {/*
-						TODO: 트리 거리 계산 필요
-						<span>158m</span>
-					*/}
-          {treeInfo.roadAddress}
-        </S.Address>
+        <TreeLocationItem location={treeInfo.roadAddress} distance={138}>
+          {treeInfo.name}
+        </TreeLocationItem>
       </S.Title>
       <S.Btns>
         <SaveButton treeId={id} isFavorite={treeInfo.isFavorite} />
