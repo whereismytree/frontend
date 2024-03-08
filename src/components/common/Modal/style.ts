@@ -13,7 +13,7 @@ export const Modal = styled.div`
   z-index: 999;
   border: 1px solid var(--grey-light);
   background-color: #fff;
-  padding: 3.2rem 1.2rem 1.8rem;
+  padding: 3.2rem 2.2rem 1.8rem;
   border-radius: 20px;
 `;
 
