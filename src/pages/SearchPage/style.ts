@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.section`
+  overflow: scroll;
+  height: calc(100vh - var(--header-height));
+`;
+
 export const ItemWrapper = styled.div`
   cursor: pointer;
   display: block;

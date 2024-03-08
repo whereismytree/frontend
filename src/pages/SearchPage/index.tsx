@@ -18,7 +18,7 @@ export const SearchPage = () => {
     <>
       <SearchInput setKeyword={setKeyword} />
       {data && keyword ? (
-        <section>
+        <S.Wrapper>
           {data.trees.map((tree) => {
             return (
               <S.ItemWrapper key={tree.name} onClick={() => handleGoToTreeInfo(tree.id)}>
@@ -26,7 +26,7 @@ export const SearchPage = () => {
               </S.ItemWrapper>
             );
           })}
-        </section>
+        </S.Wrapper>
       ) : null}
     </>
   );
