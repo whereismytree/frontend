@@ -56,8 +56,8 @@ export const TreeInfo = () => {
         <S.Map ref={mapContainer}>로딩중</S.Map>
         <TreeTitle treeId={Number(treeId)} />
         <TreeDetails treeId={treeId} />
-        <VisitorPhotoList treeInfo={data} />
-        <VisitorReviewList treeInfo={data} />
+        <VisitorPhotoList treeId={Number(treeId)} treeInfo={data} />
+        <VisitorReviewList treeId={Number(treeId)} treeInfo={data} />
       </S.InfoContainer>
       <S.ButtonContainer>
         <Button onClick={handleGoToReviewRegist}>후기 작성하기</Button>

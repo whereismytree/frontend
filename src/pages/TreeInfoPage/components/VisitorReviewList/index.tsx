@@ -8,12 +8,12 @@ import { HTTPError } from 'error/HTTPError';
 import * as S from '../style';
 
 interface IProps {
+  treeId: number;
   treeInfo: ITreeItem;
 }
 
-const VisitorReviewList = ({ treeInfo }: IProps) => {
-  const id = 2;
-  const { data, isError, error } = useApiQuery<IReviewList>(`v1/reviews?treeId=${id}`);
+const VisitorReviewList = ({ treeId, treeInfo }: IProps) => {
+  const { data, isError, error } = useApiQuery<IReviewList>(`v1/reviews?treeId=${treeId}`);
   const navigate = useNavigate();
 
   if (isError) {
@@ -26,7 +26,7 @@ const VisitorReviewList = ({ treeInfo }: IProps) => {
   };
 
   const handleReview = () => {
-    navigate(`/review/${id}`, {
+    navigate(`/review/${treeId}`, {
       state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
     });
   };

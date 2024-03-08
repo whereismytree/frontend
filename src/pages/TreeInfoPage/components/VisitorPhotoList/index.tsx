@@ -7,12 +7,12 @@ import { HTTPError } from 'error/HTTPError';
 import * as S from '../style';
 
 interface IProps {
+  treeId: number;
   treeInfo: ITreeItem;
 }
 
-const VisitorPhotoList = ({ treeInfo }: IProps) => {
-  const id = 2;
-  const { data, isError, error } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${id}`);
+const VisitorPhotoList = ({ treeId, treeInfo }: IProps) => {
+  const { data, isError, error } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${treeId}`);
   const navigate = useNavigate();
 
   if (isError) {
@@ -20,7 +20,7 @@ const VisitorPhotoList = ({ treeInfo }: IProps) => {
   }
 
   const handleReviewPhoto = () => {
-    navigate(`/review/${id}`, {
+    navigate(`/review/${treeId}`, {
       state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
     });
   };
