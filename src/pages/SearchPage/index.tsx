@@ -4,11 +4,19 @@ import { IMainSearchResult } from 'types/apiResponse';
 import useApiQuery from 'hooks/useApiQuery';
 import TreeImageItem from 'components/TreeImageItem';
 import { useNavigate } from 'react-router-dom';
+import { HTTPError } from 'error/HTTPError';
 import * as S from './style';
 
 export const SearchPage = () => {
   const [keyword, setKeyword] = useState<string>('');
-  const { data } = useApiQuery<{ trees: IMainSearchResult[] }>(`v1/trees/list?query=${keyword}`);
+  const { data, isError, error } = useApiQuery<{ trees: IMainSearchResult[] }>(
+    `v1/trees/list?query=${keyword}`,
+  );
+
+  if (isError) {
+    throw new HTTPError(`검색 결과를 불러오는데 오류가 발생했습니다. ${error}`);
+  }
+
   const navigate = useNavigate();
   const handleGoToTreeInfo = (id: number) => {
     navigate(`/tree/${id}`);

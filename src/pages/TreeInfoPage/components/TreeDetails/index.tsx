@@ -1,6 +1,7 @@
 import React from 'react';
 import { ITreeItem } from 'types/apiResponse';
 import useApiQuery from 'hooks/useApiQuery';
+import { HTTPError } from 'error/HTTPError';
 import * as S from '../style';
 
 interface IProps {
@@ -8,6 +9,12 @@ interface IProps {
 }
 
 const TreeDetails = ({ treeId }: IProps) => {
+  const { data, isError, error } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
+
+  if (isError) {
+    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${error}`);
+  }
+
   // 전시기간을 형식에 맞게 포맷팅하는 함수
   const formatExhibitionDates = (start: string, end: string) => {
     const startDate = new Date(start);
@@ -27,8 +34,6 @@ const TreeDetails = ({ treeId }: IProps) => {
 
     return `${formatDate(startDate)} ~ ${formatDate(endDate)}`;
   };
-
-  const { data } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
 
   let info;
   if (data) {

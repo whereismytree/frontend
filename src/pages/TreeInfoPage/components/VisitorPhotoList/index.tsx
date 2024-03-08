@@ -3,6 +3,7 @@ import defaultImg from 'assets/treeinfo-default.svg';
 import useApiQuery from 'hooks/useApiQuery';
 import { IReviewImages, ITreeItem } from 'types/apiResponse';
 import { useNavigate } from 'react-router-dom';
+import { HTTPError } from 'error/HTTPError';
 import * as S from '../style';
 
 interface IProps {
@@ -15,10 +16,7 @@ const VisitorPhotoList = ({ treeInfo }: IProps) => {
   const navigate = useNavigate();
 
   if (isError) {
-    console.error(error);
-    // TODO: 통신 오류시 에러페이지 이동 ?
-    // navigate('/error');
-    return null;
+    throw new HTTPError(`리뷰 정보를 불러오는데 오류가 발생했습니다. ${error}`);
   }
 
   const handleReviewPhoto = () => {

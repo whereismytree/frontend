@@ -6,6 +6,7 @@ import Button from 'components/common/button';
 import useApiMutation from 'hooks/useApiMutation';
 import useApiQuery from 'hooks/useApiQuery';
 import { IGetReview } from 'types/apiResponse';
+import { HTTPError } from 'error/HTTPError';
 import TagSelector from './components/TagSelector';
 import ReviewForm from './components/ReviewForm';
 import * as S from './style';
@@ -27,7 +28,14 @@ const ReviewRegistAndEditPage = () => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const navigate = useNavigate();
 
-  const { data } = useApiQuery<IGetReview>(`v1/reviews/${id}?reviewId=${id}`, type === 'edit');
+  const { data, isError, error } = useApiQuery<IGetReview>(
+    `v1/reviews/${id}?reviewId=${id}`,
+    type === 'edit',
+  );
+
+  if (isError) {
+    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${error}`);
+  }
 
   const { mutate: registMutate } = useApiMutation<{ reviewId: number }>('v1/reviews', 'POST', {
     onSuccess: (data) => console.log(data),

@@ -4,6 +4,7 @@ import TAG, { TagId } from 'constants/tag';
 import useApiQuery from 'hooks/useApiQuery';
 import { IReviewList, ITreeItem } from 'types/apiResponse';
 import { useNavigate } from 'react-router-dom';
+import { HTTPError } from 'error/HTTPError';
 import * as S from '../style';
 
 interface IProps {
@@ -16,10 +17,7 @@ const VisitorReviewList = ({ treeInfo }: IProps) => {
   const navigate = useNavigate();
 
   if (isError) {
-    console.error(error);
-    // TODO: 통신 오류시 에러페이지 이동 ?
-    // navigate('/error');
-    return null;
+    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${error}`);
   }
 
   const findTagId = (comment: string): TagId => {
