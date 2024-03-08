@@ -15,6 +15,7 @@ ${reset}
   --grey-dark: #878787;
   --header-height: 7.6rem;
   --navbar-height: 10rem;
+  --content-width: 420px;
 }
 
 * {
@@ -60,7 +61,7 @@ a {
 }
 
 #root {
-  width: 420px;
+  width: var(--content-width);
   min-height: 100vh;
   background: #fff;
   margin-left: 50%;
