@@ -12,7 +12,9 @@ function TreeLocationItem({ children, location, distance }: ILocationProps) {
     <Item gap={0.8}>
       <Item.Title size={2.4}>{children}</Item.Title>
       <StyleLocationText>
-        <RightLineSpan>{new Intl.NumberFormat().format(distance)}m</RightLineSpan>
+        <RightLineSpan style={{ display: 'none' }}>
+          {new Intl.NumberFormat().format(distance)}m
+        </RightLineSpan>
         {location}
       </StyleLocationText>
     </Item>

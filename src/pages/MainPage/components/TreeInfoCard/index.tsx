@@ -5,6 +5,8 @@ import ShareButton from 'components/ShareButton';
 import defaultImg from 'assets/treeinfo-default.svg';
 import { useNavigate } from 'react-router-dom';
 import useApiQuery from 'hooks/useApiQuery';
+import TreeLocationItem from 'components/TreeLocationItem';
+import { HTTPError } from 'error/HTTPError';
 import * as S from './style';
 
 interface IProps {
@@ -12,9 +14,25 @@ interface IProps {
 }
 
 const TreeInfoCard = ({ id }: IProps) => {
+  const {
+    data: treeInfo,
+    isError: isInfoError,
+    error: infoError,
+  } = useApiQuery<ITreeItem>(`v1/trees/${id}`);
+  const {
+    data: reviewImages,
+    isError: isReviewImagesError,
+    error: reviewImagesError,
+  } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${id}`);
   const navigate = useNavigate();
-  const { data: treeInfo } = useApiQuery<ITreeItem>(`v1/trees/${id}`);
-  const { data: reviewImages } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${id}`);
+
+  if (isInfoError) {
+    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${infoError}`);
+  }
+  if (isReviewImagesError) {
+    throw new HTTPError(`리뷰 이미지를 불러오는데 오류가 발생했습니다. ${reviewImagesError}`);
+  }
+
   const handleGoToTreeInfo = () => {
     navigate(`/tree/${id}`);
   };
@@ -22,14 +40,9 @@ const TreeInfoCard = ({ id }: IProps) => {
   return treeInfo ? (
     <S.Wrapper>
       <S.Title onClick={handleGoToTreeInfo}>
-        <S.Name>{treeInfo.name}</S.Name>
-        <S.Address>
-          {/*
-						TODO: 트리 거리 계산 필요
-						<span>158m</span>
-					*/}
-          {treeInfo.roadAddress}
-        </S.Address>
+        <TreeLocationItem location={treeInfo.roadAddress} distance={138}>
+          {treeInfo.name}
+        </TreeLocationItem>
       </S.Title>
       <S.Btns>
         <SaveButton treeId={id} isFavorite={treeInfo.isFavorite} />

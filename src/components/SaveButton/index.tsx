@@ -23,12 +23,12 @@ const SaveButton = ({ treeId, isFavorite: initialIsFavorite }: ISaveButtonProps)
   );
 
   const handleSaveButton = () => {
+    setIsFavorite((prev) => !prev);
     mutate(
       { treeId, isFavorite: !isFavorite },
       {
         onSuccess: () => {
           console.log('저장 상태 변경!');
-          setIsFavorite((prev) => !prev);
         },
       },
     );
