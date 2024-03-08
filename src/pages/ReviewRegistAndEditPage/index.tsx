@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Topbar from 'components/Topbar';
 import TreeItem from 'components/TreeItem';
 import Button from 'components/common/button';
@@ -22,48 +22,53 @@ const ReviewRegistAndEditPage = () => {
   const { pathname, state: treeData } = useLocation();
   const { treeName, location, type } = validateTreeData(treeData);
   const id = Number(pathname.split('/')[3]);
-  const [tagIds, setTagIds] = useState<number[]>([]);
   const contentRef = useRef<HTMLTextAreaElement>(null);
+  const [tagIds, setTagIds] = useState<number[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const navigate = useNavigate();
 
   const { data } = useApiQuery<IGetReview>(`v1/reviews/${id}?reviewId=${id}`, type === 'edit');
 
-  const { mutate: registMutate } = useApiMutation<{ treeId: number; isFavorite: boolean }>(
-    'v1/reviews',
-    'POST',
-    {
-      onSuccess: (data) => {
-        console.log('### 리뷰 등록! ###');
-        console.log(data);
-      },
-      onError: (e, data) => {
-        console.error(e);
-        console.log(data);
-      },
-    },
-  );
-
-  const { mutate: editMutate } = useApiMutation<{ treeId: number; isFavorite: boolean }>(
-    `v1/reviews/${id}?reviewId=${id}`,
-    'PUT',
-    {
-      onSuccess: (data) => {
-        console.log('### 리뷰 수정! ###');
-        console.log(data);
-      },
-      onError: (e, data) => {
-        console.error(e);
-        console.log(data);
-      },
-    },
-  );
+  const { mutate: registMutate } = useApiMutation<{ reviewId: number }>('v1/reviews', 'POST', {
+    onSuccess: (data) => console.log(data),
+    onError: (e) => console.error(e),
+  });
 
   const handleReviewRegistButton = () => {
-    registMutate({ id, tagIds, content: contentRef.current?.value, imageUrl: '' });
+    const data = {
+      treeId: id,
+      tagIds,
+      content: contentRef.current?.value,
+      imageUrl: 'http://s3.example.com/image1',
+    };
+
+    registMutate(data, {
+      onSuccess: (response) => {
+        console.log('### 리뷰 등록! ###');
+        navigate(`/review/${response.reviewId}`, {
+          state: { treeName, location },
+        });
+      },
+    });
   };
 
+  const { mutate: editMutate } = useApiMutation(`v1/reviews/${id}?reviewId=${id}`, 'PUT', {
+    onSuccess: (data) => console.log(data),
+    onError: (e) => console.error(e),
+  });
+
   const handleReviewEditButton = () => {
-    editMutate({ tagIds, content: contentRef.current?.value, imageUrl: data?.reviewImageUrl });
+    editMutate(
+      { tagIds, content: contentRef.current?.value, imageUrl: data?.reviewImageUrl },
+      {
+        onSuccess: () => {
+          console.log('### 리뷰 수정! ###');
+          navigate(`/review/${id}`, {
+            state: { treeName, location },
+          });
+        },
+      },
+    );
   };
 
   return (
