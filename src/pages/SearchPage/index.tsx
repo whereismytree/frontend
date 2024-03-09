@@ -11,6 +11,7 @@ export const SearchPage = () => {
   const [keyword, setKeyword] = useState<string>('');
   const { data, isError, error } = useApiQuery<{ trees: IMainSearchResult[] }>(
     `v1/trees/list?query=${keyword}`,
+    keyword !== '',
   );
 
   if (isError) {
@@ -29,7 +30,7 @@ export const SearchPage = () => {
         <S.Wrapper>
           {data.trees.map((tree) => {
             return (
-              <S.ItemWrapper key={tree.name} onClick={() => handleGoToTreeInfo(tree.id)}>
+              <S.ItemWrapper key={tree.id} onClick={() => handleGoToTreeInfo(tree.id)}>
                 <TreeImageItem location={tree.address}>{tree.name}</TreeImageItem>
               </S.ItemWrapper>
             );
