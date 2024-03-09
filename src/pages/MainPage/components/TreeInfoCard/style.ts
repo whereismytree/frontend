@@ -19,6 +19,7 @@ export const Wrapper = styled.article`
 export const Title = styled.div`
   cursor: pointer;
   color: #1a1a1a;
+  flex-basis: 70%;
 `;
 
 export const Name = styled.h2`
@@ -29,6 +30,10 @@ export const Name = styled.h2`
 
 export const Address = styled.p`
   font-size: 1.2rem;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   span {
     font-weight: 700;
     line-height: 1.8rem;

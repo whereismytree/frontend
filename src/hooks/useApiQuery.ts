@@ -6,12 +6,8 @@ import useUser from './useUser';
 const useApiQuery = <TData = unknown>(
   queryParam: string,
   enabled?: boolean,
-): UseQueryResult<TData, unknown> => {
+): UseQueryResult<TData, Error> => {
   const { token } = useUser();
-
-  if (!token) {
-    throw new Error('사용자의 액세스 토큰을 찾을 수 없습니다.');
-  }
 
   const fetchData = async () => {
     try {

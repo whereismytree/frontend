@@ -4,22 +4,20 @@ import TAG, { TagId } from 'constants/tag';
 import useApiQuery from 'hooks/useApiQuery';
 import { IReviewList, ITreeItem } from 'types/apiResponse';
 import { useNavigate } from 'react-router-dom';
+import { HTTPError } from 'error/HTTPError';
 import * as S from '../style';
 
 interface IProps {
+  treeId: number;
   treeInfo: ITreeItem;
 }
 
-const VisitorReviewList = ({ treeInfo }: IProps) => {
-  const id = 2;
-  const { data, isError, error } = useApiQuery<IReviewList>(`v1/reviews?treeId=${id}`);
+const VisitorReviewList = ({ treeId, treeInfo }: IProps) => {
+  const { data, isError, error } = useApiQuery<IReviewList>(`v1/reviews?treeId=${treeId}`);
   const navigate = useNavigate();
 
   if (isError) {
-    console.error(error);
-    // TODO: 통신 오류시 에러페이지 이동 ?
-    // navigate('/error');
-    return null;
+    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${error}`);
   }
 
   const findTagId = (comment: string): TagId => {
@@ -28,7 +26,7 @@ const VisitorReviewList = ({ treeInfo }: IProps) => {
   };
 
   const handleReview = () => {
-    navigate(`/review/${id}`, {
+    navigate(`/review/${treeId}`, {
       state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
     });
   };

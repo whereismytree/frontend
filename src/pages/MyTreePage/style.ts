@@ -1,13 +1,24 @@
 import styled from 'styled-components';
 
-export const Map = styled.div`
-  height: calc(100vh - var(--navbar-height) - var(--header-height));
-  position: relative;
+export const Content = styled.main`
+  height: calc(100vh - var(--header-height) - var(--navbar-height));
+  overflow: hidden;
+
+  button {
+    position: absolute;
+    top: -30px;
+    right: 10px;
+  }
 `;
 
-export const Wrapper = styled.main`
+export const GuideWrapper = styled.main`
+  height: calc(100vh - var(--header-height) - var(--navbar-height));
   display: flex;
-  align-items: center;
-  height: calc(100vh - var(--navbar-height) - var(--header-height));
   background-color: var(--grey-light);
+  align-items: center;
+`;
+
+export const Map = styled.div`
+  position: relative;
+  height: 100%;
 `;
