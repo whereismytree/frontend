@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -6,6 +5,7 @@ import ProfileImageSetting from 'pages/LoginPage/ProfileSetting/components/Image
 import getPath from 'utils/getPath';
 import Topbar from 'components/Topbar';
 import InvalidAccess from 'components/Guides/InvalidAccess';
+import convertImageFileToUrl from 'utils/imageUtils/convertImageFileToUrl';
 import { useCreateProfile } from './hooks';
 import ProfileSettingProvider from './provider';
 import SubmitButton from './components/SubmitButton';
@@ -26,17 +26,12 @@ function ProfileSetting() {
     }
   }, [navigate, state]);
 
-  // profile 설정 요청을 보내려면 profileImageUrl 데이터가 falsy한 데이터면 안된다. 무조건 실체가 있는 문자열 URL을 전송해야함.
   const createProfile = (data: IUserProfileInputData) => {
-    console.log(data);
     const apiBody = convertToProfileAPIFormat(data);
 
-    // create(
-    //   apiBody,
-    //   {
-    //     onSuccess: () => navigate(getPath('mainPage', 'root')),
-    //   },
-    // );
+    create(apiBody, {
+      onSuccess: () => navigate(getPath('mainPage', 'root')),
+    });
   };
 
   return state ? (
@@ -57,10 +52,18 @@ function ProfileSetting() {
   );
 }
 
-const convertToProfileAPIFormat = (
-  userProfileData: IUserProfileInputData,
-): IUserProfileAPIRequestBody => {
-  return {} as IUserProfileAPIRequestBody;
+const convertToProfileAPIFormat = async (userProfileData: IUserProfileInputData) => {
+  const profileImageUrl =
+    userProfileData.profileImage instanceof File
+      ? await convertImageFileToUrl(userProfileData.profileImage)
+      : userProfileData.profileImage;
+
+  const convertedProfileData: IUserProfileAPIRequestBody = {
+    nickname: userProfileData.nickname,
+    profileImageUrl,
+  };
+
+  return convertedProfileData;
 };
 
 export default ProfileSetting;
