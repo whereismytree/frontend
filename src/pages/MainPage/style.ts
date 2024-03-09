@@ -1,18 +1,24 @@
 import styled from 'styled-components';
 
+interface MapButtonProps {
+  showTreeInfo: boolean;
+  direction: 'right' | 'left';
+}
+
 export const Map = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   height: calc(100vh - var(--navbar-height));
+  position: relative;
 `;
 
-export const MapButtons = styled.div`
+export const MapButton = styled.button<MapButtonProps>`
   z-index: 10;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 1.6rem;
+  position: absolute;
+  bottom: ${(props) => (props.showTreeInfo ? '24rem' : '1.6rem')};
+  right: ${(props) => (props.direction === 'right' ? '1.6rem' : '')};
+  left: ${(props) => (props.direction === 'left' ? '1.6rem' : '')};
 `;
 
 export const Loading = styled.section`
