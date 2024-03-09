@@ -5,5 +5,5 @@ export interface IUserProfileAPIRequestBody {
 
 export interface IUserProfileInputData {
   nickname: string;
-  profileImage: File;
+  profileImage: File | string;
 }
