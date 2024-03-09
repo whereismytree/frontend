@@ -26,8 +26,8 @@ function ProfileSetting() {
     }
   }, [navigate, state]);
 
-  const createProfile = (data: IUserProfileInputData) => {
-    const apiBody = convertToProfileAPIFormat(data);
+  const createProfile = async (data: IUserProfileInputData) => {
+    const apiBody = await convertToProfileAPIFormat(data);
 
     create(apiBody, {
       onSuccess: () => navigate(getPath('mainPage', 'root')),

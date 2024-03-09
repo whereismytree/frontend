@@ -9,11 +9,11 @@ function ProfileImageSetting() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const previewImage = usePreviewImage(imageFile);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
-  const randomProfileImageURL = generateRandomProfileImageURL();
+  const randomProfileImageURL = useRef(generateRandomProfileImageURL());
 
   // 초기 로딩시 사용자의 프로필 이미지를 임의의 랜덤한 프로필 이미지로 설정합니다.
   useEffect(() => {
-    setValue('profileImage', randomProfileImageURL);
+    setValue('profileImage', randomProfileImageURL.current);
   }, []);
 
   const handleImageClick = () => {
@@ -41,7 +41,7 @@ function ProfileImageSetting() {
         }}
       />
       <ProfileImage
-        src={previewImage || randomProfileImageURL}
+        src={previewImage || randomProfileImageURL.current}
         style={{ WebkitUserSelect: 'none', cursor: 'pointer' }}
         onClick={handleImageClick}
       />
@@ -49,7 +49,6 @@ function ProfileImageSetting() {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const generateRandomProfileImageURL = () => {
   const randomProfileImages = [
     'https://jypbasebucket.s3.ap-northeast-2.amazonaws.com/images/20240309171943.blob',
