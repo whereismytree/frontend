@@ -1,7 +1,8 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 import reset from 'styled-reset';
 import mainBackground from '../assets/background.png';
 import textBackground from '../assets/background-title.png';
+import mediaQuery from './media';
 
 export default createGlobalStyle`
 ${reset}
@@ -15,7 +16,8 @@ ${reset}
   --grey-dark: #878787;
   --header-height: 7.6rem;
   --navbar-height: 10rem;
-  --content-width: 420px;
+  --min-content-width: 350px;
+  --max-content-width: 420px;
 }
 
 * {
@@ -34,6 +36,17 @@ body {
   margin: 0;
   background: url(${mainBackground}) no-repeat center / cover;
   -ms-overflow-style: none;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  background: url(${textBackground}) no-repeat center/contain;
+  width: 385px;
+  height: 238px;
 }
 
 input, textarea { 
@@ -61,7 +74,8 @@ a {
 }
 
 #root {
-  max-width: var(--content-width);
+  min-width: var(--min-content-width);
+  max-width: var(--max-content-width);
   min-height: 100vh;
   background: #fff;
   margin-left: 50%;
@@ -103,22 +117,15 @@ input[type="search"]::-moz-search-clear-button {
   position: absolute;
 }
 
-@media screen and (max-width: 868px) {
+${mediaQuery('mediumDevice')(css`
   #root {
     margin: 0 auto;
-  };
-}
+  }
+`)}
 
-@media screen and (min-width: 868px) {
-  body::before{
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 10%;
-    transform: translateY(-50%);
-    background: url(${textBackground}) no-repeat center/contain;
-    width: 385px;
-    height: 238px;
-  } 
-}
+${mediaQuery('mediumDevice')(css`
+  body::before {
+    content: none;
+  }
+`)}
 `;

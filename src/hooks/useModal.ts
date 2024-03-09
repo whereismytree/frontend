@@ -4,8 +4,8 @@ const createBackdrop = () => {
   const backdrop = document.createElement('div');
 
   backdrop.classList.add('backdrop');
-  backdrop.style.width = 'var(--content-width)';
-  backdrop.style.height = '100vh';
+  backdrop.style.width = 'var(--max-content-width)';
+  backdrop.style.height = '100%';
   backdrop.style.backgroundColor = 'rgba(0,0,0,0.5)';
   backdrop.style.position = 'fixed';
   backdrop.style.top = '0';

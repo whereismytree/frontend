@@ -1,3 +1,4 @@
+import mediaQuery from 'style/media';
 import styled from 'styled-components';
 
 export const Modal = styled.div`
@@ -5,16 +6,23 @@ export const Modal = styled.div`
 
   width: var(--modal-width);
   display: none;
-  position: absolute;
   text-align: center;
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  margin: 0 calc((var(--content-width) - var(--modal-width)) / 2);
+  margin: 0 calc((var(--max-content-width) - var(--modal-width)) / 2);
   z-index: 999;
   border: 1px solid var(--grey-light);
   background-color: #fff;
   padding: 3.2rem 2.2rem 1.8rem;
   border-radius: 20px;
+
+  ${mediaQuery('mediumDevice')`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  `}
 `;
 
 export const Title = styled.h2`
