@@ -8,7 +8,7 @@ import Button from 'components/common/button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ITreeItem } from 'types/apiResponse';
 import useApiQuery from 'hooks/useApiQuery';
-import treeMarker from 'assets/tree_marker.svg';
+import treeMarker from 'assets/tree-info-marker.svg';
 import * as S from './style';
 
 export const TreeInfo = () => {
@@ -37,6 +37,7 @@ export const TreeInfo = () => {
             image: markerImage,
           });
           setMap(map);
+          map.setDraggable(false);
         }
       });
     }
