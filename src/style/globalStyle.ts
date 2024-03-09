@@ -61,7 +61,7 @@ a {
 }
 
 #root {
-  width: var(--content-width);
+  max-width: var(--content-width);
   min-height: 100vh;
   background: #fff;
   margin-left: 50%;
