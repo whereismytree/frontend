@@ -22,10 +22,12 @@ export const MainPage = () => {
       <S.Map ref={mapContainer}>
         <MainSearchInput />
         <ResearchButton redrawTree={redrawTree} setShowTreeInfo={setShowTreeInfo} />
-        <S.MapButtons>
+        <S.MapButton showTreeInfo={showTreeInfo} direction="left">
           <MyLocationButton map={map} />
+        </S.MapButton>
+        <S.MapButton showTreeInfo={showTreeInfo} direction="right">
           <ZoomControl map={map} />
-        </S.MapButtons>
+        </S.MapButton>
         {showTreeInfo && <TreeInfoCard id={currentTreeInfoData?.id as number} />}
       </S.Map>
       <Navbar />
