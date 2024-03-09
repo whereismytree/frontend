@@ -5,6 +5,7 @@ import useApiQuery from 'hooks/useApiQuery';
 import { IReviewList, ITreeItem } from 'types/apiResponse';
 import { useNavigate } from 'react-router-dom';
 import { HTTPError } from 'error/HTTPError';
+import Profile from 'pages/ReviewDetailPage/components/Profile';
 import * as S from '../style';
 
 interface IProps {
@@ -43,13 +44,15 @@ const VisitorReviewList = ({ treeId, treeInfo }: IProps) => {
             return (
               <S.Review key={e.reviewId} onClick={() => handleReview(e.reviewId)}>
                 <S.ReviewCard hasPhotoReview={!!e.reviewImageUrl}>
-                  <S.Profile>
-                    <S.ProfileImg src={e.profileImageUrl} />
-                    <S.Nickname>
-                      {e.nickname}
-                      <S.PostedDate>{e.createdAt}</S.PostedDate>
-                    </S.Nickname>
-                  </S.Profile>
+                  <Profile
+                    profileImageSrc={e.profileImageUrl}
+                    nickname={e.nickname}
+                    createDate={e.createdAt}
+                    canEdit={false}
+                    canRemove={false}
+                  >
+                    <span />
+                  </Profile>
                   <S.TextReview>{e.content}</S.TextReview>
                   <S.Tags>
                     {e.tags.length && <Tag id={findTagId(e.tags[0])} />}
