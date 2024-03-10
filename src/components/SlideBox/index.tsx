@@ -25,7 +25,9 @@ const SlideBoxToggle = ({ children }: { children: (isOpen: initialValue['isOpen'
   const { isOpen, setIsOpen } = useContext(SlideBoxContext);
 
   return (
-    <S.ToggleButton onClick={() => setIsOpen((prev) => !prev)}>{children(isOpen)}</S.ToggleButton>
+    <S.ToggleButton type="button" onClick={() => setIsOpen((prev) => !prev)}>
+      {children(isOpen)}
+    </S.ToggleButton>
   );
 };
 
