@@ -18,6 +18,7 @@ export const Modal = styled.div`
   border-radius: 20px;
 
   ${mediaQuery('mediumDevice')`
+    margin: 0;
     position: absolute;
     top: 50%;
     left: 50%;
