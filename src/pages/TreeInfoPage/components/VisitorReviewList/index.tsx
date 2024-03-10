@@ -5,6 +5,7 @@ import useApiQuery from 'hooks/useApiQuery';
 import { IReviewList, ITreeItem } from 'types/apiResponse';
 import { useNavigate } from 'react-router-dom';
 import { HTTPError } from 'error/HTTPError';
+import Profile from 'pages/ReviewDetailPage/components/Profile';
 import * as S from '../style';
 
 interface IProps {
@@ -25,8 +26,8 @@ const VisitorReviewList = ({ treeId, treeInfo }: IProps) => {
     return tag!.id;
   };
 
-  const handleReview = () => {
-    navigate(`/review/${treeId}`, {
+  const handleReview = (reviewId: number) => {
+    navigate(`/review/${reviewId}`, {
       state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
     });
   };
@@ -41,15 +42,17 @@ const VisitorReviewList = ({ treeId, treeInfo }: IProps) => {
         {data?.totalReviews !== 0 ? (
           data?.reviews.map((e) => {
             return (
-              <S.Review key={e.reviewId} onClick={handleReview}>
+              <S.Review key={e.reviewId} onClick={() => handleReview(e.reviewId)}>
                 <S.ReviewCard hasPhotoReview={!!e.reviewImageUrl}>
-                  <S.Profile>
-                    <S.ProfileImg src={e.profileImageUrl} />
-                    <S.Nickname>
-                      {e.nickname}
-                      <S.PostedDate>{e.createdAt}</S.PostedDate>
-                    </S.Nickname>
-                  </S.Profile>
+                  <Profile
+                    profileImageSrc={e.profileImageUrl}
+                    nickname={e.nickname}
+                    createDate={e.createdAt}
+                    canEdit={false}
+                    canRemove={false}
+                  >
+                    <span />
+                  </Profile>
                   <S.TextReview>{e.content}</S.TextReview>
                   <S.Tags>
                     {e.tags.length && <Tag id={findTagId(e.tags[0])} />}

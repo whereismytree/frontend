@@ -160,7 +160,7 @@ export const TextReview = styled.p`
   font-size: 1.2rem;
   font-weight: 350;
   line-height: 1.8rem;
-  margin: 1.5rem 0;
+  margin-bottom: 1.5rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;

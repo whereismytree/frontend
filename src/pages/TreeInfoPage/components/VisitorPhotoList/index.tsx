@@ -19,8 +19,8 @@ const VisitorPhotoList = ({ treeId, treeInfo }: IProps) => {
     throw new HTTPError(`리뷰 정보를 불러오는데 오류가 발생했습니다. ${error}`);
   }
 
-  const handleReviewPhoto = () => {
-    navigate(`/review/${treeId}`, {
+  const handleReviewPhoto = (reviewId: number) => {
+    navigate(`/review/${reviewId}`, {
       state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
     });
   };
@@ -34,7 +34,13 @@ const VisitorPhotoList = ({ treeId, treeInfo }: IProps) => {
       <S.PhotoList>
         {data?.totalImages !== 0 ? (
           data?.images.map((e) => {
-            return <S.Photo key={e.reviewId} src={e.imageUrl} onClick={handleReviewPhoto} />;
+            return (
+              <S.Photo
+                key={e.reviewId}
+                src={e.imageUrl}
+                onClick={() => handleReviewPhoto(e.reviewId)}
+              />
+            );
           })
         ) : (
           <S.Photo src={defaultImg} />
