@@ -3,13 +3,13 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ProfileImageSetting from 'pages/LoginPage/ProfileSetting/components/ImageSetting';
 import getPath from 'utils/getPath';
-import Topbar from 'components/Topbar';
-import InvalidAccess from 'components/Guides/InvalidAccess';
+import InvalidAccessGuide from 'components/Guides/InvalidAccess';
 import convertImageFileToUrl from 'utils/imageUtils/convertImageFileToUrl';
-import { useCreateProfile } from './hooks';
-import ProfileSettingProvider from './provider';
+import Topbar from 'components/Topbar';
 import SubmitButton from './components/SubmitButton';
 import NicknameSetting from './components/NicknameSetting';
+import { useCreateProfile } from './hooks';
+import ProfileSettingProvider from './provider';
 import { IUserProfileAPIRequestBody, IUserProfileInputData } from './types';
 import * as S from './style';
 
@@ -48,7 +48,7 @@ function ProfileSetting() {
       </FormProvider>
     </>
   ) : (
-    <InvalidAccess />
+    <InvalidAccessGuide />
   );
 }
 
