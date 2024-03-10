@@ -11,7 +11,6 @@ import * as S from './style';
 
 const SavePage = () => {
   const savedTrees = useSavedTrees();
-
   const mapContainer = useRef(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { map } = useMarkerMap(mapContainer, {
@@ -23,21 +22,20 @@ const SavePage = () => {
   return (
     <>
       <Topbar.Icon type="star" />
-      {savedTrees.length ? (
-        <S.Content>
-          <SlideBox>
-            <S.Map ref={mapContainer} />
-            <SlideBox.Menu maxHeight="400px">
-              <SlideBox.Toggle>{(isOpen) => `${isOpen ? '지도' : '목록'}보기`}</SlideBox.Toggle>
-              <TreeList type="saved" list={savedTrees} />
-            </SlideBox.Menu>
-          </SlideBox>
-        </S.Content>
-      ) : (
-        <S.GuideWrapper>
-          <Guide text="저장한 트리가 없어요" />
-        </S.GuideWrapper>
-      )}
+      <S.Content>
+        <S.Map ref={mapContainer} />
+        <SlideBox>
+          <SlideBox.Menu maxHeight="60vh">
+            <SlideBox.Toggle>{(isOpen) => `${isOpen ? '지도' : '목록'}보기`}</SlideBox.Toggle>
+            <TreeList type="saved" list={savedTrees} />
+          </SlideBox.Menu>
+        </SlideBox>
+        {savedTrees.length === 0 && (
+          <S.GuideWrapper>
+            <Guide text="저장한 트리가 없어요" />
+          </S.GuideWrapper>
+        )}
+      </S.Content>
       <Navbar />
     </>
   );
