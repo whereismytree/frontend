@@ -1,48 +1,24 @@
 import { RefObject, useEffect, useState } from 'react';
-import { ILocation, getMyLocation } from 'utils/getMyLocation';
 
-type TPosition = number | undefined;
+const { kakao } = window;
 
-const useKakaoMap = (
-  mapContainer: RefObject<HTMLDivElement>,
-  latLng?: { lat: TPosition; lng: TPosition },
-) => {
+const useKakaoMap = (mapContainer: RefObject<HTMLDivElement>, callback?: (map: any) => void) => {
   const [map, setMap] = useState<any>(null);
 
   useEffect(() => {
-    const loadMap = async () => {
-      window.kakao.maps.load(async () => {
-        let center;
-        if (navigator.geolocation) {
-          try {
-            const { latitude, longitude }: ILocation = await getMyLocation();
-            center = new window.kakao.maps.LatLng(latitude, longitude);
-          } catch (error) {
-            console.error(error);
-          }
-        } else {
-          center = new window.kakao.maps.LatLng(37.5647224, 126.9816533);
-        }
+    if (!(kakao && kakao.maps) || !mapContainer.current) return;
 
-        const options = { center, level: 3 };
-        if (mapContainer.current) {
-          const map = new window.kakao.maps.Map(mapContainer.current, options);
-          setMap(map);
-        }
+    kakao.maps.load(() => {
+      const newMap = new kakao.maps.Map(mapContainer.current, {
+        center: new kakao.maps.LatLng(37.566535, 126.9779692), // 서울특별시청 위경도입니다.
+        level: 6,
       });
-    };
 
-    if (window.kakao && window.kakao.maps) {
-      loadMap();
-    }
-  }, []);
+      if (callback) callback(newMap);
 
-  useEffect(() => {
-    if (map && latLng?.lat && latLng?.lng) {
-      const center = new window.kakao.maps.LatLng(latLng.lat, latLng.lng);
-      map.setCenter(center);
-    }
-  }, [map, latLng?.lat, latLng?.lng]);
+      setMap(newMap);
+    });
+  }, [mapContainer]);
 
   return { map };
 };
