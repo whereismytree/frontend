@@ -3,26 +3,24 @@ import defaultImg from 'assets/treeinfo-default.svg';
 import useApiQuery from 'hooks/useApiQuery';
 import { IReviewImages, ITreeItem } from 'types/apiResponse';
 import { useNavigate } from 'react-router-dom';
+import { HTTPError } from 'error/HTTPError';
 import * as S from '../style';
 
 interface IProps {
+  treeId: number;
   treeInfo: ITreeItem;
 }
 
-const VisitorPhotoList = ({ treeInfo }: IProps) => {
-  const id = 2;
-  const { data, isError, error } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${id}`);
+const VisitorPhotoList = ({ treeId, treeInfo }: IProps) => {
+  const { data, isError, error } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${treeId}`);
   const navigate = useNavigate();
 
   if (isError) {
-    console.error(error);
-    // TODO: 통신 오류시 에러페이지 이동 ?
-    // navigate('/error');
-    return null;
+    throw new HTTPError(`리뷰 정보를 불러오는데 오류가 발생했습니다. ${error}`);
   }
 
-  const handleReviewPhoto = () => {
-    navigate(`/review/${id}`, {
+  const handleReviewPhoto = (reviewId: number) => {
+    navigate(`/review/${reviewId}`, {
       state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
     });
   };
@@ -36,7 +34,13 @@ const VisitorPhotoList = ({ treeInfo }: IProps) => {
       <S.PhotoList>
         {data?.totalImages !== 0 ? (
           data?.images.map((e) => {
-            return <S.Photo key={e.reviewId} src={e.imageUrl} onClick={handleReviewPhoto} />;
+            return (
+              <S.Photo
+                key={e.reviewId}
+                src={e.imageUrl}
+                onClick={() => handleReviewPhoto(e.reviewId)}
+              />
+            );
           })
         ) : (
           <S.Photo src={defaultImg} />

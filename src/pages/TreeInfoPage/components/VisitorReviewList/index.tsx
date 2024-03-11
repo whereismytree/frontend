@@ -4,22 +4,21 @@ import TAG, { TagId } from 'constants/tag';
 import useApiQuery from 'hooks/useApiQuery';
 import { IReviewList, ITreeItem } from 'types/apiResponse';
 import { useNavigate } from 'react-router-dom';
+import { HTTPError } from 'error/HTTPError';
+import Profile from 'pages/ReviewDetailPage/components/Profile';
 import * as S from '../style';
 
 interface IProps {
+  treeId: number;
   treeInfo: ITreeItem;
 }
 
-const VisitorReviewList = ({ treeInfo }: IProps) => {
-  const id = 2;
-  const { data, isError, error } = useApiQuery<IReviewList>(`v1/reviews?treeId=${id}`);
+const VisitorReviewList = ({ treeId, treeInfo }: IProps) => {
+  const { data, isError, error } = useApiQuery<IReviewList>(`v1/reviews?treeId=${treeId}`);
   const navigate = useNavigate();
 
   if (isError) {
-    console.error(error);
-    // TODO: 통신 오류시 에러페이지 이동 ?
-    // navigate('/error');
-    return null;
+    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${error}`);
   }
 
   const findTagId = (comment: string): TagId => {
@@ -27,8 +26,8 @@ const VisitorReviewList = ({ treeInfo }: IProps) => {
     return tag!.id;
   };
 
-  const handleReview = () => {
-    navigate(`/review/${id}`, {
+  const handleReview = (reviewId: number) => {
+    navigate(`/review/${reviewId}`, {
       state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
     });
   };
@@ -43,15 +42,17 @@ const VisitorReviewList = ({ treeInfo }: IProps) => {
         {data?.totalReviews !== 0 ? (
           data?.reviews.map((e) => {
             return (
-              <S.Review key={e.reviewId} onClick={handleReview}>
+              <S.Review key={e.reviewId} onClick={() => handleReview(e.reviewId)}>
                 <S.ReviewCard hasPhotoReview={!!e.reviewImageUrl}>
-                  <S.Profile>
-                    <S.ProfileImg src={e.profileImageUrl} />
-                    <S.Nickname>
-                      {e.nickname}
-                      <S.PostedDate>{e.createdAt}</S.PostedDate>
-                    </S.Nickname>
-                  </S.Profile>
+                  <Profile
+                    profileImageSrc={e.profileImageUrl}
+                    nickname={e.nickname}
+                    createDate={e.createdAt}
+                    canEdit={false}
+                    canRemove={false}
+                  >
+                    <span />
+                  </Profile>
                   <S.TextReview>{e.content}</S.TextReview>
                   <S.Tags>
                     {e.tags.length && <Tag id={findTagId(e.tags[0])} />}

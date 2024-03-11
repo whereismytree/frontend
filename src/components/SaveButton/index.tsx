@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import saveIcon from 'assets/save-icon.svg';
 import fullSaveIcon from 'assets/full-save-icon.svg';
 import useApiMutation from 'hooks/useApiMutation';
@@ -6,12 +6,12 @@ import * as S from './style';
 
 interface ISaveButtonProps {
   treeId: number;
-  isSave: boolean;
-  setIsSave: React.Dispatch<React.SetStateAction<boolean>>;
+  isFavorite: boolean;
 }
 
-const SaveButton = ({ treeId, isSave, setIsSave }: ISaveButtonProps) => {
-  const imgSrc = isSave ? fullSaveIcon : saveIcon;
+const SaveButton = ({ treeId, isFavorite: initialIsFavorite }: ISaveButtonProps) => {
+  const [isFavorite, setIsFavorite] = useState<boolean>(initialIsFavorite);
+  const imgSrc = isFavorite ? fullSaveIcon : saveIcon;
 
   const { mutate } = useApiMutation<{ treeId: number; isFavorite: boolean }>(
     'v1/favorites/trees',
@@ -23,14 +23,12 @@ const SaveButton = ({ treeId, isSave, setIsSave }: ISaveButtonProps) => {
   );
 
   const handleSaveButton = () => {
-    setIsSave((prev) => !prev);
-    // TODO: 추후 서버상태 변경으로 수정
+    setIsFavorite((prev) => !prev);
     mutate(
-      { treeId, isFavorite: !isSave },
+      { treeId, isFavorite: !isFavorite },
       {
         onSuccess: () => {
           console.log('저장 상태 변경!');
-          setIsSave((prev) => !prev);
         },
       },
     );

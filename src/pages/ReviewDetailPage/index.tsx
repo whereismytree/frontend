@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Topbar from 'components/Topbar';
 import ReviewProfile from 'pages/ReviewDetailPage/components/Profile';
@@ -7,40 +6,18 @@ import ReviewContent from 'pages/ReviewDetailPage/components/Review';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
 import KebabDropDown from 'pages/ReviewDetailPage/components/KebabDropDown';
 import useReview from 'hooks/useReview';
-import useSnackBar from 'hooks/useSnackBar';
+import { HTTPError } from 'error/HTTPError';
 import getPath from 'utils/getPath';
 import * as S from './style';
 import ReviewImage from './components/ReviewImage';
-
-const validateReviewId = (reviewId: number | undefined) => {
-  if (!reviewId) {
-    throw new Error('리뷰 상세 페이지를 렌더링하기 위해 PATH에 리뷰 아이디를 전달해주세요.');
-  }
-
-  if (Number.isNaN(reviewId)) {
-    throw new Error('리뷰 상세 페이지에 전달된 리뷰 아이디가 숫자 데이터가 아닙니다.');
-  }
-
-  return reviewId;
-};
-
-const validateTreeData = (treeData: any) => {
-  if (!treeData || !treeData.treeName || !treeData.location) {
-    throw new Error('리뷰 상세 페이지를 렌더링하기 위해 Navigate 객체에 state를 전달해주세요.');
-  }
-
-  return treeData as { treeName: string; location: string };
-};
 
 function ReviewDetailPage() {
   const params = useParams();
   const { state: treeData } = useLocation();
   const navigate = useNavigate();
   const reviewId = validateReviewId(Number(params.reviewId));
-
   const { review, deleteReview } = useReview(reviewId);
   const { treeName, location } = validateTreeData(treeData);
-  const { SnackBar, render: renderSnackBar } = useSnackBar();
 
   if (!review) return null;
 
@@ -63,17 +40,6 @@ function ReviewDetailPage() {
     });
   };
 
-  const handleShare = async () => {
-    const currentUrl = window.location.href;
-
-    try {
-      await navigator.clipboard.writeText(currentUrl);
-      renderSnackBar(2);
-    } catch (err) {
-      console.error('현재 URL을 클립보드에 복사하는 데 실패했습니다.');
-    }
-  };
-
   const handleEdit = () => {
     navigate(getPath('reviewPage', 'edit')(reviewId), {
       state: { treeName, location, type: 'edit' },
@@ -83,7 +49,6 @@ function ReviewDetailPage() {
   return (
     <>
       <Topbar.Icon type="tree" />
-      <SnackBar>URL이 클립보드에 복사되었습니다</SnackBar>
       <S.Main>
         <TreeItem location={location}>{treeName}</TreeItem>
         <ReviewImage src={reviewImageUrl} />
@@ -97,7 +62,6 @@ function ReviewDetailPage() {
           <KebabDropDown>
             <KebabDropDown.Toggle />
             <KebabDropDown.List>
-              <KebabDropDown.Item onClick={handleShare}>공유하기</KebabDropDown.Item>
               <KebabDropDown.Item onClick={handleEdit}>수정하기</KebabDropDown.Item>
               <KebabDropDown.Item onClick={handleDelete}>삭제하기</KebabDropDown.Item>
             </KebabDropDown.List>
@@ -108,5 +72,21 @@ function ReviewDetailPage() {
     </>
   );
 }
+
+const validateTreeData = (treeData: { treeName: string; location: string } | null) => {
+  if (!treeData || (treeData && (!treeData.treeName || !treeData.location))) {
+    throw new HTTPError('올바르지 않은 접근입니다.', 404);
+  }
+
+  return treeData;
+};
+
+const validateReviewId = (reviewId: number | undefined) => {
+  if (!reviewId || Number.isNaN(reviewId)) {
+    throw new HTTPError('리뷰를 찾을 수 없습니다.', 404);
+  }
+
+  return reviewId;
+};
 
 export default ReviewDetailPage;

@@ -2,7 +2,7 @@ import ITreeListApiResponse from 'types/TreeListApiResponse';
 import { HTTPError } from 'error/HTTPError';
 import useApiQuery from 'hooks/useApiQuery';
 
-const useRegistedTree = () => {
+const useRegistedTrees = () => {
   const { data, isError } = useApiQuery<ITreeListApiResponse>('v1/my/trees/posted');
 
   if (isError) {
@@ -12,4 +12,4 @@ const useRegistedTree = () => {
   return data?.trees || [];
 };
 
-export default useRegistedTree;
+export default useRegistedTrees;

@@ -1,44 +1,69 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ProfileImageSetting from 'pages/LoginPage/ProfileSetting/components/ImageSetting';
-import { useNavigate } from 'react-router-dom';
 import getPath from 'utils/getPath';
+import InvalidAccessGuide from 'components/Guides/InvalidAccess';
+import convertImageFileToUrl from 'utils/imageUtils/convertImageFileToUrl';
 import Topbar from 'components/Topbar';
-import { useProfile } from './hooks';
-import ProfileSettingProvider from './provider';
-import { ICreateProfileAPIBody } from './types';
-import * as S from './style';
 import SubmitButton from './components/SubmitButton';
 import NicknameSetting from './components/NicknameSetting';
+import { useCreateProfile } from './hooks';
+import ProfileSettingProvider from './provider';
+import { IUserProfileAPIRequestBody, IUserProfileInputData } from './types';
+import * as S from './style';
 
 function ProfileSetting() {
+  const { state } = useLocation();
   const navigate = useNavigate();
-  const { create } = useProfile();
-  const methods = useForm<ICreateProfileAPIBody>({ mode: 'onChange' });
+  const create = useCreateProfile();
+  const methods = useForm<IUserProfileInputData>({ mode: 'onChange' });
   const { handleSubmit } = methods;
 
-  const createProfile = (data: Omit<ICreateProfileAPIBody, 'profileImageUrl'>) => {
-    create(
-      { ...data, profileImageUrl: 'http://s3.example.com/image1' },
-      {
-        onSuccess: () => navigate(getPath('mainPage', 'root')),
-      },
-    );
+  useEffect(() => {
+    if (state && !state.nicknameRequire) {
+      navigate(getPath('mainPage', 'root'));
+    }
+  }, [navigate, state]);
+
+  const createProfile = async (data: IUserProfileInputData) => {
+    const apiBody = await convertToProfileAPIFormat(data);
+
+    create(apiBody, {
+      onSuccess: () => navigate(getPath('mainPage', 'root')),
+    });
   };
 
-  return (
+  return state ? (
     <>
       <Topbar.Icon type="cookie" />
       <FormProvider {...methods}>
         <ProfileSettingProvider>
-          <S.Wrapper onSubmit={handleSubmit(createProfile)}>
+          <S.Form onSubmit={handleSubmit(createProfile)}>
             <ProfileImageSetting />
             <NicknameSetting />
             <SubmitButton />
-          </S.Wrapper>
+          </S.Form>
         </ProfileSettingProvider>
       </FormProvider>
     </>
+  ) : (
+    <InvalidAccessGuide />
   );
 }
+
+const convertToProfileAPIFormat = async (userProfileData: IUserProfileInputData) => {
+  const profileImageUrl =
+    userProfileData.profileImage instanceof File
+      ? await convertImageFileToUrl(userProfileData.profileImage)
+      : userProfileData.profileImage;
+
+  const convertedProfileData: IUserProfileAPIRequestBody = {
+    nickname: userProfileData.nickname,
+    profileImageUrl,
+  };
+
+  return convertedProfileData;
+};
 
 export default ProfileSetting;
