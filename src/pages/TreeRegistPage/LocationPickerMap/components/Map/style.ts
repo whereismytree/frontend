@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import marker from 'assets/tree_marker.svg';
-import { LOCATION_INFO_HEIGHT } from '../../style';
+import { LOCATION_INFO_HEIGHT } from '../AddressInfo/style';
 
 export const MapContainer = styled.div`
   position: relative;
