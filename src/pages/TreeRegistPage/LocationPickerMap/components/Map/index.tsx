@@ -15,6 +15,7 @@ function LocationPickerMap({
   const [latLng, setLatLng] = useState(initialLatLng);
   const { map } = useKakaoMap(mapContainer, (map) => {
     map.setZoomable(false);
+    map.setLevel(3);
 
     const moveMapCenterToLatlng = () => {
       const { lat, lng } = latLng;
