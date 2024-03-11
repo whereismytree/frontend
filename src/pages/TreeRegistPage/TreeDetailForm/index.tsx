@@ -32,14 +32,14 @@ function TreeRegiDetail() {
   const { state } = useLocation();
   const addressData = validateAddress(state);
   const { regist } = useRegistTree();
-  const { address, addressType, location, latLng } = addressData;
+  const { address, addressType, buildingName, latLng } = addressData;
 
   const registTree = (data: FieldValues) => {
     const unrefinedBody = {
       ...data,
       ...latLng,
       // roadAddress 혹은 streetAddress 옵션이 주소의 타입에 맞게 존재
-      [`${toCamelCase(addressType, 'address')}`]: `${address} ${location}`,
+      [`${toCamelCase(addressType, 'address')}`]: `${address} ${buildingName}`,
       addressType,
     } as UnrefinedTreeRegistApiBody;
     const serverExpectBodyData = convertApiBody(unrefinedBody);
@@ -60,7 +60,7 @@ function TreeRegiDetail() {
           <S.Form onSubmit={handleSubmit(registTree)}>
             <S.FormTitle>트리 위치</S.FormTitle>
             <S.FormSection>
-              <TreeLocation location={location} address={address} addressType={addressType} />
+              <TreeLocation location={buildingName} address={address} addressType={addressType} />
               <DetailAddressInput />
             </S.FormSection>
             <S.FormTitle>트리 정보</S.FormTitle>
@@ -121,9 +121,9 @@ const validateAddress = (addressData: Partial<TAddress>): TAddress => {
 
   const isUpperCase = (str: string) => str.toUpperCase() === str;
 
-  const { address, addressType, latLng, location } = addressData;
+  const { address, addressType, latLng, buildingName } = addressData;
 
-  if (!address || !addressType || !latLng || typeof location === 'undefined') {
+  if (!address || !addressType || !latLng || typeof buildingName === 'undefined') {
     throw new Error(`올바른 주소 데이터를 전달해주세요.`);
   }
 
@@ -131,7 +131,7 @@ const validateAddress = (addressData: Partial<TAddress>): TAddress => {
     throw new Error('주소의 타입(addressType)은 영대문자로 전달해주세요.');
   }
 
-  return { address, addressType, latLng, location };
+  return { address, addressType, latLng, buildingName };
 };
 
 const removeFalsyValues = <T extends object>(obj: T): Pick<T, NonFalsy<T>> => {
