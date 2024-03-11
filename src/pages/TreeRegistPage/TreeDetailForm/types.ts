@@ -1,13 +1,11 @@
 import ADDRESS_TYPES from 'constants/addressTypes';
+import latLng from 'types/latLng';
 
 export type TAddress = {
   address: string;
-  location: string;
   addressType: keyof typeof ADDRESS_TYPES;
-  latLng: {
-    lat: number;
-    lng: number;
-  };
+  buildingName: string;
+  latLng: latLng;
 };
 
 type AddressType = keyof typeof ADDRESS_TYPES;

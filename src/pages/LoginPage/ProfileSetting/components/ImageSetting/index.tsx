@@ -1,12 +1,20 @@
+import { useEffect, useRef, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import ProfileImage from 'components/common/ProfileImage';
-import defaultProfile from 'assets/random_profile_1.png';
-import { useRef, useState } from 'react';
+import usePreviewImage from 'hooks/usePreviewImage';
 import * as S from './style';
 
 function ProfileImageSetting() {
-  // TODO: 이미지 미리보기 기능까지만 구현되어 있으니, 백엔드에서 이미지 업로드 구현 완료되면 이미지 URL을 서버로 넘길 수 있도록 코드 수정 필요합니다.
+  const { setValue } = useFormContext();
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const previewImage = usePreviewImage(imageFile);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
-  const [imageSrc, setImageSrc] = useState(defaultProfile);
+  const randomProfileImageURL = useRef(generateRandomProfileImageURL());
+
+  // 초기 로딩시 사용자의 프로필 이미지를 임의의 랜덤한 프로필 이미지로 설정합니다.
+  useEffect(() => {
+    setValue('profileImage', randomProfileImageURL.current);
+  }, []);
 
   const handleImageClick = () => {
     if (imageInputRef.current) {
@@ -16,13 +24,7 @@ function ProfileImageSetting() {
 
   const handleImageChange = (input: EventTarget & HTMLInputElement) => {
     if (input.files && input.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target) {
-          setImageSrc(e.target.result as string);
-        }
-      };
-      reader.readAsDataURL(input.files[0]);
+      setImageFile(input.files[0]);
     }
   };
 
@@ -39,12 +41,24 @@ function ProfileImageSetting() {
         }}
       />
       <ProfileImage
-        src={imageSrc}
+        src={previewImage || randomProfileImageURL.current}
         style={{ WebkitUserSelect: 'none', cursor: 'pointer' }}
         onClick={handleImageClick}
       />
     </>
   );
 }
+
+const generateRandomProfileImageURL = () => {
+  const randomProfileImages = [
+    'https://jypbasebucket.s3.ap-northeast-2.amazonaws.com/images/20240309171943.blob',
+    'https://jypbasebucket.s3.ap-northeast-2.amazonaws.com/images/20240309172017.blob',
+    'https://jypbasebucket.s3.ap-northeast-2.amazonaws.com/images/20240309172047.blob',
+    'https://jypbasebucket.s3.ap-northeast-2.amazonaws.com/images/20240309172101.blob',
+    'https://jypbasebucket.s3.ap-northeast-2.amazonaws.com/images/20240309172110.blob',
+  ];
+
+  return randomProfileImages[Math.floor(Math.random() * randomProfileImages.length)];
+};
 
 export default ProfileImageSetting;
