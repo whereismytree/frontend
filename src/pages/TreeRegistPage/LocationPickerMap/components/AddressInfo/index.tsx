@@ -13,6 +13,9 @@ function AddressInfo({ latLng }: { latLng: latLng }) {
   const [addressType, setAddressType] = useState<keyof typeof addressDatas>('address');
   const anotherAddressType = addressType === 'address' ? 'roadAddress' : 'address';
   const korAddressType = korAddressTypes[addressType];
+  const address = `${addressDatas[addressType]?.address_name} ${
+    addressDatas.roadAddress?.building_name || ''
+  }`;
 
   const changeAddressType = () => {
     setAddressType((prev) => (prev === 'address' ? 'roadAddress' : 'address'));
@@ -32,7 +35,9 @@ function AddressInfo({ latLng }: { latLng: latLng }) {
   return (
     <S.AddressInfo>
       <S.Address>
-        {addressDatas[addressType]?.address_name || `${korAddressType}이 존재하지 않습니다.`}
+        {addressDatas[addressType]?.address_name
+          ? address
+          : `${korAddressType}이 존재하지 않습니다.`}
       </S.Address>
       <S.AddressTypeButton onClick={changeAddressType}>
         {korAddressTypes[anotherAddressType]}으로 보기
