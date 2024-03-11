@@ -4,10 +4,7 @@ import Navbar from 'components/Navbar';
 import Topbar from 'components/Topbar';
 import isEmptyObject from 'utils/isEmptyObject';
 import LocationPickerMap from './components/Map';
-import TreeRegistMapProvider from './provider';
 import AddressInfo from './components/AddressInfo';
-import SubmitButton from './components/SubmitButton';
-import * as S from './style';
 
 function RegistMap() {
   const { state } = useLocation();
@@ -16,13 +13,9 @@ function RegistMap() {
   return (
     <>
       <Topbar.Icon type="candy" />
-      <TreeRegistMapProvider>
-        <LocationPickerMap initialLatLng={latLng} />
-        <S.AddressInfo>
-          <AddressInfo />
-          <SubmitButton />
-        </S.AddressInfo>
-      </TreeRegistMapProvider>
+      <LocationPickerMap initialLatLng={latLng}>
+        {(latLng) => <AddressInfo latLng={latLng} />}
+      </LocationPickerMap>
       <Navbar />
     </>
   );

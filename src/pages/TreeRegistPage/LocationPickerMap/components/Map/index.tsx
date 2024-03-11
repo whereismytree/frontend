@@ -1,73 +1,50 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import MyLocationButton from 'components/common/MyLocationButton';
-import useKakaoMapWithAddress from 'hooks/useKakaoMapWithAddress';
-import { useTreeRegistMapContext } from '../../provider';
+import useKakaoMap from 'hooks/useKakaoMap';
+import latLng from 'types/latLng';
 import * as S from './style';
 
-function LocationPickerMap({ initialLatLng }: { initialLatLng: { lat: number; lng: number } }) {
+function LocationPickerMap({
+  initialLatLng,
+  children,
+}: {
+  initialLatLng: latLng;
+  children: (latLng: latLng) => JSX.Element;
+}) {
   const mapContainer = useRef(null);
-  const { map, address } = useKakaoMapWithAddress(mapContainer);
-  const { road: roadAddress, street: streetAddress, location } = address;
-  const { setAddress } = useTreeRegistMapContext();
-
-  const prohibitMapZoom = useCallback(() => {
+  const [latLng, setLatLng] = useState(initialLatLng);
+  const { map } = useKakaoMap(mapContainer, (map) => {
     map.setZoomable(false);
-  }, [map]);
+    map.setLevel(3);
 
-  const moveMapCenterToLatlng = useCallback(
-    (moveLatLng: typeof initialLatLng) => {
-      const { lat, lng } = moveLatLng;
+    const moveMapCenterToLatlng = () => {
+      const { lat, lng } = latLng;
       const moveLatLon = new window.kakao.maps.LatLng(lat, lng);
       map.setCenter(moveLatLon);
-    },
-    [map],
-  );
+    };
 
-  const updateAddress = useCallback(
-    (map: any) => {
-      const center = map.getCenter();
+    const updateLatLng = () => {
+      window.kakao.maps.event.addListener(map, 'idle', () => {
+        const mapCenter = map.getCenter();
+        setLatLng({ lat: mapCenter.getLat(), lng: mapCenter.getLng() });
+      });
+    };
 
-      const address = {
-        latLng: {
-          lat: center.getLat(),
-          lng: center.getLng(),
-        },
-        street: streetAddress,
-        road: roadAddress || '',
-        location: location || '',
-      };
-
-      setAddress(address);
-    },
-    [location, setAddress, streetAddress, roadAddress],
-  );
-
-  useEffect(() => {
-    const isEmpty = (object: object) => Object.keys(object).length === 0;
-
-    if (map) {
-      prohibitMapZoom();
-
-      if (!isEmpty(initialLatLng)) {
-        moveMapCenterToLatlng(initialLatLng);
-      }
-    }
-  }, [map, initialLatLng, moveMapCenterToLatlng, prohibitMapZoom]);
-
-  useEffect(() => {
-    if (map) {
-      updateAddress(map);
-    }
-  }, [map, updateAddress, roadAddress, streetAddress, location]);
+    moveMapCenterToLatlng();
+    updateLatLng();
+  });
 
   return (
-    <S.MapContainer ref={mapContainer}>
-      <S.Overlay>
-        <S.ToolTip>지도를 움직여 트리를 심어주세요</S.ToolTip>
-      </S.Overlay>
-      <MyLocationButton map={map} />
-    </S.MapContainer>
+    <>
+      <S.MapContainer ref={mapContainer}>
+        <S.Overlay>
+          <S.ToolTip>지도를 움직여 트리를 심어주세요</S.ToolTip>
+        </S.Overlay>
+        <MyLocationButton map={map} />
+      </S.MapContainer>
+      {children(latLng)}
+    </>
   );
 }
 
-export default React.memo(LocationPickerMap);
+export default LocationPickerMap;
