@@ -39,7 +39,7 @@ function TreeRegiDetail() {
       ...data,
       ...latLng,
       // roadAddress 혹은 streetAddress 옵션이 주소의 타입에 맞게 존재
-      [`${toCamelCase(addressType, 'address')}`]: `${address} ${buildingName}`,
+      [`${toCamelCase(addressType, 'address')}`]: `${address} ${buildingName}`.trim(),
       addressType,
     } as UnrefinedTreeRegistApiBody;
     const serverExpectBodyData = convertApiBody(unrefinedBody);
