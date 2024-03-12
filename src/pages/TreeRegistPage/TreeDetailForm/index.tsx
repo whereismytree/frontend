@@ -11,9 +11,9 @@ import TreeNameInput from './components/TreeNameInput';
 import TreeLocation from './components/TreeLocation';
 import DetailAddressInput from './components/DetailAddressInput';
 import ExtraInput from './components/ExtraInput';
-import BusinessDaysSelect from './components/BusinessDaysSelect';
-import SpaceTypeSelect from './components/SpaceTypeSelect';
-import PetAllowSelect from './components/PetAllowSelect';
+import BusinessDaysChoice from './components/BusinessDaysChoice';
+import SpaceTypeChoice from './components/SpaceTypeChoice';
+import PetAllowChoice from './components/PetAllowChoice';
 import ExhibitionDateCalendar from './components/ExhibitionDateCalendar';
 import { useRegistTree } from './hooks';
 import {
@@ -67,9 +67,9 @@ function TreeRegiDetail() {
             <S.FormSection>
               <TreeNameInput />
               <ExhibitionDateCalendar />
-              <SpaceTypeSelect />
-              <BusinessDaysSelect />
-              <PetAllowSelect />
+              <SpaceTypeChoice />
+              <BusinessDaysChoice />
+              <PetAllowChoice />
               <ExtraInput />
               <Button type="submit">트리 등록하기</Button>
             </S.FormSection>

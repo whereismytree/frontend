@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import Select from '../common/Select';
+import Choice from '../common/Choice';
 import Label from '../common/Label';
 
-function SpaceTypeSelect() {
+function SpaceTypeChoice() {
   const formKey = 'spaceType';
   const { setValue } = useFormContext();
 
@@ -11,21 +11,18 @@ function SpaceTypeSelect() {
     setValue(formKey, null);
   }, [setValue]);
 
-  const handleSelectChange = (changeValue: string | null) => {
+  const handleChoiceChange = (changeValue: string | null) => {
     setValue(formKey, changeValue);
   };
 
   return (
     <>
       <Label optional>트리 공간</Label>
-      <Select
-        options={[
-          { text: '야외', value: 'OUTDOOR' },
-          { text: '실내', value: 'INDOOR' },
-        ]}
-        onSelectChange={handleSelectChange}
-      />
+      <Choice onChoiceChange={handleChoiceChange}>
+        <Choice.Option value="OUTDOOR">야외</Choice.Option>
+        <Choice.Option value="INDOOR">실내</Choice.Option>
+      </Choice>
     </>
   );
 }
-export default SpaceTypeSelect;
+export default SpaceTypeChoice;
