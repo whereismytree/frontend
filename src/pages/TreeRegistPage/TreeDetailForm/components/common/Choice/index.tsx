@@ -1,27 +1,27 @@
 import React, { useState, forwardRef, useId, useEffect } from 'react';
-import { Option, SelectedValue } from './types';
+import { Option, ChoicedValue } from './types';
 import * as S from './style';
 
-const Select = forwardRef<
+const Choice = forwardRef<
   HTMLInputElement,
   {
     options: Option[];
-    onSelectChange?: (selected: SelectedValue) => void;
+    onChoiceChange?: (selected: ChoicedValue) => void;
   } & React.HTMLAttributes<HTMLInputElement>
->(({ options, onSelectChange, ...rest }, ref) => {
-  const [selected, setSelected] = useState<SelectedValue>(null);
+>(({ options, onChoiceChange, ...rest }, ref) => {
+  const [choiced, setChoiced] = useState<ChoicedValue>(null);
   const id = useId();
 
   const handleClick = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     const { value } = e.target as HTMLInputElement;
-    setSelected((prev) => (prev === value ? null : value));
+    setChoiced((prev) => (prev === value ? null : value));
   };
 
   useEffect(() => {
-    if (onSelectChange) {
-      onSelectChange(selected);
+    if (onChoiceChange) {
+      onChoiceChange(choiced);
     }
-  }, [selected, onSelectChange]);
+  }, [choiced, onChoiceChange]);
 
   return (
     <S.ButtonWrapper>
@@ -33,7 +33,7 @@ const Select = forwardRef<
             id={`${id}${text}`}
             value={value}
             ref={ref}
-            checked={selected === value}
+            checked={choiced === value}
             onChange={() => {}}
             onClick={handleClick}
           />
@@ -44,4 +44,4 @@ const Select = forwardRef<
   );
 });
 
-export default Select;
+export default Choice;

@@ -1,23 +1,23 @@
-import React, { useState, ForwardRefRenderFunction, useEffect, useId } from 'react';
-import * as S from '../Select/style';
-import { MultiSelectProps } from './types';
+import React, { useState, useEffect, useId } from 'react';
+import * as S from '../Choice/style';
+import { MultiChoiceProps } from './types';
 
-const MultiSelect: ForwardRefRenderFunction<
+const MultiChoice = React.forwardRef<
   HTMLInputElement,
-  MultiSelectProps & React.HTMLAttributes<HTMLInputElement>
-> = ({ options, onSelectChange = () => {}, ...rest }, ref) => {
-  const [selected, setSelected] = useState<string[]>([]);
+  MultiChoiceProps & React.HTMLAttributes<HTMLInputElement>
+>(({ options, onChoiceChange = () => {}, ...rest }, ref) => {
+  const [choiced, setChoiced] = useState<string[]>([]);
   const [event, setEvent] = useState<React.ChangeEvent<HTMLInputElement> | null>(null);
   const id = useId();
 
   useEffect(() => {
     if (event && event.target) {
-      onSelectChange({ target: event.target, selected });
+      onChoiceChange({ target: event.target, choiced });
     }
-  }, [selected, event, onSelectChange]);
+  }, [choiced, event, onChoiceChange]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelected((prev) => {
+    setChoiced((prev) => {
       if (prev.includes(e.target.value)) {
         return prev.filter((value) => value !== e.target.value);
       }
@@ -47,6 +47,6 @@ const MultiSelect: ForwardRefRenderFunction<
       })}
     </S.ButtonWrapper>
   );
-};
+});
 
-export default React.forwardRef(MultiSelect);
+export default MultiChoice;

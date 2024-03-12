@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import MultiSelect from '../common/MultiSelect';
+import MultiChoice from '../common/MultiChoice';
 import Label from '../common/Label';
-import { SelectChangeEvent } from '../common/MultiSelect/types';
+import { ChoiceChangeEvent } from '../common/MultiChoice/types';
 
-function BusinessDaysSelect() {
+function BusinessDaysChoice() {
   const formKey = 'businessDays';
   const { setValue } = useFormContext();
   const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -13,17 +13,17 @@ function BusinessDaysSelect() {
     setValue(formKey, []);
   }, [setValue]);
 
-  const handleSelectChange = (e: SelectChangeEvent) => {
+  const handleChoiceChange = (e: ChoiceChangeEvent) => {
     setValue(
       formKey,
-      e.selected.sort((a, b) => Number(a) - Number(b)).map((value) => days[Number(value)]),
+      e.choiced.sort((a, b) => Number(a) - Number(b)).map((value) => days[Number(value)]),
     );
   };
 
   return (
     <>
       <Label optional>영업일</Label>
-      <MultiSelect
+      <MultiChoice
         options={[
           { text: '일', value: '0' },
           { text: '월', value: '1' },
@@ -33,10 +33,10 @@ function BusinessDaysSelect() {
           { text: '금', value: '5' },
           { text: '토', value: '6' },
         ]}
-        onSelectChange={handleSelectChange}
+        onChoiceChange={handleChoiceChange}
       />
     </>
   );
 }
 
-export default BusinessDaysSelect;
+export default BusinessDaysChoice;

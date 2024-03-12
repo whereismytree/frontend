@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import Label from '../common/Label';
-import Select from '../common/Select';
+import Choice from '../common/Choice';
 
-function PetAllowSelect() {
+function PetAllowChoice() {
   const formKey = 'isPet';
   const { setValue } = useFormContext();
 
@@ -11,22 +11,22 @@ function PetAllowSelect() {
     setValue(formKey, null);
   }, [setValue]);
 
-  const handleSelectChange = (value: string | null) => {
+  const handleChoiceChange = (value: string | null) => {
     setValue(formKey, value);
   };
 
   return (
     <>
       <Label optional>반려동물 동반</Label>
-      <Select
+      <Choice
         options={[
           { text: '동반 가능', value: 'true' },
           { text: '동반 불가', value: 'false' },
         ]}
-        onSelectChange={handleSelectChange}
+        onChoiceChange={handleChoiceChange}
       />
     </>
   );
 }
 
-export default PetAllowSelect;
+export default PetAllowChoice;
