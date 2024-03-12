@@ -1,47 +1,55 @@
-import React, { useState, forwardRef, useId, useEffect } from 'react';
+import React, { useState, useId, useEffect, ReactNode } from 'react';
 import { Option, ChoicedValue } from './types';
 import * as S from './style';
+import ChoiceProvider, { useChoiceContext } from './provider';
 
-const Choice = forwardRef<
-  HTMLInputElement,
-  {
-    options: Option[];
-    onChoiceChange?: (selected: ChoicedValue) => void;
-  } & React.HTMLAttributes<HTMLInputElement>
->(({ options, onChoiceChange, ...rest }, ref) => {
-  const [choiced, setChoiced] = useState<ChoicedValue>(null);
+const ChoiceOption = ({ children, value, choiced }: Option) => {
+  const { choicedOption, setChoicedOption } = useChoiceContext();
   const id = useId();
 
   const handleClick = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     const { value } = e.target as HTMLInputElement;
-    setChoiced((prev) => (prev === value ? null : value));
+    setChoicedOption((prev) => (prev === value ? null : value));
   };
+
+  return (
+    <>
+      <S.ButtonInput
+        type="radio"
+        id={`${id}${children}`}
+        value={value}
+        checked={choiced || choicedOption === value}
+        onChange={() => {}}
+        onClick={handleClick}
+      />
+      <S.ButtonLabel htmlFor={`${id}${children}`}>{children}</S.ButtonLabel>
+    </>
+  );
+};
+
+const Choice = ({
+  onChoiceChange,
+  children,
+}: {
+  onChoiceChange: (choiced: ChoicedValue) => void;
+  children: ReactNode;
+}) => {
+  const [choicedOption, setChoicedOption] = useState<ChoicedValue>(null);
+  const value = React.useMemo(() => ({ choicedOption, setChoicedOption }), [choicedOption]);
 
   useEffect(() => {
     if (onChoiceChange) {
-      onChoiceChange(choiced);
+      onChoiceChange(choicedOption);
     }
-  }, [choiced, onChoiceChange]);
+  }, [choicedOption, onChoiceChange]);
 
   return (
     <S.ButtonWrapper>
-      {options.map(({ text, value }) => (
-        <React.Fragment key={value}>
-          <S.ButtonInput
-            {...rest}
-            type="radio"
-            id={`${id}${text}`}
-            value={value}
-            ref={ref}
-            checked={choiced === value}
-            onChange={() => {}}
-            onClick={handleClick}
-          />
-          <S.ButtonLabel htmlFor={`${id}${text}`}>{text}</S.ButtonLabel>
-        </React.Fragment>
-      ))}
+      <ChoiceProvider value={value}>{children}</ChoiceProvider>
     </S.ButtonWrapper>
   );
-});
+};
+
+Choice.Option = ChoiceOption;
 
 export default Choice;

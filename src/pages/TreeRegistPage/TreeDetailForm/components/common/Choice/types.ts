@@ -1,5 +1,5 @@
 export type Option = {
-  text: string;
+  children: string;
   value: string;
   choiced?: boolean;
 };

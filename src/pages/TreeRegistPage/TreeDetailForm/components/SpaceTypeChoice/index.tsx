@@ -18,13 +18,10 @@ function SpaceTypeChoice() {
   return (
     <>
       <Label optional>트리 공간</Label>
-      <Choice
-        options={[
-          { text: '야외', value: 'OUTDOOR' },
-          { text: '실내', value: 'INDOOR' },
-        ]}
-        onChoiceChange={handleChoiceChange}
-      />
+      <Choice onChoiceChange={handleChoiceChange}>
+        <Choice.Option value="OUTDOOR">야외</Choice.Option>
+        <Choice.Option value="INDOOR">실내</Choice.Option>
+      </Choice>
     </>
   );
 }

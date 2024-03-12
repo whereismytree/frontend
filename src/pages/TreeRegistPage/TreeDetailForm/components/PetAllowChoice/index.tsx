@@ -18,13 +18,10 @@ function PetAllowChoice() {
   return (
     <>
       <Label optional>반려동물 동반</Label>
-      <Choice
-        options={[
-          { text: '동반 가능', value: 'true' },
-          { text: '동반 불가', value: 'false' },
-        ]}
-        onChoiceChange={handleChoiceChange}
-      />
+      <Choice onChoiceChange={handleChoiceChange}>
+        <Choice.Option value="true">동반 가능</Choice.Option>
+        <Choice.Option value="false">동반 불가</Choice.Option>
+      </Choice>
     </>
   );
 }
