@@ -4,7 +4,7 @@ import ReviewProfile from 'pages/ReviewDetailPage/components/Profile';
 import TreeItem from 'components/TreeItem';
 import ReviewContent from 'pages/ReviewDetailPage/components/Review';
 import parseTagCommentToID from 'utils/parseTagCommentToID';
-import KebabDropDown from 'pages/ReviewDetailPage/components/KebabDropDown';
+import KebabFlyout from 'pages/ReviewDetailPage/components/KebabFlyout';
 import useReview from 'hooks/useReview';
 import { HTTPError } from 'error/HTTPError';
 import getPath from 'utils/getPath';
@@ -59,13 +59,13 @@ function ReviewDetailPage() {
           canEdit={canEdit}
           canRemove={canRemove}
         >
-          <KebabDropDown>
-            <KebabDropDown.Toggle />
-            <KebabDropDown.List>
-              <KebabDropDown.Item onClick={handleEdit}>수정하기</KebabDropDown.Item>
-              <KebabDropDown.Item onClick={handleDelete}>삭제하기</KebabDropDown.Item>
-            </KebabDropDown.List>
-          </KebabDropDown>
+          <KebabFlyout>
+            <KebabFlyout.Toggle />
+            <KebabFlyout.List>
+              <KebabFlyout.Item onClick={handleEdit}>수정하기</KebabFlyout.Item>
+              <KebabFlyout.Item onClick={handleDelete}>삭제하기</KebabFlyout.Item>
+            </KebabFlyout.List>
+          </KebabFlyout>
         </ReviewProfile>
         <ReviewContent content={content} tags={parseTags} />
       </S.Main>
