@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.section`
   overflow: scroll;
-  height: calc(100vh - var(--header-height) - var(--navbar-height));
+  height: calc(100vh - var(--header-height));
 `;
 
 export const TreeInfo = styled.header`
@@ -12,9 +12,7 @@ export const TreeInfo = styled.header`
 `;
 
 export const Button = styled.div`
-  padding: 2.4rem;
+  padding: 2rem;
   background-color: #fff;
-  position: fixed;
-  bottom: 0;
   width: 42rem;
 `;

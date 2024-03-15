@@ -7,6 +7,10 @@ import useApiMutation from 'hooks/useApiMutation';
 import useApiQuery from 'hooks/useApiQuery';
 import { IGetReview } from 'types/apiResponse';
 import { HTTPError } from 'error/HTTPError';
+import convertImageFileToUrl from 'utils/imageUtils/convertImageFileToUrl';
+import useModal from 'hooks/useModal';
+import Modal from 'components/common/Modal';
+import { UseMutateFunction } from '@tanstack/react-query';
 import TagSelector from './components/TagSelector';
 import ReviewForm from './components/ReviewForm';
 import * as S from './style';
@@ -25,8 +29,9 @@ const ReviewRegistAndEditPage = () => {
   const id = Number(pathname.split('/')[3]);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const [tagIds, setTagIds] = useState<number[]>([]);
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File | null>(null);
   const navigate = useNavigate();
+  const { open, close, ref: modalRef } = useModal();
 
   const { data, isError, error } = useApiQuery<IGetReview>(
     `v1/reviews/${id}?reviewId=${id}`,
@@ -39,44 +44,62 @@ const ReviewRegistAndEditPage = () => {
 
   const { mutate: registMutate } = useApiMutation<{ reviewId: number }>('v1/reviews', 'POST', {
     onSuccess: (data) => console.log(data),
-    onError: (e) => console.error(e),
+    onError: (e, data) => {
+      console.error(e);
+      console.log(data);
+    },
   });
-
-  const handleReviewRegistButton = () => {
-    const data = {
-      treeId: id,
-      tagIds,
-      content: contentRef.current?.value,
-      imageUrl: 'http://s3.example.com/image1',
-    };
-
-    registMutate(data, {
-      onSuccess: (response) => {
-        console.log('### 리뷰 등록! ###');
-        navigate(`/review/${response.reviewId}`, {
-          state: { treeName, location },
-        });
-      },
-    });
-  };
 
   const { mutate: editMutate } = useApiMutation(`v1/reviews/${id}?reviewId=${id}`, 'PUT', {
     onSuccess: (data) => console.log(data),
     onError: (e) => console.error(e),
   });
 
-  const handleReviewEditButton = () => {
-    editMutate(
-      { tagIds, content: contentRef.current?.value, imageUrl: data?.reviewImageUrl },
-      {
-        onSuccess: () => {
-          console.log('### 리뷰 수정! ###');
-          navigate(`/review/${id}`, {
-            state: { treeName, location },
-          });
-        },
+  const convertAndSubmitReview = async (
+    actionType: 'regist' | 'edit',
+    submitAction: UseMutateFunction<any, any, any, any>,
+  ) => {
+    if (!tagIds.length || !contentRef.current?.value) {
+      open();
+      return;
+    }
+
+    let convertUrl = null;
+    if (selectedFiles) {
+      convertUrl = await convertImageFileToUrl(selectedFiles);
+    }
+
+    const reviewData: {
+      treeId?: number;
+      tagIds: number[];
+      content: string;
+      imageUrl?: string | null;
+    } = {
+      tagIds,
+      content: contentRef.current?.value,
+      imageUrl: convertUrl,
+    };
+
+    if (actionType === 'regist') {
+      reviewData.treeId = id;
+    }
+
+    submitAction(reviewData, {
+      onSuccess: (response) => {
+        console.log('### 리뷰 처리 성공! ###');
+        navigate(`/review/${response.reviewId || id}`, {
+          state: { treeName, location },
+        });
       },
-    );
+    });
+  };
+
+  const handleReviewRegistButton = async () => {
+    convertAndSubmitReview('regist', registMutate);
+  };
+
+  const handleReviewEditButton = async () => {
+    convertAndSubmitReview('edit', editMutate);
   };
 
   return (
@@ -93,14 +116,29 @@ const ReviewRegistAndEditPage = () => {
           setSelectedFiles={setSelectedFiles}
           data={data}
         />
+        <S.Button>
+          {type === 'regist' ? (
+            <Button onClick={handleReviewRegistButton}>후기 등록하기</Button>
+          ) : (
+            <Button onClick={handleReviewEditButton}>후기 수정하기</Button>
+          )}
+        </S.Button>
+        <Modal
+          ref={modalRef}
+          title="입력값 오류"
+          content={
+            <p>
+              코멘트 리뷰를 1개 이상 선택하고, <br />
+              소감을 1글자 이상 작성해주세요
+            </p>
+          }
+          footer={
+            <button type="button" onClick={close}>
+              닫기
+            </button>
+          }
+        />
       </S.Wrapper>
-      <S.Button>
-        {type === 'regist' ? (
-          <Button onClick={handleReviewRegistButton}>후기 등록하기</Button>
-        ) : (
-          <Button onClick={handleReviewEditButton}>후기 수정하기</Button>
-        )}
-      </S.Button>
     </>
   );
 };
