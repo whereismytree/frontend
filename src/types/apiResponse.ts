@@ -53,7 +53,7 @@ export interface IGetReview {
   nickname: string;
   profileImageUrl: string;
   createdAt: string;
-  reviewImageUrl: string;
+  reviewImageUrl: string | null;
   content: string;
   tags: string[];
   canEdit: boolean;
