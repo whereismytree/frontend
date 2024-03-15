@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import photoIcon from 'assets/photo-icon.svg';
 // import test from 'assets/treeinfo-default.svg';
 import { IGetReview } from 'types/apiResponse';
@@ -13,11 +13,18 @@ interface IReviewFormProp {
 }
 
 const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IReviewFormProp) => {
+  const [prevImage, setPrevImage] = useState<string | null>(null);
   const privewImage = usePreviewImage(selectedFiles);
 
   const [textLength, setTextLength] = useState<number>(
     contentRef.current ? contentRef.current.value.length : 0,
   );
+
+  useEffect(() => {
+    if (data) {
+      setPrevImage(data.reviewImageUrl);
+    }
+  }, [data]);
 
   const handleOnInput = () => {
     if (contentRef.current) {
@@ -40,7 +47,7 @@ const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IRevi
       <S.Title>리뷰를 남겨주세요</S.Title>
       {selectedFiles ? (
         <S.PhotoContainer>
-          <S.Photo src={privewImage} alt="ff" />
+          <S.Photo src={prevImage || privewImage} alt="ff" />
           <S.PhotoDeleteButton onClick={handleDeletePhoto} />
         </S.PhotoContainer>
       ) : (
@@ -63,9 +70,8 @@ const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IRevi
         onInput={handleOnInput}
         placeholder="트리를 구경한 소감이 어땠는지 알려주세요."
         maxLength={400}
-      >
-        {data && data.content}
-      </S.TextBox>
+        defaultValue={data && data.content}
+      />
       <S.TextLength>
         <strong>{textLength}</strong> / 400
       </S.TextLength>

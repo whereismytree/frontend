@@ -8,6 +8,8 @@ import useApiQuery from 'hooks/useApiQuery';
 import { IGetReview } from 'types/apiResponse';
 import { HTTPError } from 'error/HTTPError';
 import convertImageFileToUrl from 'utils/imageUtils/convertImageFileToUrl';
+import useModal from 'hooks/useModal';
+import Modal from 'components/common/Modal';
 import TagSelector from './components/TagSelector';
 import ReviewForm from './components/ReviewForm';
 import * as S from './style';
@@ -28,6 +30,7 @@ const ReviewRegistAndEditPage = () => {
   const [tagIds, setTagIds] = useState<number[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File | null>(null);
   const navigate = useNavigate();
+  const { open, close, ref: modalRef } = useModal();
 
   const { data, isError, error } = useApiQuery<IGetReview>(
     `v1/reviews/${id}?reviewId=${id}`,
@@ -47,9 +50,10 @@ const ReviewRegistAndEditPage = () => {
   });
 
   const handleReviewRegistButton = async () => {
-    let convertUrl = 'null';
+    if (!validateTagsLength()) return;
+
+    let convertUrl: string | null = null;
     if (selectedFiles) convertUrl = await convertImageFileToUrl(selectedFiles);
-    console.log(convertUrl);
     const data = {
       treeId: id,
       tagIds,
@@ -72,18 +76,33 @@ const ReviewRegistAndEditPage = () => {
     onError: (e) => console.error(e),
   });
 
-  const handleReviewEditButton = () => {
+  const handleReviewEditButton = async () => {
+    if (!validateTagsLength()) return;
+
+    let convertUrl: string | null = null;
+    if (selectedFiles) convertUrl = await convertImageFileToUrl(selectedFiles);
     editMutate(
-      { tagIds, content: contentRef.current?.value, imageUrl: data?.reviewImageUrl },
+      {
+        tagIds,
+        content: contentRef.current?.value,
+        imageUrl: convertUrl,
+      },
       {
         onSuccess: () => {
-          console.log('### 리뷰 수정! ###');
           navigate(`/review/${id}`, {
             state: { treeName, location },
           });
         },
       },
     );
+  };
+
+  const validateTagsLength = () => {
+    if (!tagIds.length) {
+      open();
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -107,6 +126,16 @@ const ReviewRegistAndEditPage = () => {
             <Button onClick={handleReviewEditButton}>후기 수정하기</Button>
           )}
         </S.Button>
+        <Modal
+          ref={modalRef}
+          title="입력값 오류"
+          content={<p>코멘트 리뷰를 1개 이상 선택해주세요!</p>}
+          footer={
+            <button type="button" onClick={close}>
+              닫기
+            </button>
+          }
+        />
       </S.Wrapper>
     </>
   );
