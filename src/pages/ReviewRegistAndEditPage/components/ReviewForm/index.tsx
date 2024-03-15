@@ -1,24 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import photoIcon from 'assets/photo-icon.svg';
 // import test from 'assets/treeinfo-default.svg';
 import { IGetReview } from 'types/apiResponse';
+import usePreviewImage from 'hooks/usePreviewImage';
 import * as S from './style';
 
 interface IReviewFormProp {
   contentRef: React.RefObject<HTMLTextAreaElement>;
-  selectedFiles: FileList | null;
-  setSelectedFiles: React.Dispatch<React.SetStateAction<FileList | null>>;
+  selectedFiles: File | null;
+  setSelectedFiles: React.Dispatch<React.SetStateAction<File | null>>;
   data: IGetReview | undefined;
 }
-const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IReviewFormProp) => {
-  useEffect(() => {
-    if (data) {
-      console.log(selectedFiles);
-      setReviewImgUrl(data.reviewImageUrl);
-    }
-  }, [data]);
 
-  const [reviewImgUrl, setReviewImgUrl] = useState<string | null>(null);
+const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IReviewFormProp) => {
+  const privewImage = usePreviewImage(selectedFiles);
 
   const [textLength, setTextLength] = useState<number>(
     contentRef.current ? contentRef.current.value.length : 0,
@@ -32,22 +27,20 @@ const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IRevi
 
   const handleDeletePhoto = () => {
     setSelectedFiles(null);
-    setReviewImgUrl(null);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    e.persist();
-    // TODO: img URL로 변환하는 작업 필요
-    setSelectedFiles(e.target.files);
+  const handleFileChange = (e: EventTarget & HTMLInputElement) => {
+    if (e.files && e.files[0]) {
+      setSelectedFiles(e.files[0]);
+    }
   };
 
   return (
     <S.Wrapper>
       <S.Title>리뷰를 남겨주세요</S.Title>
-      {reviewImgUrl ? (
+      {selectedFiles ? (
         <S.PhotoContainer>
-          <S.Photo src={reviewImgUrl} alt="ff" />
+          <S.Photo src={privewImage} alt="ff" />
           <S.PhotoDeleteButton onClick={handleDeletePhoto} />
         </S.PhotoContainer>
       ) : (
@@ -57,7 +50,7 @@ const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IRevi
             name="images"
             accept=".png, .jpg,image/*"
             id="photo-upload"
-            onChange={(e) => handleFileChange(e)}
+            onChange={(e) => handleFileChange(e.target)}
           />
           <S.PhotoButton htmlFor="photo-upload">
             <S.PhotoIcon src={photoIcon} alt="사진 추가하기" />

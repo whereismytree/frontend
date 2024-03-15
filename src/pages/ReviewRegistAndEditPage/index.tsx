@@ -7,6 +7,7 @@ import useApiMutation from 'hooks/useApiMutation';
 import useApiQuery from 'hooks/useApiQuery';
 import { IGetReview } from 'types/apiResponse';
 import { HTTPError } from 'error/HTTPError';
+import convertImageFileToUrl from 'utils/imageUtils/convertImageFileToUrl';
 import TagSelector from './components/TagSelector';
 import ReviewForm from './components/ReviewForm';
 import * as S from './style';
@@ -25,7 +26,7 @@ const ReviewRegistAndEditPage = () => {
   const id = Number(pathname.split('/')[3]);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const [tagIds, setTagIds] = useState<number[]>([]);
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File | null>(null);
   const navigate = useNavigate();
 
   const { data, isError, error } = useApiQuery<IGetReview>(
@@ -39,15 +40,21 @@ const ReviewRegistAndEditPage = () => {
 
   const { mutate: registMutate } = useApiMutation<{ reviewId: number }>('v1/reviews', 'POST', {
     onSuccess: (data) => console.log(data),
-    onError: (e) => console.error(e),
+    onError: (e, data) => {
+      console.error(e);
+      console.log(data);
+    },
   });
 
-  const handleReviewRegistButton = () => {
+  const handleReviewRegistButton = async () => {
+    let convertUrl = 'null';
+    if (selectedFiles) convertUrl = await convertImageFileToUrl(selectedFiles);
+    console.log(convertUrl);
     const data = {
       treeId: id,
       tagIds,
       content: contentRef.current?.value,
-      imageUrl: 'http://s3.example.com/image1',
+      imageUrl: convertUrl,
     };
 
     registMutate(data, {
@@ -93,14 +100,14 @@ const ReviewRegistAndEditPage = () => {
           setSelectedFiles={setSelectedFiles}
           data={data}
         />
+        <S.Button>
+          {type === 'regist' ? (
+            <Button onClick={handleReviewRegistButton}>후기 등록하기</Button>
+          ) : (
+            <Button onClick={handleReviewEditButton}>후기 수정하기</Button>
+          )}
+        </S.Button>
       </S.Wrapper>
-      <S.Button>
-        {type === 'regist' ? (
-          <Button onClick={handleReviewRegistButton}>후기 등록하기</Button>
-        ) : (
-          <Button onClick={handleReviewEditButton}>후기 수정하기</Button>
-        )}
-      </S.Button>
     </>
   );
 };
