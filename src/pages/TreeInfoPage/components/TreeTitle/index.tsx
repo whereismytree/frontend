@@ -20,7 +20,7 @@ const TreeTitle = ({ treeId }: IProps) => {
 
   return data ? (
     <S.Title>
-      <TreeLocationItem location={data.roadAddress} distance={138}>
+      <TreeLocationItem location={data.roadAddress || data.streetAddress} distance={138}>
         {data.name}
       </TreeLocationItem>
       <S.Btns>
