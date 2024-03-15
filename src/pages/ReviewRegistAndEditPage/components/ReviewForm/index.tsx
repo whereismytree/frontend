@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import photoIcon from 'assets/photo-icon.svg';
-// import test from 'assets/treeinfo-default.svg';
 import { IGetReview } from 'types/apiResponse';
 import usePreviewImage from 'hooks/usePreviewImage';
 import * as S from './style';
@@ -13,18 +12,21 @@ interface IReviewFormProp {
 }
 
 const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IReviewFormProp) => {
-  const [prevImage, setPrevImage] = useState<string | null>(null);
   const privewImage = usePreviewImage(selectedFiles);
-
+  const [showImage, setShowImage] = useState<string | undefined>(undefined);
   const [textLength, setTextLength] = useState<number>(
     contentRef.current ? contentRef.current.value.length : 0,
   );
 
   useEffect(() => {
-    if (data) {
-      setPrevImage(data.reviewImageUrl);
+    if (privewImage) {
+      setShowImage(privewImage);
+    } else if (data && data.reviewImageUrl) {
+      setShowImage(data.reviewImageUrl);
+    } else {
+      setShowImage(undefined);
     }
-  }, [data]);
+  }, [data, privewImage]);
 
   const handleOnInput = () => {
     if (contentRef.current) {
@@ -34,6 +36,7 @@ const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IRevi
 
   const handleDeletePhoto = () => {
     setSelectedFiles(null);
+    setShowImage(undefined);
   };
 
   const handleFileChange = (e: EventTarget & HTMLInputElement) => {
@@ -45,9 +48,9 @@ const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IRevi
   return (
     <S.Wrapper>
       <S.Title>리뷰를 남겨주세요</S.Title>
-      {selectedFiles ? (
+      {showImage ? (
         <S.PhotoContainer>
-          <S.Photo src={prevImage || privewImage} alt="ff" />
+          <S.Photo src={showImage} alt="ff" />
           <S.PhotoDeleteButton onClick={handleDeletePhoto} />
         </S.PhotoContainer>
       ) : (
