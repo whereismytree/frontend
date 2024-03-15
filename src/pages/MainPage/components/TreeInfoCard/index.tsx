@@ -40,7 +40,7 @@ const TreeInfoCard = ({ id }: IProps) => {
   return treeInfo ? (
     <S.Wrapper>
       <S.Title onClick={handleGoToTreeInfo}>
-        <TreeLocationItem location={treeInfo.roadAddress} distance={138}>
+        <TreeLocationItem location={treeInfo.roadAddress || treeInfo.streetAddress} distance={138}>
           {treeInfo.name}
         </TreeLocationItem>
       </S.Title>
