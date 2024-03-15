@@ -10,6 +10,7 @@ import { HTTPError } from 'error/HTTPError';
 import convertImageFileToUrl from 'utils/imageUtils/convertImageFileToUrl';
 import useModal from 'hooks/useModal';
 import Modal from 'components/common/Modal';
+import { UseMutateFunction } from '@tanstack/react-query';
 import TagSelector from './components/TagSelector';
 import ReviewForm from './components/ReviewForm';
 import * as S from './style';
@@ -49,60 +50,56 @@ const ReviewRegistAndEditPage = () => {
     },
   });
 
-  const handleReviewRegistButton = async () => {
-    if (!validateTagsLength()) return;
+  const { mutate: editMutate } = useApiMutation(`v1/reviews/${id}?reviewId=${id}`, 'PUT', {
+    onSuccess: (data) => console.log(data),
+    onError: (e) => console.error(e),
+  });
 
-    let convertUrl: string | null = null;
-    if (selectedFiles) convertUrl = await convertImageFileToUrl(selectedFiles);
-    const data = {
-      treeId: id,
+  const convertAndSubmitReview = async (
+    actionType: 'regist' | 'edit',
+    submitAction: UseMutateFunction<any, any, any, any>,
+  ) => {
+    if (!tagIds.length || !contentRef.current?.value) {
+      open();
+      return;
+    }
+
+    let convertUrl = null;
+    if (selectedFiles) {
+      convertUrl = await convertImageFileToUrl(selectedFiles);
+    }
+
+    const reviewData: {
+      treeId?: number;
+      tagIds: number[];
+      content: string;
+      imageUrl?: string | null;
+    } = {
       tagIds,
       content: contentRef.current?.value,
       imageUrl: convertUrl,
     };
 
-    registMutate(data, {
+    if (actionType === 'regist') {
+      reviewData.treeId = id;
+    }
+
+    submitAction(reviewData, {
       onSuccess: (response) => {
-        console.log('### 리뷰 등록! ###');
-        navigate(`/review/${response.reviewId}`, {
+        console.log('### 리뷰 처리 성공! ###');
+        navigate(`/review/${response.reviewId || id}`, {
           state: { treeName, location },
         });
       },
     });
   };
 
-  const { mutate: editMutate } = useApiMutation(`v1/reviews/${id}?reviewId=${id}`, 'PUT', {
-    onSuccess: (data) => console.log(data),
-    onError: (e) => console.error(e),
-  });
-
-  const handleReviewEditButton = async () => {
-    if (!validateTagsLength()) return;
-
-    let convertUrl: string | null = null;
-    if (selectedFiles) convertUrl = await convertImageFileToUrl(selectedFiles);
-    editMutate(
-      {
-        tagIds,
-        content: contentRef.current?.value,
-        imageUrl: convertUrl,
-      },
-      {
-        onSuccess: () => {
-          navigate(`/review/${id}`, {
-            state: { treeName, location },
-          });
-        },
-      },
-    );
+  const handleReviewRegistButton = async () => {
+    convertAndSubmitReview('regist', registMutate);
   };
 
-  const validateTagsLength = () => {
-    if (!tagIds.length) {
-      open();
-      return false;
-    }
-    return true;
+  const handleReviewEditButton = async () => {
+    convertAndSubmitReview('edit', editMutate);
   };
 
   return (
@@ -129,7 +126,12 @@ const ReviewRegistAndEditPage = () => {
         <Modal
           ref={modalRef}
           title="입력값 오류"
-          content={<p>코멘트 리뷰를 1개 이상 선택해주세요!</p>}
+          content={
+            <p>
+              코멘트 리뷰를 1개 이상 선택하고, <br />
+              소감을 1글자 이상 작성해주세요
+            </p>
+          }
           footer={
             <button type="button" onClick={close}>
               닫기
