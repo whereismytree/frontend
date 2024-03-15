@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface StyledProps {
-  isselected: boolean;
+  isselected: 'true' | undefined;
 }
 
 export const Wrapper = styled.button<StyledProps>`
