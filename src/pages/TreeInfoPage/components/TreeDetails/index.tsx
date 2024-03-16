@@ -38,7 +38,9 @@ const TreeDetails = ({ treeId }: IProps) => {
   let info;
   if (data) {
     info = [
-      data.spaceType && ['공간', data.spaceType === 'UNKNOWN' ? '실내' : '야외 '],
+      data.spaceType && data.spaceType === 'UNKNOWN'
+        ? null
+        : ['공간', data.spaceType === 'INDOOR' ? '실내' : '야외 '],
       data.businessDays && ['영업일', data.businessDays?.replace(/,/g, ', ')],
       data.exhibitionStartDate &&
         data.exhibitionEndDate && [
