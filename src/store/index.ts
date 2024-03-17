@@ -1,9 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import locationReducer from './modules/treeRegistLocationSlice';
 
-const rootReducer = combineReducers({
-  location: locationReducer,
-});
+const rootReducer = combineReducers({});
 
 const store = configureStore({
   reducer: rootReducer,

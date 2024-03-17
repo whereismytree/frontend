@@ -42,18 +42,9 @@ const ReviewRegistAndEditPage = () => {
     throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${error}`);
   }
 
-  const { mutate: registMutate } = useApiMutation<{ reviewId: number }>('v1/reviews', 'POST', {
-    onSuccess: (data) => console.log(data),
-    onError: (e, data) => {
-      console.error(e);
-      console.log(data);
-    },
-  });
+  const { mutate: registMutate } = useApiMutation<{ reviewId: number }>('v1/reviews', 'POST');
 
-  const { mutate: editMutate } = useApiMutation(`v1/reviews/${id}?reviewId=${id}`, 'PUT', {
-    onSuccess: (data) => console.log(data),
-    onError: (e) => console.error(e),
-  });
+  const { mutate: editMutate } = useApiMutation(`v1/reviews/${id}?reviewId=${id}`, 'PUT');
 
   const convertAndSubmitReview = async (
     actionType: 'regist' | 'edit',
@@ -86,7 +77,6 @@ const ReviewRegistAndEditPage = () => {
 
     submitAction(reviewData, {
       onSuccess: (response) => {
-        console.log('### 리뷰 처리 성공! ###');
         navigate(`/review/${response.reviewId || id}`, {
           state: { treeName, location },
         });

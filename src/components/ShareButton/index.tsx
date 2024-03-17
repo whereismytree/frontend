@@ -40,21 +40,18 @@ const ShareButton = ({ treeId, treeName }: IShareButtonProps) => {
   const handleCopyButton = () => {
     const url = `http://localhost:3000/tree/${treeId}`;
     navigator.clipboard.writeText(url).then(() => {
+      // eslint-disable-next-line no-alert
       alert('클립보드 복사 완료!');
     });
   };
 
   const handleKakaoShareButton = () => {
-    try {
-      window.Kakao.Share.sendCustom({
-        templateId: 103468,
-        templateArgs: {
-          tree: treeName,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    window.Kakao.Share.sendCustom({
+      templateId: 103468,
+      templateArgs: {
+        tree: treeName,
+      },
+    });
   };
 
   return (

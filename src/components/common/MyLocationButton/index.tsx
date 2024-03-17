@@ -16,7 +16,7 @@ export const MyLocationButton = ({ map }: { map: any }) => {
 
       map.setCenter(locPosition);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 

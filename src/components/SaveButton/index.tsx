@@ -16,22 +16,11 @@ const SaveButton = ({ treeId, isFavorite: initialIsFavorite }: ISaveButtonProps)
   const { mutate } = useApiMutation<{ treeId: number; isFavorite: boolean }>(
     'v1/favorites/trees',
     'POST',
-    {
-      onSuccess: (data) => console.log(data),
-      onError: (e) => console.error(e),
-    },
   );
 
   const handleSaveButton = () => {
     setIsFavorite((prev) => !prev);
-    mutate(
-      { treeId, isFavorite: !isFavorite },
-      {
-        onSuccess: () => {
-          console.log('저장 상태 변경!');
-        },
-      },
-    );
+    mutate({ treeId, isFavorite: !isFavorite });
   };
 
   return (
