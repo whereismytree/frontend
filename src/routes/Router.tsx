@@ -59,7 +59,7 @@ const Router = () => {
     path: PATH.treePage.root,
     element: <Outlet />,
     children: [
-      { path: PATH.treePage.children.dynamicParam, element: <TreeInfo /> },
+      { path: PATH.treePage.children.dynamicParam, element: AuthElement(<TreeInfo />) },
       {
         path: PATH.treePage.children.regist.root,
         element: AuthElement(<Outlet />),
