@@ -1,0 +1,72 @@
+{
+  "trees": [
+    {
+      "treeId": 1,
+      "name": "롯데백화점 본점",
+      "lat": 37.5647224,
+      "lng": 126.9816533,
+      "addressType": "야외",
+      "roadAddress": "서울 중구 남대문로 81",
+      "streetAddress": "서울 중구 소공동 1",
+      "detailAddress": "",
+      "exhibitionStartDate": "2023-12-01",
+      "exhibitionEndDate": "2024-01-31",
+      "spaceType": "백화점",
+      "businessDays": "[1,2,3,4,5,6,7]",
+      "isPet": true,
+      "title": "롯데백화점 본점",
+      "extraInfo": "건물 왼편에 대형 트리 있어요!"
+    },
+    {
+      "treeId": 2,
+      "name": "신세계백화점 본점",
+      "lat": 37.5609223,
+      "lng": 126.981138,
+      "addressType": "야외",
+      "roadAddress": "서울 중구 소공로 63 신세계백화점본점",
+      "streetAddress": "서울 중구 충무로1가 52-5",
+      "detailAddress": "",
+      "exhibitionStartDate": "2023-12-01",
+      "exhibitionEndDate": "2024-01-31",
+      "spaceType": "백화점",
+      "businessDays": "[1,2,3,4,5,6,7]",
+      "isPet": true,
+      "title": "신세계백화점 본점",
+      "extraInfo": "트리와 미디어 아트를 함께 즐길 수 있는 명동 핫플레이스"
+    },
+    {
+      "treeId": 3,
+      "name": "제니앤폴",
+      "lat": 37.6228808,
+      "lng": 126.9185208,
+      "addressType": "실내",
+      "roadAddress": "서울 은평구 통일로87길 17-23",
+      "streetAddress": "서울 은평구 갈현동 410-25",
+      "detailAddress": "1층",
+      "exhibitionStartDate": "2023-12-01",
+      "exhibitionEndDate": "2024-01-15",
+      "spaceType": "카페",
+      "businessDays": "1, 3, 4, 5, 6, 7",
+      "isPet": true,
+      "title": "제니앤폴",
+      "extraInfo": "카공하기 좋은 조용한 동네 카페"
+    },
+    {
+      "treeId": 4,
+      "name": "은평롯데몰",
+      "lat": 37.6374333,
+      "lng": 126.917884,
+      "addressType": "실내",
+      "roadAddress": "서울 은평구 통일로 1050",
+      "streetAddress": "서울 은평구 진관동 63",
+      "detailAddress": "1층",
+      "exhibitionStartDate": "2023-12-01",
+      "exhibitionEndDate": "2024-01-15",
+      "spaceType": "쇼핑몰",
+      "businessDays": "1, 2, 3, 4, 5, 6, 7",
+      "isPet": true,
+      "title": "은평롯데몰",
+      "extraInfo": ""
+    }
+  ]
+}
