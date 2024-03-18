@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IMapItem } from 'types/apiResponse';
 import defaultMarkerImg from 'assets/tree_marker_default.svg';
+import useUser from 'hooks/useUser';
 import focusTreeMarkerImg from 'assets/tree_marker_focus.svg';
 import useApiQuery from '../../hooks/useApiQuery';
 
@@ -11,6 +12,7 @@ const useFetchTreeData = (
 ) => {
   const [url, setUrl] = useState<string>('');
   const { data } = useApiQuery<{ trees: IMapItem[] }>(url);
+  const { isLogin } = useUser();
   let selectedMarker: any = null;
 
   const createMarker = (map: any, treeInfo: IMapItem) => {
@@ -62,6 +64,8 @@ const useFetchTreeData = (
       treeMarkers.forEach((tree: IMapItem) => {
         const marker = createMarker(map, tree);
         window.kakao.maps.event.addListener(marker, 'click', () => {
+          if (!isLogin) return;
+
           if (selectedMarker === marker) {
             // 현재 클릭한 마커와 선택했던 마커가 같은 경우
             setImageToMarker(marker, defaultMarkerImg);
