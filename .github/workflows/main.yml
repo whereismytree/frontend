@@ -1,8 +1,5 @@
 name: Build & Deploy React App
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -19,12 +16,14 @@ jobs:
           ref: main
       - name: 'Npm Install'
         run: npm install
-      - name: 'Npm Build'
-        run: npm run build
       - name: 'Create env file'
         run: |
           touch .env
-          echo REACT_APP_TREE_API_URL=${{ secrets.REACT_APP_TREE_API_URL }} >> .env
+          echo REACT_APP_TREE_API_URL=$REACT_APP_TREE_API_URL >> .env
+        env:
+          REACT_APP_TREE_API_URL: ${{ secrets.REACT_APP_TREE_API_URL }}
+      - name: 'Npm Build'
+        run: npm run build
       - name: 'Deploy to S3'
         uses: jakejarvis/s3-sync-action@master
         with:
