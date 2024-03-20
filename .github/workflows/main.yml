@@ -1,8 +1,9 @@
 name: Build & Deploy React App
 on:
-  push:
+  pull_request:
     branches:
-      - release/0.1.2-beta
+      - main
+    types: [closed]
 
 jobs:
   build:
