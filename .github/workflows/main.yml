@@ -20,8 +20,10 @@ jobs:
         run: |
           touch .env
           echo REACT_APP_TREE_API_URL=$REACT_APP_TREE_API_URL >> .env
+          echo REACT_APP_KAKAO_API_KEY=$REACT_APP_KAKAO_API_KEY >> .env
         env:
           REACT_APP_TREE_API_URL: ${{ secrets.REACT_APP_TREE_API_URL }}
+          REACT_APP_KAKAO_API_KEY: ${{ secrets.REACT_APP_KAKAO_API_KEY }}
       - name: 'Npm Build'
         run: npm run build
       - name: 'Deploy to S3'
