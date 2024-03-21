@@ -37,7 +37,9 @@ const useWithraw = (token: string) => {
   return withraw;
 };
 
-const useIsLogin = () => {
+export const useToken = () => sessionStorage.getItem(localStorageTokenKey);
+
+const useUser = () => {
   const [isLogin, setIsLogin] = useState(false);
   const { isError } = useApiQuery('v1/my');
   const token = useToken();
@@ -56,22 +58,16 @@ const useIsLogin = () => {
     }
   }, [isError]);
 
-  return isLogin;
-};
-
-export const useToken = () => sessionStorage.getItem(localStorageTokenKey);
-
-const useUser = () => {
-  const token = useToken();
-  const isLogin = useIsLogin();
   const withraw = useWithraw(token ?? '');
 
   const login = (accessToken: string) => {
     sessionStorage.setItem(localStorageTokenKey, accessToken);
+    setIsLogin(true);
   };
 
   const logout = () => {
     sessionStorage.removeItem(localStorageTokenKey);
+    setIsLogin(false);
   };
 
   return { login, logout, isLogin, withraw };
