@@ -52,9 +52,9 @@ const useUser = () => {
     }
 
     if (isError) {
-      if (token) {
-        throw new HTTPError('로그인 정보가 만료되었습니다.', 401);
-      }
+      // if (token) {
+      //   throw new HTTPError('로그인 정보가 만료되었습니다.', 401);
+      // }
 
       setIsLogin(false);
     }
