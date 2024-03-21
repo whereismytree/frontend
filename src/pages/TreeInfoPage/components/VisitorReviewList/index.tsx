@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import Tag from 'components/common/tag';
 import TAG, { TagId } from 'constants/tag';
@@ -5,6 +6,7 @@ import useApiQuery from 'hooks/useApiQuery';
 import { IReviewList, ITreeItem } from 'types/apiResponse';
 import { useNavigate } from 'react-router-dom';
 import { HTTPError } from 'error/HTTPError';
+import getPath from 'utils/getPath';
 import Profile from 'pages/ReviewDetailPage/components/Profile';
 import * as S from '../style';
 
@@ -27,8 +29,11 @@ const VisitorReviewList = ({ treeId, treeInfo }: IProps) => {
   };
 
   const handleReview = (reviewId: number) => {
-    navigate(`/review/${reviewId}`, {
-      state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
+    navigate(getPath('reviewPage', 'detail')(reviewId), {
+      state: {
+        treeName: treeInfo.name,
+        location: treeInfo.roadAddress || treeInfo.streetAddress,
+      },
     });
   };
 

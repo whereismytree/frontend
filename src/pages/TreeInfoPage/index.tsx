@@ -6,8 +6,7 @@ import VisitorPhotoList from 'pages/TreeInfoPage/components/VisitorPhotoList';
 import VisitorReviewList from 'pages/TreeInfoPage/components/VisitorReviewList';
 import Button from 'components/common/button';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ITreeItem } from 'types/apiResponse';
-import useApiQuery from 'hooks/useApiQuery';
+import { useTreeData } from 'hooks/treeHooks';
 import treeMarker from 'assets/tree-info-marker.svg';
 import * as S from './style';
 
@@ -16,7 +15,7 @@ export const TreeInfo = () => {
   const location = useLocation();
   const treeId = location.pathname.split('/')[2];
   const mapContainer = useRef<HTMLDivElement>(null);
-  const { data } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
+  const data = useTreeData(treeId);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [map, setMap] = useState<any>(null);
 
