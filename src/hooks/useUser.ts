@@ -1,6 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { HTTPError } from 'error/HTTPError';
+import useApiQuery from './useApiQuery';
+
+const localStorageTokenKey = 'token';
 
 const deleteUser = async (token: string) => {
   const res = await axios({
@@ -15,9 +18,7 @@ const deleteUser = async (token: string) => {
   return res;
 };
 
-const useUser = () => {
-  const localStorageKey = 'token';
-  const token = sessionStorage.getItem(localStorageKey);
+const useWithraw = (token: string) => {
   const { mutate } = useMutation({ mutationFn: deleteUser });
 
   const withraw = () => {
@@ -32,15 +33,35 @@ const useUser = () => {
     }
   };
 
+  return withraw;
+};
+
+const useIsLogin = () => {
+  const { isError } = useApiQuery('v1/my');
+
+  if (isError) {
+    return false;
+  }
+
+  return true;
+};
+
+export const useToken = () => sessionStorage.getItem(localStorageTokenKey);
+
+const useUser = () => {
+  const token = useToken();
+  const isLogin = useIsLogin();
+  const withraw = useWithraw(token ?? '');
+
   const login = (accessToken: string) => {
-    sessionStorage.setItem(localStorageKey, accessToken);
+    sessionStorage.setItem(localStorageTokenKey, accessToken);
   };
 
   const logout = () => {
-    sessionStorage.removeItem(localStorageKey);
+    sessionStorage.removeItem(localStorageTokenKey);
   };
 
-  return { token, login, logout, isLogin: !!token, withraw };
+  return { login, logout, isLogin, withraw };
 };
 
 export default useUser;

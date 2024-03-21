@@ -1,13 +1,13 @@
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { HTTPError } from 'error/HTTPError';
-import useUser from './useUser';
+import { useToken } from './useUser';
 
 const useApiQuery = <TData = unknown>(
   queryParam: string,
   enabled?: boolean,
 ): UseQueryResult<TData, Error> => {
-  const { token } = useUser();
+  const token = useToken();
 
   const fetchData = async () => {
     try {
