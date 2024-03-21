@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import useApiQuery from 'hooks/useApiQuery';
 import TreeLocationItem from 'components/TreeLocationItem';
 import { HTTPError } from 'error/HTTPError';
+import { useQueryClient } from '@tanstack/react-query';
 import * as S from './style';
 
 interface IProps {
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 const TreeInfoCard = ({ id }: IProps) => {
+  const queryClient = useQueryClient();
   const {
     data: treeInfo,
     isError: isInfoError,
@@ -37,6 +39,12 @@ const TreeInfoCard = ({ id }: IProps) => {
     navigate(`/tree/${id}`);
   };
 
+  const invalidateTreeInfoQuery = () => {
+    queryClient.invalidateQueries({
+      queryKey: [`v1/trees/${id}`],
+    });
+  };
+
   return treeInfo ? (
     <S.Wrapper>
       <S.Title onClick={handleGoToTreeInfo}>
@@ -45,7 +53,11 @@ const TreeInfoCard = ({ id }: IProps) => {
         </TreeLocationItem>
       </S.Title>
       <S.Btns>
-        <SaveButton treeId={id} isFavorite={treeInfo.isFavorite} />
+        <SaveButton
+          treeId={id}
+          isFavorite={treeInfo.isFavorite}
+          onSaved={invalidateTreeInfoQuery}
+        />
         <ShareButton treeId={treeInfo.treeId} treeName={treeInfo.name} />
       </S.Btns>
       <S.Images onClick={handleGoToTreeInfo}>
