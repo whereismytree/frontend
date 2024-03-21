@@ -22,7 +22,6 @@ export const Title = styled.h2`
 export const ButtonContainer = styled.div`
   padding: 2.4rem;
   background-color: #fff;
-  position: fixed;
+  position: sticky;
   bottom: 0;
-  width: 42rem;
 `;

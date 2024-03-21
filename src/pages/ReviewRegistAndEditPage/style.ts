@@ -14,5 +14,4 @@ export const TreeInfo = styled.header`
 export const Button = styled.div`
   padding: 2rem;
   background-color: #fff;
-  width: 42rem;
 `;
