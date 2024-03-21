@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import shareIcon from 'assets/share-icon.svg';
 import urlIcon from 'assets/url-icon.svg';
 import kakaoIcon from 'assets/kakao-icon.svg';
+import useSnackBar from 'hooks/useSnackBar';
 import * as S from './style';
 
 interface IModalIconProps {
@@ -26,6 +27,7 @@ const ModalIcon = ({ onClick, src, alt, text }: IModalIconProps) => {
 };
 
 const ShareButton = ({ treeId, treeName }: IShareButtonProps) => {
+  const { SnackBar, render } = useSnackBar();
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleShareButton = () => {
     setShowModal((prev) => !prev);
@@ -38,10 +40,9 @@ const ShareButton = ({ treeId, treeName }: IShareButtonProps) => {
   }, []);
 
   const handleCopyButton = () => {
-    const url = `http://localhost:3000/tree/${treeId}`;
-    navigator.clipboard.writeText(url).then(() => {
-      // eslint-disable-next-line no-alert
-      alert('클립보드 복사 완료!');
+    const domain = 'https://whereismytree.me';
+    navigator.clipboard.writeText(`${domain}/tree/${treeId}`).then(() => {
+      render(3);
     });
   };
 
@@ -56,6 +57,7 @@ const ShareButton = ({ treeId, treeName }: IShareButtonProps) => {
 
   return (
     <>
+      <SnackBar>링크가 복사되었습니다</SnackBar>
       <S.Wrapper onClick={handleShareButton}>
         <S.Img src={shareIcon} alt="공유" />
         <S.Text>공유</S.Text>
