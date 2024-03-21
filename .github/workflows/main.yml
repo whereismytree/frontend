@@ -16,7 +16,7 @@ jobs:
       - name: 'checkout branch'
         uses: actions/checkout@v1
         with:
-          ref: main
+          ref: ${{ github.head_ref }}
       - name: 'Npm Install'
         run: npm install
       - name: 'Create env file'
