@@ -1,14 +1,14 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { HTTPError } from 'error/HTTPError';
-import useUser from './useUser';
+import { useToken } from './useUser';
 
 const useApiMutation = <TData = unknown, TVariables = unknown>(
   url: string,
   method: 'POST' | 'PUT' | 'DELETE',
   options?: UseMutationOptions<TData, Error, TVariables, unknown>,
 ) => {
-  const { token } = useUser();
+  const token = useToken();
 
   const mutationFn = async (variables: TVariables): Promise<TData> => {
     try {
