@@ -12,7 +12,7 @@ function SignIn() {
       <S.Modal>
         <S.GuideText>
           어쩔트리와 추억을 공유하시려면
-          <br /> 로그인을 해주세요
+          <br /> 로그인을 해주세요.
         </S.GuideText>
         <S.LoginButtonWrapper>
           <S.LoginButton platform="google" href={googleLoginUrl}>
