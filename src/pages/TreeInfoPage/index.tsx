@@ -37,6 +37,7 @@ export const TreeInfo = () => {
           });
           setMap(map);
           map.setDraggable(false);
+          map.setZoomable(false);
         }
       });
     }
