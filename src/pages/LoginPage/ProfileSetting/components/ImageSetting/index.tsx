@@ -4,6 +4,8 @@ import ProfileImage from 'components/common/ProfileImage';
 import usePreviewImage from 'hooks/usePreviewImage';
 import * as S from './style';
 
+const PROFILE_IMG_FORM_KEY = 'profileImage';
+
 function ProfileImageSetting() {
   const { setValue } = useFormContext();
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -11,10 +13,14 @@ function ProfileImageSetting() {
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const randomProfileImageURL = useRef(generateRandomProfileImageURL());
 
-  // 초기 로딩시 사용자의 프로필 이미지를 임의의 랜덤한 프로필 이미지로 설정합니다.
   useEffect(() => {
-    setValue('profileImage', randomProfileImageURL.current);
-  }, []);
+    if (imageFile) {
+      setValue(PROFILE_IMG_FORM_KEY, imageFile);
+    } else {
+      // 초기 로딩시 사용자의 프로필 이미지를 임의의 랜덤한 프로필 이미지로 설정합니다.
+      setValue(PROFILE_IMG_FORM_KEY, randomProfileImageURL.current);
+    }
+  }, [imageFile]);
 
   const handleImageClick = () => {
     if (imageInputRef.current) {
