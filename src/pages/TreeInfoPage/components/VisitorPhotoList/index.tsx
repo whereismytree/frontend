@@ -21,7 +21,7 @@ const VisitorPhotoList = ({ treeId, treeInfo }: IProps) => {
 
   const handleReviewPhoto = (reviewId: number) => {
     navigate(`/review/${reviewId}`, {
-      state: { treeName: treeInfo.name, location: treeInfo.roadAddress },
+      state: { treeName: treeInfo.name, location: treeInfo.roadAddress || treeInfo.streetAddress },
     });
   };
 
