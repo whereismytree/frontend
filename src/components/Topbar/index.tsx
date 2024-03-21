@@ -1,16 +1,21 @@
 import React from 'react';
 import { topbarImg } from 'assets/images';
-import { useNavigate } from 'react-router-dom';
+import { NavigateProps, useNavigate } from 'react-router-dom';
 import * as S from './style';
 
-interface ITopbarProps {
+type ITopbarProps = {
+  navigate?: NavigateProps;
   children: React.ReactNode;
-}
+};
 
-const Topbar = ({ children }: ITopbarProps) => {
-  const navigate = useNavigate();
+const Topbar = ({ navigate, children }: ITopbarProps) => {
+  const navigator = useNavigate();
   const handleGoToBack = () => {
-    navigate(-1);
+    if (navigate) {
+      navigator(navigate.to, { state: navigate.state });
+    } else {
+      navigator(-1);
+    }
   };
 
   return (
@@ -21,13 +26,13 @@ const Topbar = ({ children }: ITopbarProps) => {
   );
 };
 
-interface IPageIconProps {
+type IPageIconProps = Pick<ITopbarProps, 'navigate'> & {
   type: 'tree' | 'candy' | 'star' | 'cookie';
-}
+};
 
-const CurrentPageIcon = ({ type }: IPageIconProps) => {
+const CurrentPageIcon = ({ navigate, type }: IPageIconProps) => {
   return (
-    <Topbar>
+    <Topbar navigate={navigate}>
       <S.Icon src={topbarImg[type]} alt={type} />
     </Topbar>
   );

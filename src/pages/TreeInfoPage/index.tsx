@@ -7,6 +7,7 @@ import VisitorReviewList from 'pages/TreeInfoPage/components/VisitorReviewList';
 import Button from 'components/common/button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTreeData } from 'hooks/treeHooks';
+import getPath from 'utils/getPath';
 import treeMarker from 'assets/tree-info-marker.svg';
 import * as S from './style';
 
@@ -55,7 +56,13 @@ export const TreeInfo = () => {
 
   return data ? (
     <>
-      <Topbar.Icon type="tree" />
+      <Topbar.Icon
+        type="tree"
+        navigate={{
+          to: getPath('mainPage', 'root'),
+          state: { lat: data.lat, lng: data.lng },
+        }}
+      />
       <h1 className="hidden">트리 상세 정보 페이지</h1>
       <S.InfoContainer>
         <S.Map ref={mapContainer}>로딩중</S.Map>
