@@ -5,7 +5,6 @@ export const ImageWrapper = styled.section`
   width: calc(100% + (${REVIEW_PAGE_SIDE_GAP} * 2));
   margin-left: -${REVIEW_PAGE_SIDE_GAP};
   height: 420px;
-  margin-top: 23px;
   position: relative;
   background-color: var(--grey-light);
   overflow: hidden;

@@ -7,12 +7,20 @@ import ResearchButton from 'pages/MainPage/components/ReSearchButton';
 import TreeInfoCard from 'pages/MainPage/components/TreeInfoCard';
 import Navbar from 'components/Navbar';
 import { IMapItem } from 'types/apiResponse';
+import { useLocation } from 'react-router-dom';
 import useFetchTreeData from 'pages/MainPage/hooks';
 import * as S from './style';
 
 export const MainPage = () => {
+  const { state } = useLocation();
   const mapContainer = useRef<HTMLDivElement>(null);
-  const { map } = useKakaoMap(mapContainer);
+  const { map } = useKakaoMap(mapContainer, (map) => {
+    if (state && state.lat && state.lng) {
+      const { lat, lng } = state;
+      const center = new window.kakao.maps.LatLng(lat, lng);
+      map.setCenter(center);
+    }
+  });
   const [showTreeInfo, setShowTreeInfo] = useState<boolean>(false);
   const [currentTreeInfoData, setTreeInfoData] = useState<IMapItem | null>(null);
   const redrawTree = useFetchTreeData(map, setTreeInfoData, setShowTreeInfo);

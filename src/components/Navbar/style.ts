@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.nav`
+  width: 100%;
   height: var(--navbar-height);
-  display: flex;
+  display: inline-flex;
   justify-content: space-around;
   align-items: center;
   padding: 0 1rem;
+  background-color: var(--main-white);
 `;
 
 export const Button = styled.button`

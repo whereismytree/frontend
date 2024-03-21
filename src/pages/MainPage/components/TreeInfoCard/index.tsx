@@ -58,7 +58,7 @@ const TreeInfoCard = ({ id }: IProps) => {
           isFavorite={treeInfo.isFavorite}
           onSaved={invalidateTreeInfoQuery}
         />
-        <ShareButton treeId={treeInfo.treeId} treeName={treeInfo.name} />
+        <ShareButton treeId={id} treeName={treeInfo.name} />
       </S.Btns>
       <S.Images onClick={handleGoToTreeInfo}>
         {reviewImages && reviewImages.images.length > 0 ? (

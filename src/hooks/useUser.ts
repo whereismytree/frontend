@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { HTTPError } from 'error/HTTPError';
@@ -36,29 +37,37 @@ const useWithraw = (token: string) => {
   return withraw;
 };
 
-const useIsLogin = () => {
-  const { isError } = useApiQuery('v1/my');
-
-  if (isError) {
-    return false;
-  }
-
-  return true;
-};
-
 export const useToken = () => sessionStorage.getItem(localStorageTokenKey);
 
 const useUser = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  const { isError } = useApiQuery('v1/my');
   const token = useToken();
-  const isLogin = useIsLogin();
+
+  useEffect(() => {
+    if (token && isError) {
+      throw new HTTPError('로그인 정보가 만료되었습니다.', 401);
+    }
+
+    if (isError) {
+      setIsLogin(false);
+    }
+
+    if (!isError) {
+      setIsLogin(true);
+    }
+  }, [isError]);
+
   const withraw = useWithraw(token ?? '');
 
   const login = (accessToken: string) => {
     sessionStorage.setItem(localStorageTokenKey, accessToken);
+    setIsLogin(true);
   };
 
   const logout = () => {
     sessionStorage.removeItem(localStorageTokenKey);
+    setIsLogin(false);
   };
 
   return { login, logout, isLogin, withraw };

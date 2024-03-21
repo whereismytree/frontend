@@ -8,8 +8,8 @@ import KebabFlyout from 'pages/ReviewDetailPage/components/KebabFlyout';
 import useReview from 'hooks/useReview';
 import { HTTPError } from 'error/HTTPError';
 import getPath from 'utils/getPath';
-import * as S from './style';
 import ReviewImage from './components/ReviewImage';
+import * as S from './style';
 
 function ReviewDetailPage() {
   const params = useParams();
@@ -51,23 +51,25 @@ function ReviewDetailPage() {
       <Topbar.Icon type="tree" />
       <S.Main>
         <TreeItem location={location}>{treeName}</TreeItem>
-        <ReviewImage src={reviewImageUrl} />
-        <ReviewProfile
-          nickname={nickname}
-          profileImageSrc={profileImageUrl}
-          createDate={createdAt}
-          canEdit={canEdit}
-          canRemove={canRemove}
-        >
-          <KebabFlyout>
-            <KebabFlyout.Toggle />
-            <KebabFlyout.List>
-              <KebabFlyout.Item onClick={handleEdit}>수정하기</KebabFlyout.Item>
-              <KebabFlyout.Item onClick={handleDelete}>삭제하기</KebabFlyout.Item>
-            </KebabFlyout.List>
-          </KebabFlyout>
-        </ReviewProfile>
-        <ReviewContent content={content} tags={parseTags} />
+        {reviewImageUrl && <ReviewImage src={reviewImageUrl} />}
+        <div>
+          <ReviewProfile
+            nickname={nickname}
+            profileImageSrc={profileImageUrl}
+            createDate={createdAt}
+            canEdit={canEdit}
+            canRemove={canRemove}
+          >
+            <KebabFlyout>
+              <KebabFlyout.Toggle />
+              <KebabFlyout.List>
+                <KebabFlyout.Item onClick={handleEdit}>수정하기</KebabFlyout.Item>
+                <KebabFlyout.Item onClick={handleDelete}>삭제하기</KebabFlyout.Item>
+              </KebabFlyout.List>
+            </KebabFlyout>
+          </ReviewProfile>
+          <ReviewContent content={content} tags={parseTags} />
+        </div>
       </S.Main>
     </>
   );
