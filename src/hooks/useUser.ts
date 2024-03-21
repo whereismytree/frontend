@@ -41,22 +41,24 @@ export const useToken = () => sessionStorage.getItem(localStorageTokenKey);
 
 const useUser = () => {
   const [isLogin, setIsLogin] = useState(false);
-  const { isError } = useApiQuery('v1/my');
+  const { isLoading, isError } = useApiQuery('v1/my');
   const token = useToken();
 
   useEffect(() => {
-    if (token && isError) {
-      throw new HTTPError('로그인 정보가 만료되었습니다.', 401);
-    }
-
-    if (isError) {
-      setIsLogin(false);
-    }
+    if (isLoading) return;
 
     if (!isError) {
       setIsLogin(true);
     }
-  }, [isError]);
+
+    if (isError) {
+      if (token) {
+        throw new HTTPError('로그인 정보가 만료되었습니다.', 401);
+      }
+
+      setIsLogin(false);
+    }
+  }, [isLoading, isError]);
 
   const withraw = useWithraw(token ?? '');
 
