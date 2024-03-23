@@ -9,10 +9,10 @@ interface IProps {
 }
 
 const TreeDetails = ({ treeId }: IProps) => {
-  const { data, isError, error } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
+  const { data, isError } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
 
   if (isError) {
-    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${error}`);
+    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다.`);
   }
 
   // 전시기간을 형식에 맞게 포맷팅하는 함수

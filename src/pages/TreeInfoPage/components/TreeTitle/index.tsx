@@ -2,9 +2,7 @@ import React from 'react';
 import TreeLocationItem from 'components/TreeLocationItem';
 import SaveButton from 'components/SaveButton';
 import ShareButton from 'components/ShareButton';
-import { ITreeItem } from 'types/apiResponse';
-import useApiQuery from 'hooks/useApiQuery';
-import { HTTPError } from 'error/HTTPError';
+import { useTreeData } from 'hooks/treeHooks';
 import * as S from '../style';
 
 interface IProps {
@@ -12,11 +10,7 @@ interface IProps {
 }
 
 const TreeTitle = ({ treeId }: IProps) => {
-  const { data, isError, error } = useApiQuery<ITreeItem>(`v1/trees/${treeId}`);
-
-  if (isError) {
-    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${error}`);
-  }
+  const data = useTreeData(String(treeId));
 
   return data ? (
     <S.Title>
