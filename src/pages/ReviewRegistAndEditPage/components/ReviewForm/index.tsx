@@ -28,6 +28,12 @@ const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IRevi
     }
   }, [data, privewImage]);
 
+  useEffect(() => {
+    if (data) {
+      setShowImage(data.reviewImageUrl ? data.reviewImageUrl : undefined);
+    }
+  }, []);
+
   const handleOnInput = () => {
     if (contentRef.current) {
       setTextLength(contentRef.current.value.length);
