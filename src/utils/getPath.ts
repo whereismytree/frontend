@@ -37,6 +37,8 @@ const PATH_DATABASE = {
     registedTrees: `/${PATH.myPage.root}/${PATH.myPage.children.registedTrees}`,
     registedReviews: `/${PATH.myPage.root}/${PATH.myPage.children.registedReviews}`,
   },
+
+  sessionExpired: `/${PATH.sessionExpired}`,
 };
 
 type PATH_DATABASE = typeof PATH_DATABASE;

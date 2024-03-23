@@ -13,7 +13,7 @@ const useApiMutation = <TData = unknown, TVariables = unknown>(
   const mutationFn = async (variables: TVariables): Promise<TData> => {
     try {
       const response: AxiosResponse<TData> = await axios({
-        url: `${process.env.REACT_APP_TREE_API_URL}${url}`,
+        url,
         method,
         headers: {
           'Content-Type': 'application/json',

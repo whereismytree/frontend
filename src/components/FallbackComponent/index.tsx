@@ -4,16 +4,11 @@ import Guide from 'components/common/Guide';
 import Topbar from 'components/Topbar';
 import { HTTPError } from 'error/HTTPError';
 import getPath from 'utils/getPath';
-import LoginExpiredGuide from 'components/Guides/LoginExpired';
 import * as S from './style';
 
 const FallbackComponent = ({ error, resetErrorBoundary }: FallbackProps) => {
   const navigate = useNavigate();
   if (error instanceof HTTPError) {
-    if (error.statusCode === 401) {
-      return <LoginExpiredGuide onClick={resetErrorBoundary} />;
-    }
-
     return (
       <>
         <Topbar>{null}</Topbar>

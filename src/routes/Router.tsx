@@ -19,6 +19,7 @@ import RegistReviewPage from 'pages/MyReviewPage';
 import ReviewRegistAndEditPage from 'pages/ReviewRegistAndEditPage';
 import useUser from 'hooks/useUser';
 import Unauthorized from 'components/Guides/Unauthorized';
+import SessionExpiredGuide from 'components/Guides/SessionExpired';
 
 const Router = () => {
   const { isLogin } = useUser();
@@ -106,6 +107,11 @@ const Router = () => {
     element: <ErrorPage />,
   };
 
+  const loginExpiredRoute: RouteObject = {
+    path: PATH.sessionExpired,
+    element: <SessionExpiredGuide />,
+  };
+
   const routes = [
     landingRoute,
     mainRoute,
@@ -115,6 +121,7 @@ const Router = () => {
     loginRedirectRoute,
     myRoute,
     NotFoundRoute,
+    loginExpiredRoute,
   ];
 
   return useRoutes(routes);
