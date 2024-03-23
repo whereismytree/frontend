@@ -45,12 +45,18 @@ export const Address = styled.p`
   }
 `;
 
-export const Images = styled.div`
+export const ImageContainer = styled.div`
   cursor: pointer;
   display: flex;
   gap: 0.5rem;
+  width: 100%;
+  height: 10.2rem;
+`;
+
+export const Image = styled.img`
   width: 11.2rem;
   height: 10.2rem;
+  object-fit: cover;
 `;
 
 export const Btns = styled.div`
