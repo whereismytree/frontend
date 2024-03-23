@@ -20,7 +20,7 @@ const VisitorReviewList = ({ treeId, treeInfo }: IProps) => {
   const navigate = useNavigate();
 
   if (isError) {
-    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${error}`);
+    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다.`);
   }
 
   const findTagId = (comment: string): TagId => {

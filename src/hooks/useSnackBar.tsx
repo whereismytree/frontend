@@ -29,7 +29,7 @@ const showAndSlideUp = keyframes`
 
 const SnackBarUI = styled.span<{ $view: boolean; $during: number }>`
   position: fixed;
-  top: var(--header-height);
+  top: -100%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;

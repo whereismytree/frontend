@@ -12,11 +12,11 @@ interface IProps {
 }
 
 const VisitorPhotoList = ({ treeId, treeInfo }: IProps) => {
-  const { data, isError, error } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${treeId}`);
+  const { data, isError } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${treeId}`);
   const navigate = useNavigate();
 
   if (isError) {
-    throw new HTTPError(`리뷰 정보를 불러오는데 오류가 발생했습니다. ${error}`);
+    throw new HTTPError(`리뷰 정보를 불러오는데 오류가 발생했습니다`);
   }
 
   const handleReviewPhoto = (reviewId: number) => {

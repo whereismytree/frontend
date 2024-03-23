@@ -9,13 +9,13 @@ import * as S from './style';
 
 export const SearchPage = () => {
   const [keyword, setKeyword] = useState<string>('');
-  const { data, isError, error } = useApiQuery<{ trees: IMainSearchResult[] }>(
+  const { data, isError } = useApiQuery<{ trees: IMainSearchResult[] }>(
     `v1/trees/list?query=${keyword}`,
     keyword !== '',
   );
 
   if (isError) {
-    throw new HTTPError(`검색 결과를 불러오는데 오류가 발생했습니다. ${error}`);
+    throw new HTTPError(`검색 결과를 불러오는데 오류가 발생했습니다.`);
   }
 
   const navigate = useNavigate();
