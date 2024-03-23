@@ -1,8 +1,5 @@
 name: Build & Deploy React App
 on:
-  push:
-    branches:
-      - hotfix/v0.1.3-beta
   pull_request:
     branches:
       - main
