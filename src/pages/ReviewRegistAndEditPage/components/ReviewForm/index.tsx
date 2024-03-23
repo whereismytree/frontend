@@ -56,7 +56,7 @@ const ReviewForm = ({ contentRef, selectedFiles, setSelectedFiles, data }: IRevi
       <S.Title>리뷰를 남겨주세요</S.Title>
       {showImage ? (
         <S.PhotoContainer>
-          <S.Photo src={showImage} alt="ff" />
+          <S.Photo src={showImage} alt="후기 이미지" />
           <S.PhotoDeleteButton onClick={handleDeletePhoto} />
         </S.PhotoContainer>
       ) : (

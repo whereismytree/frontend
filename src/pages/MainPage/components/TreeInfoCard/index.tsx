@@ -63,7 +63,7 @@ const TreeInfoCard = ({ id }: IProps) => {
       <S.ImageContainer onClick={handleGoToTreeInfo}>
         {reviewImages && reviewImages.images.length > 0 ? (
           reviewImages.images.slice(0, 3).map((e) => {
-            return <S.Image key={e.reviewId} style={{}} src={e.imageUrl} alt="트리 리뷰 이미지" />;
+            return <S.Image key={e.reviewId} src={e.imageUrl} alt="트리 리뷰 이미지" />;
           })
         ) : (
           <S.Image src={defaultImg} alt="트리 기본 이미지" />
