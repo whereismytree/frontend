@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { HTTPError } from 'error/HTTPError';
+import getPath from 'utils/getPath';
 import { useToken } from './useUser';
 
 const useApiQuery = <TData = unknown>(
@@ -8,6 +10,7 @@ const useApiQuery = <TData = unknown>(
   enabled?: boolean,
 ): UseQueryResult<TData, Error> => {
   const token = useToken();
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
@@ -23,6 +26,10 @@ const useApiQuery = <TData = unknown>(
 
       return response.data;
     } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 500) {
+        navigate(getPath('sessionExpired'));
+      }
+
       if (axios.isAxiosError(error) && error.response) {
         throw new HTTPError('axios 통신 중 오류가 발생했습니다.', error.response.status);
       }

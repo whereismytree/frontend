@@ -33,13 +33,13 @@ const ReviewRegistAndEditPage = () => {
   const navigate = useNavigate();
   const { open, close, ref: modalRef } = useModal();
 
-  const { data, isError, error } = useApiQuery<IGetReview>(
+  const { data, isError } = useApiQuery<IGetReview>(
     `v1/reviews/${id}?reviewId=${id}`,
     type === 'edit',
   );
 
   if (isError) {
-    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${error}`);
+    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다.`);
   }
 
   const { mutate: registMutate } = useApiMutation<{ reviewId: number }>('v1/reviews', 'POST');

@@ -3,7 +3,7 @@ import Guide from 'components/common/Guide';
 import getPath from 'utils/getPath';
 import Layout from '../Layout';
 
-const LoginExpiredGuide = ({ onClick }: { onClick?: () => void }) => {
+const SessionExpiredGuide = ({ onClick }: { onClick?: () => void }) => {
   const navigate = useNavigate();
 
   return (
@@ -21,4 +21,4 @@ const LoginExpiredGuide = ({ onClick }: { onClick?: () => void }) => {
   );
 };
 
-export default LoginExpiredGuide;
+export default SessionExpiredGuide;

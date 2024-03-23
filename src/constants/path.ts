@@ -47,6 +47,8 @@ const PATH = {
       registedTrees: 'tree',
     },
   },
+
+  sessionExpired: '401',
 };
 
 export default PATH;

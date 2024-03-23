@@ -16,23 +16,17 @@ interface IProps {
 
 const TreeInfoCard = ({ id }: IProps) => {
   const queryClient = useQueryClient();
-  const {
-    data: treeInfo,
-    isError: isInfoError,
-    error: infoError,
-  } = useApiQuery<ITreeItem>(`v1/trees/${id}`);
-  const {
-    data: reviewImages,
-    isError: isReviewImagesError,
-    error: reviewImagesError,
-  } = useApiQuery<IReviewImages>(`v1/reviews/images?treeId=${id}`);
+  const { data: treeInfo, isError: isInfoError } = useApiQuery<ITreeItem>(`v1/trees/${id}`);
+  const { data: reviewImages, isError: isReviewImagesError } = useApiQuery<IReviewImages>(
+    `v1/reviews/images?treeId=${id}`,
+  );
   const navigate = useNavigate();
 
   if (isInfoError) {
-    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다. ${infoError}`);
+    throw new HTTPError(`트리 정보를 불러오는데 오류가 발생했습니다.`);
   }
   if (isReviewImagesError) {
-    throw new HTTPError(`리뷰 이미지를 불러오는데 오류가 발생했습니다. ${reviewImagesError}`);
+    throw new HTTPError(`리뷰 이미지를 불러오는데 오류가 발생했습니다.`);
   }
 
   const handleGoToTreeInfo = () => {
@@ -60,15 +54,15 @@ const TreeInfoCard = ({ id }: IProps) => {
         />
         <ShareButton treeId={id} treeName={treeInfo.name} />
       </S.Btns>
-      <S.Images onClick={handleGoToTreeInfo}>
+      <S.ImageContainer onClick={handleGoToTreeInfo}>
         {reviewImages && reviewImages.images.length > 0 ? (
           reviewImages.images.slice(0, 3).map((e) => {
-            return <img key={e.reviewId} src={e.imageUrl} alt="트리 리뷰 이미지" />;
+            return <S.Image key={e.reviewId} src={e.imageUrl} alt="트리 리뷰 이미지" />;
           })
         ) : (
-          <img src={defaultImg} alt="트리 기본 이미지" />
+          <S.Image src={defaultImg} alt="트리 기본 이미지" />
         )}
-      </S.Images>
+      </S.ImageContainer>
     </S.Wrapper>
   ) : null;
 };

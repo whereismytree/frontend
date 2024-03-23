@@ -126,7 +126,7 @@ export const ReviewCard = styled.article<ReviewCardProps>`
   margin: 1.6rem 2.4rem;
   display: ${(props) => (props.hasPhotoReview ? 'grid' : 'block')};
   grid-template-columns: ${(props) => (props.hasPhotoReview ? '1fr 11.6rem' : 'none')};
-  grid-column-gap: ${(props) => (props.hasPhotoReview ? '4.2rem' : 'none')};
+  /* grid-column-gap: ${(props) => (props.hasPhotoReview ? '4.2rem' : 'none')}; */
 `;
 
 export const Profile = styled.div`
