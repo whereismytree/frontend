@@ -5,5 +5,5 @@ export const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   background-color: var(--grey-light);
-  height: calc(100vh - var(--navbar-height) - var(--header-height));
+  height: var(--content-height);
 `;

@@ -8,7 +8,7 @@ export const BackDrop = styled.div`
   position: relative;
   background: url(${backdrop}) no-repeat center / cover;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
 `;
 
 export const Modal = styled.article`

@@ -8,5 +8,5 @@ export const Main = styled.main`
   gap: 2.3rem;
   padding: ${REVIEW_PAGE_SIDE_GAP};
   overflow: scroll;
-  height: calc(100vh - var(--header-height));
+  height: calc(var(--content-height) + var(--navbar-height));
 `;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Content = styled.main`
-  height: calc(100vh - var(--header-height) - var(--navbar-height));
+  height: var(--content-height);
   overflow: hidden;
   position: relative;
 
@@ -17,7 +17,7 @@ export const GuideWrapper = styled.div`
   top: 0;
   z-index: 999;
   width: 100%;
-  height: calc(100vh - var(--header-height) - var(--navbar-height));
+  height: var(--content-height);
   display: flex;
   background-color: var(--grey-light);
   align-items: center;

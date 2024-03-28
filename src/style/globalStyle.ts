@@ -18,6 +18,7 @@ ${reset}
   --navbar-height: 10rem;
   --min-content-width: 350px;
   --max-content-width: 420px;
+  --content-height: calc(100dvh - var(--header-height) - var(--navbar-height));
 }
 
 * {
@@ -76,7 +77,7 @@ a {
 #root {
   min-width: var(--min-content-width);
   max-width: var(--max-content-width);
-  min-height: 100vh;
+  min-height: 100dvh;
   background: #fff;
   margin-left: 50%;
   overflow: hidden;
