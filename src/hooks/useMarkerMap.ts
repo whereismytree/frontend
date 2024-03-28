@@ -34,7 +34,7 @@ const useMarkerMap: UseMarkerMap = (mapContainer, markerOptions): { map: any } =
 
   useEffect(() => {
     if (map && positions && positions.length) {
-      const { latlng } = positions[0];
+      const { latlng } = positions[positions.length - 1];
       map.setCenter(latlng);
       setMarkers(...imageSize);
     }

@@ -39,7 +39,7 @@ export const ReviewSection = styled.div`
 `;
 
 export const ReviewList = styled.ul`
-  height: calc(100vh - (var(--header-height) + var(--navbar-height)));
+  height: var(--content-height);
   overflow: scroll;
 `;
 

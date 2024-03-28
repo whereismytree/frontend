@@ -27,7 +27,7 @@ const useApiMutation = <TData = unknown, TVariables = unknown>(
 
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.status === 500) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
         navigate(getPath('sessionExpired'));
       }
 

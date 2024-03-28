@@ -9,7 +9,7 @@ export const Map = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: calc(100vh - var(--navbar-height));
+  height: calc(var(--content-height) + var(--header-height));
   position: relative;
 `;
 
@@ -22,7 +22,7 @@ export const MapButton = styled.button<MapButtonProps>`
 `;
 
 export const Loading = styled.section`
-  height: calc(100vh - var(--navbar-height));
+  height: calc(var(--content-height) + var(--header-height));
   display: flex;
   justify-content: center;
   align-items: center;

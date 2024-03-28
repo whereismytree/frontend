@@ -4,7 +4,7 @@ import { LOCATION_INFO_HEIGHT } from '../AddressInfo/style';
 
 export const MapContainer = styled.div`
   position: relative;
-  height: calc(100vh - (var(--navbar-height) + var(--header-height) + ${LOCATION_INFO_HEIGHT}px));
+  height: calc(var(--content-height) - ${LOCATION_INFO_HEIGHT}px);
 
   img[alt='현재 위치'] {
     position: absolute;

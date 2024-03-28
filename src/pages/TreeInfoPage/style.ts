@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const InfoContainer = styled.main`
   overflow: scroll;
-  height: calc(100vh - var(--header-height) - var(--navbar-height));
+  height: var(--content-height);
 `;
 
 export const Map = styled.div`

@@ -7,7 +7,7 @@ export const Map = styled.div`
 
 export const Content = styled.main`
   position: relative;
-  height: calc(100vh - var(--header-height) - var(--navbar-height));
+  height: var(--content-height);
   overflow: hidden;
 
   button:first-child {
@@ -22,7 +22,7 @@ export const GuideWrapper = styled.div`
   top: 0;
   z-index: 999;
   width: 100%;
-  height: calc(100vh - var(--header-height) - var(--navbar-height));
+  height: var(--content-height);
   display: flex;
   background-color: var(--grey-light);
   align-items: center;

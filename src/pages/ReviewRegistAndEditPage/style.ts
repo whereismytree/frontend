@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.section`
   overflow: scroll;
-  height: calc(100vh - var(--header-height));
+  height: calc(var(--content-height) + var(--navbar-height));
 `;
 
 export const TreeInfo = styled.header`
