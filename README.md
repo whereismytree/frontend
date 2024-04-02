@@ -1,46 +1,118 @@
-# Getting Started with Create React App
+# 어쩔트리
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> 크리스마스 트리의 위치를 공유해보세요! 👉 https://whereismytree.me/
 
-## Available Scripts
+![cover](https://github.com/KwanBeom/readmetest/assets/126222927/1c28fa50-51f8-4350-b838-65c2249f706e)
 
-In the project directory, you can run:
 
-### `npm start`
+## 📖 프로젝트 소개
+크리스마스 트리의 위치를 등록해 전국의 유저들에게 공유하고, 리뷰를 남겨 생생한 후기를 사용자들과 나누는 커뮤니티 기반의 서비스입니다. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 목차
+1. [시작하기](#시작하기)
+2. [주요 기능 소개](#주요-기능-소개)
+3. [사용 기술](#사용-기술)
+4. [폴더 구조](#폴더-구조)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 시작하기
+```
+git clone https://github.com/whereismytree/frontend.git
+```
 
-### `npm test`
+```
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Dev Mode
+```
+npm start
+```
 
-### `npm run build`
+### Production
+```
+npm run build
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 주요 기능 소개
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 크리스마스 트리 등록
+- 위치를 검색하거나 현재 위치로 설정합니다.
+- 지도를 기반으로 트리를 등록할 수 있습니다.
+- 트리의 상세정보를 기입할 수 있습니다.
+  
+  ![위치 등록](https://github.com/KwanBeom/readmetest/assets/126222927/dfa586b1-1d88-4175-add8-82a0336a03f9) ![트리등록](https://github.com/KwanBeom/readmetest/assets/126222927/7d1e6009-c54c-46f4-a649-b8dd138d99d7) <img width="200" alt="image" src="https://github.com/KwanBeom/readmetest/assets/126222927/8003b589-fcef-4d92-9080-222482f7d0f6">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 트리 리뷰 등록
+- 사진과 함께 트리에 대한 간단한 리뷰를 남길 수 있습니다.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  ![후기 등록](https://github.com/KwanBeom/readmetest/assets/126222927/79e1c036-8409-447a-9b7a-dd7781022e34)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 트리 저장
+- 등록된 트리를 저장하고 저장해둔 트리를 간편하게 확인할 수 있습니다.
+  
+  ![트리 저장](https://github.com/KwanBeom/readmetest/assets/126222927/7d2edf45-821e-468e-a336-91fffaad39fa)
+  <img width="200" alt="image" src="https://github.com/KwanBeom/readmetest/assets/126222927/1cd06b84-001c-4876-8c40-be171c559b79">
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 크리스마스 트리 찾기
+- 지도에서 등록된 크리스마스 트리를 찾을 수 있습니다.
+- 위치 및 트리 이름으로 검색해 트리를 찾을 수 있습니다.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  ![트리검색](https://github.com/KwanBeom/readmetest/assets/126222927/3729b20d-b31a-4fb4-b0a7-02f920d5f91b) ![메인 페이지 트리 탐색](https://github.com/KwanBeom/readmetest/assets/126222927/8b7e3e97-919d-46d4-a94c-892611b88abd)
+
+
+
+
+ 
+
+
+## 사용 기술
+
+-   **Language**: TypeScript
+-   **Library & Framework**  : React, TanStack-Query
+-  **Style**: Styled-components
+-  **Deploy**: AWS S3 + CloudFront
+- **DevOps**: Github Actions
+
+
+## 폴더 구조
+
+```
+📦src  
+ ┣ 📂assets  
+ ┣ 📂components  
+ ┃ ┗ 📂common  
+ ┣ 📂constants  
+ ┣ 📂error  
+ ┣ 📂hooks  
+ ┣ 📂pages  
+ ┃ ┣ 📂ErrorPage  
+ ┃ ┣ 📂LandingPage  
+ ┃ ┣ 📂LoginPage  
+ ┃ ┣ 📂MyPage  
+ ┃ ┣ 📂MyReviewPage  
+ ┃ ┣ 📂MyTreePage  
+ ┃ ┣ 📂ReviewDetailPage  
+ ┃ ┣ 📂ReviewRegistAndEditPage  
+ ┃ ┣ 📂SavedTreePage  
+ ┃ ┣ 📂SearchPage  
+ ┃ ┣ 📂TreeInfoPage  
+ ┃ ┗ 📂TreeRegistPage  
+ ┣ 📂routes  
+ ┣ 📂store  
+ ┣ 📂style  
+ ┣ 📂types  
+ ┣ 📂utils  
+ ┣ App.tsx  
+ ┣ index.css  
+ ┗ index.tsx  
+ ```
+
+## 팀원
+
+- 유재영([zxxng](https://github.com/zxxng))
+-  최범관([KwanBeom](https://github.com/KwanBeom))
+
